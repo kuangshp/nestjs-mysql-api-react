@@ -11,9 +11,6 @@ class LoginService extends BaseService {
     console.log(this, '??', postData);
     return this.post('/admin/login', postData);
   }
-  // async loginApi(postData:ILoginParams) {
-  //   return axiosPost('/admin/login', postData);
-  // }
 }
 
 export default new LoginService();
