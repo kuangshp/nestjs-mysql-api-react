@@ -7,8 +7,8 @@ interface ILoginParams {
 }
 
 class LoginService extends BaseService {
+  // 登录接口
   async loginApi(postData: ILoginParams) {
-    console.log(this, '??', postData);
     return this.post('/admin/login', postData);
   }
 }

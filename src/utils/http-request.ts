@@ -5,7 +5,6 @@ import { authToken } from '../config';
 
 class HttpRequest {
   constructor() {
-    console.log('axios初始化');
     axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
     axios.defaults.timeout = 60 * 1000;
     // 拦截请求的

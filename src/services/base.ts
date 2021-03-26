@@ -22,7 +22,6 @@ export default class BaseService {
 
   // 提供post请求
   async post<T>(url: string, postData: ObjectType): Promise<CustomSuccessData<T>> {
-    console.log('最终的', url);
     return await axios.post(url, fileObjectField(postData));
   }
 
