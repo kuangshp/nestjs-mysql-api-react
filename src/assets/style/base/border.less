@@ -1,0 +1,43 @@
+/**
+  边框线 border1 ~ border20
+  圆角 radius1 ~ radius20
+  常用1px边框线 + 圆角 b-r1 ～ b-r20
+ */
+.borderRadius(@n) when (@n > 1) {
+  .border@{n} {
+    border: ~'@{n}px' solid @border-color-base;
+  }
+
+  .radius@{n} {
+    border-radius: ~'@{n}px';
+  }
+
+  .b-r@{n} {
+    border: 1px solid @border-color-base;
+    border-radius: ~'@{n}px';
+  }
+
+  .borderRadius((@n - 1));
+}
+
+.borderRadius(20);
+
+/*
+  为了编辑器有提示单独写一个
+*/
+.border1 {
+  border: 1px solid @border-color-base;
+}
+
+.radius1 {
+  border-radius: 1px;
+}
+
+.b-r1 {
+  border: 1px solid @border-color-base;
+  border-radius: 1px;
+}
+
+.b-bottom {
+  border-bottom: 1px solid @border-color-base;
+}

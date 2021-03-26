@@ -1,0 +1,18 @@
+.layout {
+  width: calc(100vw);
+  height: calc(100vh);
+}
+.layout .content {
+  height: inherit;
+}
+.layout .view-content {
+  background-color: #F5f5f5;
+  padding: 15px;
+  box-sizing: border-box;
+}
+.layout .view-content .container {
+  background: #fff;
+  padding: 15px;
+  box-sizing: border-box;
+  height: 100%;
+}

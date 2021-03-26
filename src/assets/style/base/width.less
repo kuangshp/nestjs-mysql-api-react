@@ -1,0 +1,15 @@
+/* width */
+.w {
+  width: 100%;
+}
+
+/* 宽度百分比 w1 ~ w9 */
+.widthFc(@n) when (@n > 0) {
+  .w@{n} {
+    width: ~'@{n}0%';
+  }
+
+  .widthFc(@n - 1);
+}
+
+.widthFc(9);

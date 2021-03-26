@@ -1,0 +1,16 @@
+{
+  "singleQuote": true,
+  "trailingComma": "es5",
+  "printWidth": 100,
+  "tabWidth": 2,
+  "endOfLine": "auto",
+  "arrowParens": "avoid",
+  "overrides": [
+    {
+      "files": ".less",
+      "options": {
+        "parser": "css"
+      }
+    }
+  ]
+}

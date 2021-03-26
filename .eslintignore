@@ -1,0 +1,5 @@
+# 注释，忽略文件
+node_modules
+src/serviceWorker.ts
+src/react-app-env.d.ts
+*.lock

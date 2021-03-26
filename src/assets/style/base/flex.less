@@ -1,0 +1,71 @@
+/**
+ * flex
+ * https://css-tricks.com/snippets/css/a-guide-to-flexbox/
+ */
+
+// 子元素横向垂直居中
+.f-middle {
+  display: flex;
+  align-items: center;
+}
+
+// 子元素横向居中
+.f-center {
+  display: flex;
+  justify-content: center;
+}
+
+// 子元素横向分布
+.flex,
+.f-row {
+  display: flex;
+  flex-direction: row;
+}
+
+// 子元素横向垂直居中
+.f-middle-row {
+  flex-direction: row;
+  .f-middle;
+}
+
+// 子元素纵向居中
+.f-middle-column {
+  flex-direction: column;
+  .f-middle;
+}
+
+// 子元素横向垂直居中
+.f-middle-center {
+  justify-content: center;
+  .f-middle;
+}
+
+// 子元素均匀分布在行中;第一个项目在起始行，最后一个项目在结束行
+.f-middle-sb {
+  justify-content: space-between;
+  .f-middle;
+}
+
+// 当前元素宽或高度为父元素余下或占父元素1个伸缩（用于自适应余下高宽）
+.f-scroll-h {
+  flex: 1;
+  overflow: hidden;
+}
+
+// 当前元素宽或高度为父元素余下或占父元素1个伸缩，且内部纵向滚动（用于自适应余下高宽带滚动）
+.f-scroll-y {
+  flex: 1;
+  .overflow-y-a;
+}
+
+// 当前元素宽或高度为父元素余下或占父元素1个伸缩，且内部横向滚动（用于自适应余下高宽带滚动）
+.f-scroll-x {
+  flex: 1;
+  .overflow-x-a;
+}
+
+// 子元素纵向分布
+.f-column {
+  display: flex;
+  flex-direction: column;
+}

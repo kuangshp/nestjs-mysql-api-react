@@ -1,0 +1,74 @@
+/* padding */
+// 水平方向
+.paddingHorizontal(@n) {
+  padding-right: @n;
+  padding-left: @n;
+}
+
+// 垂直方向
+.paddingVertical(@n) {
+  padding-top: @n;
+  padding-bottom: @n;
+}
+
+.marginHorizontal(@n) {
+  margin-right: @n;
+  margin-left: @n;
+}
+
+.marginVertical(@n) {
+  margin-top: @n;
+  margin-bottom: @n;
+}
+
+/* flex */
+.flexAlign(@params) {
+  display: flex;
+  align-items: @params;
+}
+
+.flexJustify(@justify) {
+  display: flex;
+  align-items: center;
+  justify-content: @justify;
+}
+
+/* 垂直居中 */
+.middle() {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* text */
+// 文本省略
+.ellipse() {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* color */
+.themeColor() {
+  color: @primary-color;
+}
+
+.themeBorderColor() {
+  border-color: @primary-color;
+}
+
+.themeBackgroundColor() {
+  background-color: @primary-color;
+}
+
+/* hover */
+.colorHover(@c) {
+  color: rgba(@c, 0.9);
+}
+
+.borderColorHover(@c) {
+  border-color: rgba(@c, 0.9);
+}
+
+.backgroundColorHover(@c) {
+  background-color: rgba(@c, 0.9);
+}

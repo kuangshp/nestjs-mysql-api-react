@@ -1,0 +1,36 @@
+.marginStatic(@n) when (@n > 0) {
+  .m-horizontal@{n} {
+    .marginHorizontal(~'@{n}px');
+  }
+
+  .m-vertical@{n} {
+    .marginVertical(~'@{n}px');
+  }
+
+  .marginStatic((@n - 1));
+}
+
+.marginStatic(100);
+
+.m-horizontal0 {
+  .marginHorizontal(0);
+}
+
+.m-vertical0 {
+  .marginVertical(0);
+}
+
+.mb10 {
+  margin-bottom: 10px;
+}
+
+.mb12 {
+  margin-bottom: 12px;
+}
+
+.mb20 {
+  margin-bottom: 20px;
+}
+.mr10 {
+  margin-right: 10px;
+}

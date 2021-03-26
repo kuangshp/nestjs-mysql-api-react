@@ -1,0 +1,33 @@
+/*
+ p-horizontal 左右
+ p-vertical 上下
+ */
+.paddingStatic(@n) when (@n > 0) {
+  .p-horizontal@{n} {
+    .paddingHorizontal(~'@{n}px');
+  }
+
+  .p-vertical@{n} {
+    .paddingVertical(~'@{n}px');
+  }
+
+  .paddingStatic((@n - 1));
+}
+
+.paddingStatic(100);
+
+.p-horizontal0 {
+  .paddingHorizontal(0);
+}
+
+.p-vertical0 {
+  .paddingVertical(0);
+}
+
+.pb10 {
+  padding-bottom: 10px;
+}
+
+.pb20 {
+  padding-bottom: 20px;
+}

@@ -1,0 +1,23 @@
+/* font-size */
+.fontSize(@n) when (@n > 12) {
+  .size@{n} {
+    font-size: ~'@{n}px';
+  }
+  .fontSize((@n - 1));
+}
+
+.fontSize(70);
+
+.size12 {
+  font-size: 12px;
+}
+
+/* font-weight */
+@fontWeight: 1, 2, 3, 4, 5, 6, 7, 8, 9;
+each(@fontWeight, {
+  .fw@{value}00 {
+    font-weight: ~"@{value}00";
+  }
+}) .fwb {
+  font-weight: bold;
+}

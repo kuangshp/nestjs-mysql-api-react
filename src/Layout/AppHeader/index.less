@@ -1,0 +1,34 @@
+.app-header {
+  background-color: #fff;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom: 1px solid #e5e5e5;
+  .trigger {
+    font-size: 26px;
+    line-height: 64px;
+    padding: 0 24px;
+    cursor: pointer;
+    transition: color 0.3s;
+    &:hover {
+      // color: #fff;
+    }
+  }
+  .header-view{
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    .breadcrumb{
+      line-height: 60px;
+    }
+    .user-info{
+      margin-right: 20px;
+      .avatar{
+        width: 35px;
+        height: 35px;
+        margin-left: 5px;
+        border-radius: 50%;
+      }
+    }
+  }
+}
