@@ -102,6 +102,7 @@
     "build:pro": "cross-env NODE_ENV=production node scripts/build.js",
     "eslint": "npx eslint src/**/*.{ts,tsx}",
     "eslint:fix": "npx eslint src/**/*.{ts,tsx} --fix",
+    "stylelint:fix": "",
     "lint-staged": "lint-staged",
     "test": "node scripts/test.js",
     "prepare": "husky install"
