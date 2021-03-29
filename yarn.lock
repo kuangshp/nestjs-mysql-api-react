@@ -4770,12 +4770,22 @@
   dependencies:
     "is-obj" "^2.0.0"
 
-"dotenv-expand@5.1.0":
+"dotenv-cli@^4.0.0":
+  "integrity" "sha1-PN1ouHzNY8eNv6cqqy9jm766X0s="
+  "resolved" "https://registry.npm.taobao.org/dotenv-cli/download/dotenv-cli-4.0.0.tgz"
+  "version" "4.0.0"
+  dependencies:
+    "cross-spawn" "^7.0.1"
+    "dotenv" "^8.1.0"
+    "dotenv-expand" "^5.1.0"
+    "minimist" "^1.1.3"
+
+"dotenv-expand@^5.1.0", "dotenv-expand@5.1.0":
   "integrity" "sha1-P7rwIL/XlIhAcuomsel5HUWmKfA="
   "resolved" "https://registry.npm.taobao.org/dotenv-expand/download/dotenv-expand-5.1.0.tgz"
   "version" "5.1.0"
 
-"dotenv@8.2.0":
+"dotenv@^8.1.0", "dotenv@8.2.0":
   "integrity" "sha1-l+YZJZradQ7qPk6j4mvO6lQksWo="
   "resolved" "https://registry.npm.taobao.org/dotenv/download/dotenv-8.2.0.tgz"
   "version" "8.2.0"
@@ -8404,7 +8414,7 @@
     "is-plain-obj" "^1.1.0"
     "kind-of" "^6.0.3"
 
-"minimist@^1.1.1", "minimist@^1.2.0", "minimist@^1.2.5":
+"minimist@^1.1.1", "minimist@^1.1.3", "minimist@^1.2.0", "minimist@^1.2.5":
   "integrity" "sha1-Z9ZgFLZqaoqqDAg8X9WN9OTpdgI="
   "resolved" "https://registry.npm.taobao.org/minimist/download/minimist-1.2.5.tgz?cache=0&sync_timestamp=1589682820731&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fminimist%2Fdownload%2Fminimist-1.2.5.tgz"
   "version" "1.2.5"

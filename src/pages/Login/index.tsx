@@ -16,7 +16,6 @@ const Login = (props: Props) => {
   useMemo(() => {
     storage.clear();
   }, []);
-
   // 成功的提交
   const onFinish = (values: any) => {
     console.log('Success:', values, typeof values);

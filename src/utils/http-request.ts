@@ -1,7 +1,9 @@
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { storage } from './storage';
-import { prefix, iamPrefix } from '../api';
 import { authToken } from '../config';
+
+const prefix: string = <string>process.env.REACT_APP_BASE_API_URL;
+const iamPrefix: string = <string>process.env.REACT_APP_BASE_IMG_URL;
 
 class HttpRequest {
   constructor() {
