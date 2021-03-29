@@ -58,7 +58,7 @@ const AppSider = (props: Props) => {
 
   return (
     <Sider trigger={null} collapsible collapsed={props.collapsed} className={styles.app_sider}>
-      <div className={styles.logo} />
+      <div className={styles.logo} onClick={() => history.push('/home')} />
       <Menu
         theme="dark"
         mode="inline"
