@@ -3,7 +3,7 @@ import { Layout, Menu, Dropdown, Modal } from 'antd';
 import { MenuUnfoldOutlined, MenuFoldOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import { storage } from './../../utils';
 import { authToken } from '../../config';
-import { connect } from 'dva';
+import { connect, useDispatch } from 'dva';
 import { withRouter, RouteComponentProps } from 'dva/router';
 import styles from './index.module.less';
 import { CombinedState } from '../../typings';
@@ -12,14 +12,10 @@ import { GlobalState } from '../../models/global';
 const { Header } = Layout;
 const { confirm } = Modal;
 
-type Props = PropsWithChildren<
-  RouteComponentProps &
-    ReturnType<typeof mapStateToProps> & {
-      dispatch: Dispatch<any>;
-    }
->;
+type Props = PropsWithChildren<RouteComponentProps & ReturnType<typeof mapStateToProps>>;
 
 const AppHeader = (props: Props) => {
+  const dispatch = useDispatch();
   // 退出操作
   const logoutHandler = () => {
     confirm({
@@ -40,7 +36,7 @@ const AppHeader = (props: Props) => {
 
   // 打开和关闭左侧菜单按钮事件
   const toggleHandler = () => {
-    props.dispatch({ type: 'global/toggleMenusCollapsed' });
+    dispatch({ type: 'global/toggleMenusCollapsed' });
   };
 
   const menu = (
