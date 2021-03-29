@@ -1,7 +1,7 @@
 import React, { useMemo, PropsWithChildren, Dispatch } from 'react';
 import { Form, Input, Button, message } from 'antd';
 import { RouteComponentProps } from 'dva/router';
-import styles from './index.module.css';
+import styles from './index.module.less';
 import { FormError } from 'src/typings';
 import { storage } from 'src/utils';
 import { connect } from 'dva';
