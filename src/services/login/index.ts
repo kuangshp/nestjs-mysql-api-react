@@ -1,6 +1,6 @@
 import BaseService from '../base';
 import { IApiBaseResDto } from 'src/dto/api.res.base.dto';
-import { ILoginRes } from 'src/pages/Login/login.res.dto';
+import { ILoginRes } from 'src/pages/Login/types/login.res.dto';
 
 interface ILoginParams {
   username: string;

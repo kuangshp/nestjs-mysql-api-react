@@ -5,7 +5,7 @@ import { storage } from './../utils';
 import { authToken } from './../config';
 import { Model } from 'dva';
 import { IApiBaseResDto } from 'src/dto/api.res.base.dto';
-import { ILoginRes } from 'src/pages/Login/login.res.dto';
+import { ILoginRes } from 'src/pages/Login/types/login.res.dto';
 
 export interface ReduxAction {
   type: string;
