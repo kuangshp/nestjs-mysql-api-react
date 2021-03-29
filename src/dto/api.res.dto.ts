@@ -1,5 +1,5 @@
-export interface ApiResDto<T> {
-  result?: T;
-  code: number;
-  message: string;
+export interface IApiResDto {
+  id: number;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

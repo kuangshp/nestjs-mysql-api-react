@@ -1,12 +1,11 @@
+import { IApiResDto } from 'src/dto/api.res.dto';
+
 /** 登录接口返回的数据 */
-export interface ILoginRes {
+export interface ILoginRes extends IApiResDto {
   mobile: string;
   email: string;
   username: string;
-  id: number;
   isDel: number;
-  createdAt: string;
-  updatedAt: string;
   name: string;
   status: number;
   platform: number;

@@ -1,5 +1,5 @@
 import BaseService from '../base';
-import { ApiResDto } from 'src/dto/api.res.dto';
+import { IApiBaseResDto } from 'src/dto/api.res.base.dto';
 import { ILoginRes } from 'src/pages/Login/login.res.dto';
 
 interface ILoginParams {
@@ -10,7 +10,7 @@ interface ILoginParams {
 class LoginService extends BaseService {
   // 登录接口
   async loginApi(postData: ILoginParams) {
-    return this.post<ApiResDto<ILoginRes>>('/admin/login', postData);
+    return this.post<IApiBaseResDto<ILoginRes>>('/admin/login', postData);
   }
 }
 

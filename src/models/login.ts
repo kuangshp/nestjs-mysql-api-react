@@ -4,7 +4,7 @@ import { routerRedux } from 'dva/router';
 import { storage } from './../utils';
 import { authToken } from './../config';
 import { Model } from 'dva';
-import { ApiResDto } from 'src/dto/api.res.dto';
+import { IApiBaseResDto } from 'src/dto/api.res.base.dto';
 import { ILoginRes } from 'src/pages/Login/login.res.dto';
 
 export interface ReduxAction {
@@ -18,7 +18,7 @@ const model: Model = {
   subscriptions: {},
   effects: {
     *loginApi({ payload }: ReduxAction, { call, put }) {
-      const data: ApiResDto<ILoginRes> = yield call(() => LoginService.loginApi(payload));
+      const data: IApiBaseResDto<ILoginRes> = yield call(() => LoginService.loginApi(payload));
       // const data = yield call(LoginService.loginApi, payload);
       console.log(data, '请求结果');
       const { code, message, result } = data;
