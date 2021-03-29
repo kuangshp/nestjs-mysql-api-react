@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import Layout from 'src/Layout';
 import dynamic from 'dva/dynamic';
-import { Route, Router, Switch } from 'dva/router';
+import { Route, Router, Switch, Redirect } from 'dva/router';
 import HomeRoute from 'src/router/home';
 
 export interface IRouteConfig {
@@ -54,6 +54,8 @@ function RouterConfig({ history, app }: any) {
             />
           )
         )}
+        {/* 重定向到首页 */}
+        <Redirect to="/home" />
       </Switch>
     );
   };
