@@ -1,29 +1,29 @@
-.app-header {
+.app_header {
   background-color: #fff;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   border-bottom: 1px solid #e5e5e5;
 }
-.app-header .trigger {
+.app_header .trigger {
   font-size: 26px;
   line-height: 64px;
   padding: 0 24px;
   cursor: pointer;
   transition: color 0.3s;
 }
-.app-header .header-view {
+.app_header .header_view {
   flex: 1;
   display: flex;
   justify-content: space-between;
 }
-.app-header .header-view .breadcrumb {
+.app_header .header_view .breadcrumb {
   line-height: 60px;
 }
-.app-header .header-view .user-info {
+.app_header .header_view .user_info {
   margin-right: 20px;
 }
-.app-header .header-view .user-info .avatar {
+.app_header .header_view .user_info .avatar {
   width: 35px;
   height: 35px;
   margin-left: 5px;

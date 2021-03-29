@@ -3,22 +3,22 @@ import { Layout } from 'antd';
 import AppSider from './AppSider';
 import AppHeader from './AppHeader';
 import AppFooter from './AppFooter';
-import './index.less';
+import styles from './index.module.less';
 import { connect } from 'dva';
 
 const { Content } = Layout;
 
 const LayoutPage: React.FC = props => {
   return (
-    <div className="layout">
-      <Layout className="content">
+    <div className={styles.layout}>
+      <Layout className={styles.content}>
         {/* 侧边导航 */}
         <AppSider />
         {/* 右侧内容区域 */}
-        <Layout className="view">
+        <Layout className={styles.view}>
           <AppHeader />
-          <Content className="view-content">
-            <div className="container">
+          <Content className={styles.view_content}>
+            <div className={styles.container}>
               {/* 内容区域 */}
               {props.children}
             </div>

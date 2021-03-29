@@ -5,7 +5,7 @@ import { storage } from './../../utils';
 import { authToken } from '../../config';
 import { connect } from 'dva';
 import { withRouter, RouteComponentProps } from 'dva/router';
-import './index.less';
+import styles from './index.module.less';
 import { CombinedState } from '../../typings';
 import { GlobalState } from '../../models/global';
 
@@ -57,19 +57,19 @@ const AppHeader = (props: Props) => {
     </Menu>
   );
   return (
-    <Header className="app-header" style={{ padding: 0 }}>
+    <Header className={styles.app_header} style={{ padding: 0 }}>
       {React.createElement(props.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
         className: 'trigger',
         onClick: toggleHandler,
       })}
-      <div className="header-view">
+      <div className={styles.header_view}>
         <div>&nbsp;</div>
         {/* 用户中心 */}
-        <div className="user-info">
+        <div className={styles.user_info}>
           <span>admin</span>
           <Dropdown overlay={menu}>
             <img
-              className="avatar"
+              className={styles.avatar}
               src={'http://amin-1302640623.cos.ap-nanjing.myqcloud.com/tmp/cat.jpg'}
               alt="用户头像"
             />
