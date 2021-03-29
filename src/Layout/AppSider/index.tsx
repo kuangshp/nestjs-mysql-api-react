@@ -6,7 +6,7 @@ import { menusDataList, MenusProps } from './menus';
 import { FolderOpenOutlined, FileTextOutlined } from '@ant-design/icons';
 import { storage } from './../../utils';
 import { authToken } from '../../config';
-import { connect } from 'dva';
+import { connect, useSelector } from 'dva';
 import { RouteComponentProps, withRouter } from 'dva/router';
 import { GlobalState } from '../../models/global';
 const { Sider } = Layout;
@@ -38,6 +38,9 @@ const AppSider = (props: Props) => {
   const { location, history } = props;
   const [selectKey, setSelectKey] = useState<string>('');
   const [openKey, setOpenKey] = useState<string>('');
+  // 可以使用hooks代替下面的connect
+  // const state = useSelector((state: CombinedState) => state.global);
+  // console.log(state, '===>');
 
   // 选择菜单的事件
   const selectMenuHandler = (ev: ObjectType) => {

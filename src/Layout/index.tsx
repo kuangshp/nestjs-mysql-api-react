@@ -4,7 +4,6 @@ import AppSider from './AppSider';
 import AppHeader from './AppHeader';
 import AppFooter from './AppFooter';
 import styles from './index.module.less';
-import { connect } from 'dva';
 
 const { Content } = Layout;
 
@@ -31,4 +30,4 @@ const LayoutPage: React.FC = props => {
   );
 };
 
-export default connect()(LayoutPage);
+export default LayoutPage;
