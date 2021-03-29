@@ -1,6 +1,6 @@
 import dva from 'dva';
 import React from 'react';
-import createHistory from 'history/createHashHistory';
+import createHistory from 'history/createBrowserHistory';
 import './assets/style/global.less';
 import 'antd/dist/antd.css';
 import globalModel from 'src/models/global';
@@ -12,8 +12,11 @@ import routeConfig from 'src/router';
 import 'moment/locale/zh-cn';
 
 const app = dva({
-  history: createHistory(),
+  history: createHistory({
+    basename: 'admin-web', // 配置项目名,可以不写
+  }),
 });
+
 app.use(createLoading());
 app.model(globalModel);
 app.router(routeConfig as any);
