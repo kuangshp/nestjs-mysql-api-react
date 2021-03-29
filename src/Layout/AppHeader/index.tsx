@@ -59,7 +59,7 @@ const AppHeader = (props: Props) => {
   return (
     <Header className={styles.app_header} style={{ padding: 0 }}>
       {React.createElement(props.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-        className: 'trigger',
+        className: `${styles.trigger}`,
         onClick: toggleHandler,
       })}
       <div className={styles.header_view}>

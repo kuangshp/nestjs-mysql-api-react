@@ -42,16 +42,10 @@ const AppSider = (props: Props) => {
   // 选择菜单的事件
   const selectMenuHandler = (ev: ObjectType) => {
     console.log('点击了菜单', ev);
-    // // 根据菜单去跳转页面
-    // const { key } = ev;
-    // console.log(ev, '===');
-    // const toPath = key && key.startsWith('/') ? key : `/${key}`;
-    // if (storage.getItem(authToken)) {
-    //   history.push(toPath);
-    // } else {
-    //   // 重定向到登录页面
-    //   history.push('/login');
-    // }
+    // 根据菜单去跳转页面
+    const { key } = ev;
+    const toPath = key && key.startsWith('/') ? key : `/${key}`;
+    history.push(toPath);
   };
   // 刷新的时候默认选中
   useMemo(() => {
