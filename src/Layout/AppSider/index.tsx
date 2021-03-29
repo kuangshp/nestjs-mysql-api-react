@@ -1,7 +1,7 @@
 import React, { useState, useMemo, PropsWithChildren } from 'react';
 import { Layout, Menu } from 'antd';
 import { ObjectType, CombinedState } from '../../typings';
-import './index.less';
+import styles from './index.module.css';
 import { menusDataList, MenusProps } from './menus';
 import { FolderOpenOutlined, FileTextOutlined } from '@ant-design/icons';
 import { storage } from './../../utils';
@@ -59,8 +59,8 @@ const AppSider = (props: Props) => {
   }, [location.pathname]);
 
   return (
-    <Sider trigger={null} collapsible collapsed={props.collapsed} className="app-sider">
-      <div className="logo" />
+    <Sider trigger={null} collapsible collapsed={props.collapsed} className={styles.app_sider}>
+      <div className={styles.logo} />
       <Menu
         theme="dark"
         mode="inline"

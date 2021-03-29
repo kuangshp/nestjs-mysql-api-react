@@ -503,7 +503,7 @@ module.exports = function (webpackEnv) {
               use: getStyleLoaders(
                   {
                     importLoaders: 3,
-                    sourceMap: isEnvProduction && shouldUseSourceMap,
+                    sourceMap: isEnvProduction && shouldUseSourceMap
                   },
                   'less-loader'
               ),
