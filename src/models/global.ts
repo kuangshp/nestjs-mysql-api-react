@@ -1,4 +1,6 @@
 import { Model } from 'dva';
+import { storage } from 'src/utils';
+import { authToken } from 'src/config';
 
 // 定义数据类型
 export interface GlobalState {
@@ -19,10 +21,10 @@ const model: Model = {
   subscriptions: {
     setup({ dispatch, history }) {
       return history.listen(({ pathname }) => {
-        // dispatch({ type: 'fetchStreetData' });
-        // if (Cookies.get('token')) {
-        //   dispatch({ type: 'fetchUserInfo' });
-        // }
+        // 判断当前是否有token,没有就到登录页面
+        if (!storage.getItem(authToken)) {
+          history.push('/login');
+        }
       });
     },
   },

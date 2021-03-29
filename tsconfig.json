@@ -33,7 +33,7 @@
     "newLine": "lf",
     "baseUrl": ".",
     "paths": {
-      "@src/*": [
+      "src/*": [
         "src/*"
       ]
     }
