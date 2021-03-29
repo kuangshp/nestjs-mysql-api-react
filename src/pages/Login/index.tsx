@@ -4,22 +4,19 @@ import { RouteComponentProps } from 'dva/router';
 import styles from './index.module.less';
 import { FormError } from 'src/typings';
 import { storage } from 'src/utils';
-import { connect } from 'dva';
+import { connect, useDispatch } from 'dva';
 
-type Props = PropsWithChildren<
-  RouteComponentProps & {
-    dispatch: Dispatch<any>;
-  }
->;
+type Props = PropsWithChildren<RouteComponentProps>;
 
 const Login = (props: Props) => {
+  const dispatch = useDispatch();
   useMemo(() => {
     storage.clear();
   }, []);
   // 成功的提交
   const onFinish = (values: any) => {
     console.log('Success:', values, typeof values);
-    props.dispatch({ type: 'login/loginApi', payload: values });
+    dispatch({ type: 'login/loginApi', payload: values });
   };
   // 失败的提示
   const onFinishFailed = (errorInfo: FormError) => {
