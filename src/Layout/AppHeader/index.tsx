@@ -59,7 +59,6 @@ const AppHeader = (props: Props) => {
         onClick: toggleHandler,
       })}
       <div className={styles.header_view}>
-        <div>&nbsp;</div>
         {/* 用户中心 */}
         <div className={styles.user_info}>
           <span>admin</span>
