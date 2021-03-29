@@ -1,7 +1,7 @@
 import React, { useMemo, PropsWithChildren, Dispatch } from 'react';
 import { Form, Input, Button, message } from 'antd';
 import { RouteComponentProps } from 'dva/router';
-import './index.less';
+import styles from './index.module.css';
 import { FormError } from 'src/typings';
 import { storage } from 'src/utils';
 import { connect } from 'dva';
@@ -29,9 +29,9 @@ const Login = (props: Props) => {
     message.warning(errorFields[0].errors[0]);
   };
   return (
-    <div className="login">
-      <div className="login-panel">
-        <div className="title">后台管理系统平台</div>
+    <div className={styles.login}>
+      <div className={styles.login_panel}>
+        <div className={styles.title}>后台管理系统平台</div>
         <Form name="basic" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
           <Form.Item
             label="用户名"
@@ -50,11 +50,11 @@ const Login = (props: Props) => {
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit" className="login-btn">
+            <Button type="primary" htmlType="submit" className={styles.login_btn}>
               登录
             </Button>
           </Form.Item>
-          <div className="tools">用户名和密码随便输入</div>
+          <div className={styles.tools}>用户名和密码随便输入</div>
         </Form>
       </div>
     </div>

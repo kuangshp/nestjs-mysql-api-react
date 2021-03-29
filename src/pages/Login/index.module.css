@@ -5,7 +5,7 @@
   background-image: url('../../assets/images/login.svg');
   position: relative;
 }
-.login .login-panel {
+.login .login_panel {
   width: 400px;
   height: 350px;
   background-color: #fff;
@@ -20,17 +20,17 @@
   left: 0;
   margin: auto;
 }
-.login .login-panel .title {
+.login .login_panel .title {
   width: 100%;
   height: 50px;
   line-height: 50px;
   text-align: center;
   font-size: 30px;
 }
-.login .login-panel .login-btn {
+.login .login_panel .login_btn {
   width: 100%;
 }
-.login .login-panel .tools {
+.login .login_panel .tools {
   text-align: right;
   color: #1890ff;
 }
