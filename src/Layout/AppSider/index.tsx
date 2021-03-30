@@ -4,8 +4,6 @@ import { ObjectType, CombinedState } from '../../typings';
 import styles from './index.module.css';
 import { menusDataList, MenusProps } from './menus';
 import { FolderOpenOutlined, FileTextOutlined } from '@ant-design/icons';
-import { storage } from './../../utils';
-import { authToken } from '../../config';
 import { connect, useSelector } from 'dva';
 import { RouteComponentProps, withRouter } from 'dva/router';
 import { GlobalState } from '../../models/global';

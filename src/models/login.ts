@@ -12,15 +12,19 @@ export interface ReduxAction {
   [propName: string]: any;
 }
 
+export interface LoginState {
+  userInfo: ObjectType;
+}
+
 const model: Model = {
   namespace: 'login',
-  state: {},
+  state: {
+    userInfo: {},
+  },
   subscriptions: {},
   effects: {
     *loginApi({ payload }: ReduxAction, { call, put }) {
       const data: IApiBaseResDto<ILoginRes> = yield call(() => LoginService.loginApi(payload));
-      // const data = yield call(LoginService.loginApi, payload);
-      console.log(data, '请求结果');
       const { code, message, result } = data;
       if (Object.is(code, 0)) {
         yield put({ type: 'setStorage', payload: result });
@@ -32,9 +36,10 @@ const model: Model = {
   },
   reducers: {
     // 设置存储
-    setStorage(state, action: ReduxAction) {
+    setStorage(state: LoginState, action: ReduxAction) {
       storage.setItem(authToken, action.payload.token);
-      return { ...state, ...action.payload };
+      // return { userInfo: Object.assign(state.userInfo, action.payload) };
+      return { userInfo: { ...state.userInfo, ...action.payload } };
     },
   },
 };
