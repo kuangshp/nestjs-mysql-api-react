@@ -14,22 +14,11 @@ import 'moment/locale/zh-cn';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { PersistGate } from 'redux-persist/lib/integration/react';
-import undoable, { ActionCreators } from 'redux-undo';
+import undoable from 'redux-undo';
 
-console.log(storage, '初始化');
 const persistConfig = {
   key: 'root',
   storage,
-};
-
-const localStorageState: string = '@@LOCAL_STORAGE_STATE';
-const getStorageData = () => {
-  const state = window.localStorage.getItem(localStorageState);
-  if (state) {
-    return typeof state === 'string' ? JSON.parse(state) : state;
-  } else {
-    return {};
-  }
 };
 
 const app = dva({
@@ -40,7 +29,6 @@ const app = dva({
     const undoReducer = undoable(reducer);
     const rootReducer = persistReducer(persistConfig, undoReducer);
     return (state: any, action: any) => {
-      console.log('旧数据:', state);
       const newState: any = rootReducer(state, action);
       return { ...newState, router: newState.present.router };
     };
@@ -49,7 +37,6 @@ const app = dva({
     createStore => (...args) => {
       const store: any = createStore(...args);
       const persistor = persistStore(store);
-      console.log(persistor, '22');
       store.persistor = persistor;
       return store;
     },
