@@ -11011,12 +11011,22 @@
     "indent-string" "^4.0.0"
     "strip-indent" "^3.0.0"
 
+"redux-persist@^6.0.0":
+  "integrity" "sha1-tNKXL5hZWXwTDUDUsUb+zatRs6g="
+  "resolved" "https://registry.npm.taobao.org/redux-persist/download/redux-persist-6.0.0.tgz"
+  "version" "6.0.0"
+
 "redux-saga@^0.16.0":
   "integrity" "sha1-mTZi6GvJRdhQmsK42ro6jGFcyXE="
   "resolved" "https://registry.npm.taobao.org/redux-saga/download/redux-saga-0.16.2.tgz"
   "version" "0.16.2"
 
-"redux@^4.0.0", "redux@^4.0.1":
+"redux-undo@^1.0.1":
+  "integrity" "sha1-jZidbDJuZxj0RxBC6Qpbi28zF+s="
+  "resolved" "https://registry.npm.taobao.org/redux-undo/download/redux-undo-1.0.1.tgz"
+  "version" "1.0.1"
+
+"redux@^4.0.0", "redux@^4.0.1", "redux@>4.0.0":
   "integrity" "sha1-TbXeWBbheJHeioDEJCMtBvBR2T8="
   "resolved" "https://registry.npm.taobao.org/redux/download/redux-4.0.5.tgz"
   "version" "4.0.5"

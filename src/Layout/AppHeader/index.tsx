@@ -75,6 +75,6 @@ const AppHeader = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: CombinedState): GlobalState => state.global;
+const mapStateToProps = (state: any): GlobalState => state.present.global;
 
 export default withRouter(connect(mapStateToProps)(AppHeader));

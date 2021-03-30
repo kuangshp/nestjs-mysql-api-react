@@ -90,6 +90,6 @@ const AppSider = (props: Props) => {
     </Sider>
   );
 };
-const mapStateToProps = (state: CombinedState): GlobalState => state.global;
+const mapStateToProps = (state: any): GlobalState => state.present.global;
 
 export default withRouter(connect(mapStateToProps)(AppSider));
