@@ -18,9 +18,9 @@ class AccountService extends BaseService {
   }
 
   // 查询列表
-  async accountList(params: any): Promise<any> {
+  async accountList(params?: any): Promise<any> {
     return await this.get('/admin/account', params);
   }
 }
 
-export default AccountService;
+export default new AccountService();

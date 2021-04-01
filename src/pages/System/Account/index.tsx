@@ -1,113 +1,67 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'dva';
 import AccountService from 'src/services/account';
 import styles from './index.module.less';
 import { Table } from 'antd';
 import { TablePaginationConfig } from 'antd/lib/table';
+import { useRequest } from 'ahooks';
 
 const Account = () => {
-  const dataSource = [
-    {
-      key: '1',
-      name: '胡彦斌',
-      age: 32,
-      address: '西湖区湖底公园1号',
-    },
-    {
-      key: '2',
-      name: '胡彦祖',
-      age: 42,
-      address: '西湖区湖底公园1号',
-    },
-    {
-      key: '3',
-      name: '胡彦斌',
-      age: 32,
-      address: '西湖区湖底公园1号',
-    },
-    {
-      key: '4',
-      name: '胡彦祖',
-      age: 42,
-      address: '西湖区湖底公园1号',
-    },
-    {
-      key: '5',
-      name: '胡彦斌',
-      age: 32,
-      address: '西湖区湖底公园1号',
-    },
-    {
-      key: '6',
-      name: '胡彦祖',
-      age: 42,
-      address: '西湖区湖底公园1号',
-    },
-    {
-      key: '7',
-      name: '胡彦斌',
-      age: 32,
-      address: '西湖区湖底公园1号',
-    },
-    {
-      key: '8',
-      name: '胡彦祖',
-      age: 42,
-      address: '西湖区湖底公园1号',
-    },
-    {
-      key: '9',
-      name: '胡彦斌',
-      age: 32,
-      address: '西湖区湖底公园1号',
-    },
-    {
-      key: '10',
-      name: '胡彦祖',
-      age: 42,
-      address: '西湖区湖底公园1号',
-    },
-    {
-      key: '11',
-      name: '胡彦斌',
-      age: 32,
-      address: '西湖区湖底公园1号',
-    },
-    {
-      key: '12',
-      name: '胡彦祖',
-      age: 42,
-      address: '西湖区湖底公园1号',
-    },
-    {
-      key: '13',
-      name: '胡彦斌',
-      age: 32,
-      address: '西湖区湖底公园1号',
-    },
-    {
-      key: '14',
-      name: '胡彦祖',
-      age: 42,
-      address: '西湖区湖底公园1号',
-    },
-  ];
+  const [dataSource, setDataSource] = useState([]);
+  useEffect(() => {
+    initAccountList();
+  }, []);
+
+  const initAccountList = async () => {
+    const { code, message, result } = await AccountService.accountList();
+    if (Object.is(code, 0)) {
+      const { data, total } = result;
+      setDataSource(data);
+    } else {
+      console.error('获取用户列表数据错误', message);
+    }
+  };
 
   const columns = [
     {
-      title: '姓名',
-      dataIndex: 'name',
-      key: 'name',
+      title: '用户名',
+      dataIndex: 'username',
+      key: 'username',
     },
     {
-      title: '年龄',
-      dataIndex: 'age',
-      key: 'age',
+      title: '手机号码',
+      dataIndex: 'mobile',
+      key: 'mobile',
     },
     {
-      title: '住址',
-      dataIndex: 'address',
-      key: 'address',
+      title: '邮箱',
+      dataIndex: 'email',
+      key: 'email',
+    },
+    {
+      title: '状态',
+      dataIndex: 'status',
+      key: 'status',
+    },
+    {
+      title: '平台',
+      dataIndex: 'platform',
+      key: 'platform',
+    },
+    {
+      title: '最后登录IP',
+      dataIndex: 'lastLoginIp',
+      key: 'lastLoginIp',
+    },
+    {
+      title: '最后登录地址',
+      dataIndex: 'lastLoginAddress',
+      key: 'lastLoginAddress',
+    },
+    {
+      title: '最后登录时间',
+      dataIndex: 'lastLoginTime',
+      key: 'lastLoginTime',
     },
   ];
 
@@ -117,7 +71,7 @@ const Account = () => {
 
   return (
     <div className={styles.account}>
-      <Table dataSource={dataSource} columns={columns} onChange={pageHandler} />
+      <Table bordered dataSource={dataSource} columns={columns} onChange={pageHandler} />
     </div>
   );
 };
