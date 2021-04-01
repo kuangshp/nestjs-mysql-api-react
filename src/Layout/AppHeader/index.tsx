@@ -3,11 +3,11 @@ import { Layout, Menu, Dropdown, Modal } from 'antd';
 import { MenuUnfoldOutlined, MenuFoldOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import { storage } from './../../utils';
 import { authToken } from '../../config';
-import { connect, useDispatch } from 'dva';
+import { connect, useDispatch, useSelector } from 'dva';
 import { withRouter, RouteComponentProps } from 'dva/router';
 import styles from './index.module.less';
-import { CombinedState } from '../../typings';
 import { GlobalState } from '../../models/global';
+import { LoginState } from 'src/models/login';
 
 const { Header } = Layout;
 const { confirm } = Modal;
@@ -16,6 +16,8 @@ type Props = PropsWithChildren<RouteComponentProps & ReturnType<typeof mapStateT
 
 const AppHeader = (props: Props) => {
   const dispatch = useDispatch();
+  // 从状态中获取用户信息
+  const { userInfo } = useSelector((state: any): LoginState => state.present.login);
   // 退出操作
   const logoutHandler = () => {
     confirm({
@@ -61,7 +63,7 @@ const AppHeader = (props: Props) => {
       <div className={styles.header_view}>
         {/* 用户中心 */}
         <div className={styles.user_info}>
-          <span>admin</span>
+          <span>{userInfo.username}</span>
           <Dropdown overlay={menu}>
             <img
               className={styles.avatar}

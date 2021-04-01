@@ -15,6 +15,7 @@
     "@types/react-dom": "^16.9.8",
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",
+    "ahooks": "^2.10.0",
     "antd": "^4.8.5",
     "axios": "^0.21.0",
     "babel-eslint": "^10.1.0",
