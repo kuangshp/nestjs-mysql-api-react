@@ -53,8 +53,8 @@ class HttpRequest {
    * @param response
    */
   private response(response: AxiosResponse) {
-    const code = response.status;
-    if ((code >= 200 && code < 300) || code === 304) {
+    const status = response.status;
+    if ((status >= 200 && status < 300) || status === 304) {
       return this.isPlainRequest(response.config.url as string) || this.useOrigin(response)
         ? Promise.resolve(response)
         : Promise.resolve(response.data);
