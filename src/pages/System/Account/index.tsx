@@ -8,6 +8,9 @@ import { useRequest } from 'ahooks';
 
 const Account = () => {
   const [dataSource, setDataSource] = useState([]);
+
+  const { data, error, loading } = useRequest(() => AccountService.accountList());
+
   useEffect(() => {
     initAccountList();
   }, []);
