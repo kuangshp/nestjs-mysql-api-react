@@ -65,13 +65,18 @@ const Account = () => {
     },
   ];
 
+  // 分页器
+  const pagination = {
+    hideOnSinglePage: true,
+  };
+
   const pageHandler = (pageNumber: TablePaginationConfig) => {
     console.log(pageNumber);
   };
 
   return (
     <div className={styles.account}>
-      <Table bordered dataSource={dataSource} columns={columns} onChange={pageHandler} />
+      <Table dataSource={dataSource} columns={columns} onChange={pageHandler} bordered />
     </div>
   );
 };
