@@ -1,9 +1,11 @@
+import { Model } from 'dva';
+import { message as Message } from 'antd';
+
 import LoginService from './../services/login';
 import { ObjectType } from '../typings';
 import { routerRedux } from 'dva/router';
 import { storage } from './../utils';
 import { authToken } from './../config';
-import { Model } from 'dva';
 import { IApiBaseResDto } from 'src/dto/api.res.base.dto';
 import { ILoginRes } from 'src/pages/Login/types/login.res.dto';
 
@@ -31,6 +33,7 @@ const model: Model = {
         yield put(routerRedux.push('/home'));
       } else {
         console.log('请求接口失败', message);
+        Message.error(message);
       }
     },
   },
