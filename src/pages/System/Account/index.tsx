@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import AccountService from 'src/services/account';
 import styles from './index.module.less';
-import { Table, Form, Input, Button } from 'antd';
+import { Table, Form, Button } from 'antd';
 import { useAntdTable } from 'ahooks';
 import { PaginatedParams } from 'ahooks/lib/useAntdTable';
 import { DEFAULT_PAGE_SIZE } from 'src/constants';
 import { AccountResDto } from './types/account.list.res.dto';
 import { formatDate } from 'src/utils';
 import AccountModal from './components/AccountModal';
+import TopForm from './components/TopForm';
 
 // 获取表格数据
 const getTableData = async (
@@ -29,10 +30,10 @@ const getTableData = async (
 // 组件
 const AccountList = () => {
   const [isModifyVisible, setIsModifyVisible] = useState<boolean>(false);
-  const [form] = Form.useForm();
+  const [searchForm] = Form.useForm();
   const { tableProps, params, search } = useAntdTable(getTableData, {
     defaultPageSize: DEFAULT_PAGE_SIZE, // 默认请求页数
-    form,
+    form: searchForm,
     cacheKey: 'tableProps',
   });
   const { filters = {} } = params[0] || ({} as any);
@@ -129,41 +130,15 @@ const AccountList = () => {
     },
   ];
 
-  // 顶部搜索栏目
-  const searchFrom = (
-    <div className={styles.top}>
-      <Form form={form} className={styles.form}>
-        <Form.Item name="username">
-          <Input placeholder="请输入用户名" style={{ width: 140, marginRight: 16 }} />
-        </Form.Item>
-        {/* 判断是否要展开更多的搜索 */}
-        {type === 'advance' && (
-          <>
-            <Form.Item name="email">
-              <Input placeholder="请输入邮箱地址" style={{ width: 140, marginRight: 16 }} />
-            </Form.Item>
-            <Form.Item name="mobile">
-              <Input placeholder="请输入手机号码" style={{ width: 140, marginRight: 16 }} />
-            </Form.Item>
-          </>
-        )}
-        <Button type="primary" onClick={submit}>
-          搜索
-        </Button>
-        <Button onClick={reset} style={{ marginLeft: 8 }}>
-          重置
-        </Button>
-        <Button type="link" onClick={changeType}>
-          {type === 'simple' ? '展开' : '收缩'}
-        </Button>
-      </Form>
-      <Button type="primary">新增账号</Button>
-    </div>
-  );
-
   return (
     <div className={styles.account}>
-      {searchFrom}
+      <TopForm
+        form={searchForm}
+        type={type}
+        submit={submit}
+        reset={reset}
+        changeType={changeType}
+      />
       <AccountModal isModifyVisible={isModifyVisible} setIsModifyVisible={setIsModifyVisible} />
       <Table columns={columns} rowKey="id" {...tableProps} bordered scroll={{ x: 1500 }} />
     </div>
