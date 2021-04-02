@@ -4,7 +4,7 @@ import styles from './index.module.less';
 import { Table, Form, Button, Modal, message } from 'antd';
 import { useAntdTable } from 'ahooks';
 import { PaginatedParams } from 'ahooks/lib/useAntdTable';
-import { DEFAULT_PAGE_SIZE } from 'src/constants';
+import { DEFAULT_PAGE_SIZE, DEFAULT_PASSWORD } from 'src/constants';
 import { AccountResDto } from './types/account.list.res.dto';
 import { formatDate } from 'src/utils';
 import AccountModal from './components/AccountModal';
@@ -54,6 +54,17 @@ const AccountList = () => {
   // 重置密码
   const resetPasswordRow = (rowData: AccountResDto) => {
     setRowData(rowData);
+    confirm({
+      icon: <ExclamationCircleOutlined />,
+      content: <h3>您是否要重置密码为:{DEFAULT_PASSWORD}</h3>,
+      async onOk() {
+        const result = await AccountService.resetPassword({ id: rowData.id });
+        if (result) {
+          message.success(result);
+          reset();
+        }
+      },
+    });
   };
   // 删除行
   const deleteRow = (rowData: AccountResDto) => {

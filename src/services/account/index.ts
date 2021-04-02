@@ -7,6 +7,11 @@ class AccountService extends BaseService {
     return await this.post<string>('/admin/account', postData);
   }
 
+  // 重置为默认密码
+  async resetPassword(postData: { id: number }): Promise<any> {
+    return await this.post<string>('/admin/account/reset_password', postData);
+  }
+
   // 删除数据
   async deleteAccountById(id: number): Promise<any> {
     return await this.delete('/admin/account', id);
