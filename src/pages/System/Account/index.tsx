@@ -36,6 +36,16 @@ const AccountList = () => {
   const { filters = {} } = params[0] || ({} as any);
   const { type, changeType, submit, reset } = search || {};
 
+  // 编辑行
+  const modifyRow = (rowData: AccountResDto) => {
+    console.log(rowData);
+  };
+  const resetPasswordRow = (rowData: AccountResDto) => {
+    console.log(rowData);
+  };
+  const deleteRow = (rowData: AccountResDto) => {
+    console.log(rowData);
+  };
   const columns = [
     {
       title: '用户名',
@@ -96,20 +106,26 @@ const AccountList = () => {
       key: 'operation',
       align: 'center' as const,
       fixed: 'right' as const,
-      width: 200,
+      width: 250,
       // 当前行的值，当前行数据，行索引
-      render: (a: any, record: AccountResDto) => {
-        console.log(a, 'a');
-        console.log(record, 'record');
+      render: (_: any, record: AccountResDto) => {
         return (
-          <Space size="middle">
-            <a>Delete</a>
-            <a className="ant-dropdown-link">More actions</a>
-          </Space>
+          <div>
+            <Button type="primary" onClick={() => modifyRow(record)}>
+              编辑
+            </Button>
+            <Button onClick={() => resetPasswordRow(record)} className={styles.mr}>
+              重置密码
+            </Button>
+            <Button type="primary" danger onClick={() => deleteRow(record)}>
+              删除
+            </Button>
+          </div>
         );
       },
     },
   ];
+
   // 顶部搜索栏目
   const searchFrom = (
     <div className={styles.top}>
