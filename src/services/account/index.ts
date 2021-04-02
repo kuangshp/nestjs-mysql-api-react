@@ -1,5 +1,6 @@
 import BaseService from '../base';
 import { CreateAccountDto } from 'src/pages/System/Account/types/create.account.dto';
+import { ModifyPasswordDto } from 'src/pages/System/Account/types/modify.password.dto';
 
 class AccountService extends BaseService {
   // 添加数据
@@ -10,6 +11,10 @@ class AccountService extends BaseService {
   // 重置为默认密码
   async resetPassword(postData: { id: number }): Promise<any> {
     return await this.post<string>('/admin/account/reset_password', postData);
+  }
+
+  async modifyPassword(posData: ModifyPasswordDto): Promise<any> {
+    return await this.post<string>('/admin/account/modify_password', posData);
   }
 
   // 删除数据
