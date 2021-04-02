@@ -1,87 +1,100 @@
-import React, { useEffect, useState } from 'react';
-import { connect } from 'dva';
+import React from 'react';
 import AccountService from 'src/services/account';
 import styles from './index.module.less';
-import { Table } from 'antd';
-import { TablePaginationConfig } from 'antd/lib/table';
-import { useRequest } from 'ahooks';
+import { Table, Form, Input, Button } from 'antd';
+import { useAntdTable } from 'ahooks';
 
-const Account = () => {
-  const [dataSource, setDataSource] = useState([]);
-
-  const { data, error, loading } = useRequest(() => AccountService.accountList());
-
-  useEffect(() => {
-    initAccountList();
-  }, []);
-
-  const initAccountList = async () => {
-    const { code, message, result } = await AccountService.accountList();
-    if (Object.is(code, 0)) {
-      const { data, total } = result;
-      setDataSource(data);
-    } else {
-      console.error('获取用户列表数据错误', message);
-    }
-  };
+const AccountList = () => {
+  const [form] = Form.useForm();
+  const { tableProps, params, search } = useAntdTable(() => AccountService.accountList(), {
+    defaultPageSize: 5,
+    form,
+    cacheKey: 'tableProps',
+  });
+  console.log(params, '===', tableProps);
+  const { sorter = {}, filters = {} } = params[0] || ({} as any);
+  const { type, changeType, submit, reset } = search || {};
 
   const columns = [
     {
       title: '用户名',
       dataIndex: 'username',
-      key: 'username',
     },
     {
       title: '手机号码',
       dataIndex: 'mobile',
-      key: 'mobile',
+      sorter: true,
+      sortOrder: sorter.field === 'mobile' && sorter.order,
     },
     {
       title: '邮箱',
       dataIndex: 'email',
-      key: 'email',
     },
     {
       title: '状态',
       dataIndex: 'status',
-      key: 'status',
+      filters: [
+        { text: '正常', value: '0' },
+        { text: '禁止', value: '1' },
+      ],
+      filteredValue: filters.status,
     },
     {
       title: '平台',
       dataIndex: 'platform',
-      key: 'platform',
     },
     {
       title: '最后登录IP',
       dataIndex: 'lastLoginIp',
-      key: 'lastLoginIp',
     },
     {
       title: '最后登录地址',
       dataIndex: 'lastLoginAddress',
-      key: 'lastLoginAddress',
     },
     {
       title: '最后登录时间',
       dataIndex: 'lastLoginTime',
-      key: 'lastLoginTime',
     },
   ];
 
-  // 分页器
-  const pagination = {
-    hideOnSinglePage: true,
-  };
-
-  const pageHandler = (pageNumber: TablePaginationConfig) => {
-    console.log(pageNumber);
-  };
+  const searchFrom = (
+    <div style={{ marginBottom: 16 }}>
+      <Form form={form} style={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <Form.Item name="name">
+          <Input placeholder="请输入名字" style={{ width: 140, marginRight: 16 }} />
+        </Form.Item>
+        {/* 判断是否要展开更多的搜索 */}
+        {type === 'advance' && (
+          <>
+            <Form.Item name="email">
+              <Input placeholder="请输入邮箱地址" style={{ width: 140, marginRight: 16 }} />
+            </Form.Item>
+            <Form.Item name="phone">
+              <Input placeholder="请输入手机号码" style={{ width: 140, marginRight: 16 }} />
+            </Form.Item>
+          </>
+        )}
+        <Button type="primary" onClick={submit}>
+          搜索
+        </Button>
+        <Button onClick={reset} style={{ marginLeft: 8 }}>
+          重置
+        </Button>
+        <Button type="link" onClick={changeType}>
+          {type === 'simple' ? '展开' : '收缩'}
+        </Button>
+      </Form>
+    </div>
+  );
 
   return (
-    <div className={styles.account}>
-      <Table dataSource={dataSource} columns={columns} onChange={pageHandler} bordered />
+    <div>
+      {searchFrom}
+      <Table columns={columns} rowKey="id" {...tableProps} />
     </div>
   );
 };
 
-export default connect()(Account);
+const Account = () => <AccountList />;
+
+export default Account;

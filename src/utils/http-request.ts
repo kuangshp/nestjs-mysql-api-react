@@ -1,6 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { storage } from './storage';
 import { authToken } from '../config';
+import { message as Message } from 'antd';
 
 const prefix: string = <string>process.env.REACT_APP_BASE_API_URL;
 const iamPrefix: string = <string>process.env.REACT_APP_BASE_IMG_URL;
@@ -55,9 +56,21 @@ class HttpRequest {
   private response(response: AxiosResponse) {
     const status = response.status;
     if ((status >= 200 && status < 300) || status === 304) {
-      return this.isPlainRequest(response.config.url as string) || this.useOrigin(response)
-        ? Promise.resolve(response)
-        : Promise.resolve(response.data);
+      console.log(response, '路由中');
+      if (response?.data) {
+        const { code, message, result } = response.data;
+        if (Object.is(code, 0)) {
+          return Promise.resolve(result);
+        } else {
+          Message.error(message);
+          return Promise.resolve(null);
+        }
+      } else {
+        return Promise.reject(response);
+      }
+      // return this.isPlainRequest(response.config.url as string) || this.useOrigin(response)
+      //   ? Promise.resolve(response)
+      //   : Promise.resolve(response.data);
     } else {
       return Promise.reject(response);
     }
