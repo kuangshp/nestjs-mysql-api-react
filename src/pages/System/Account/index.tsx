@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
-import AccountService from 'src/services/account';
-import styles from './index.module.less';
 import { Table, Form, Button, Modal, message } from 'antd';
 import { useAntdTable } from 'ahooks';
 import { PaginatedParams } from 'ahooks/lib/useAntdTable';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
+
+import AccountService from 'src/services/account';
+import styles from './index.module.less';
 import { DEFAULT_PAGE_SIZE, DEFAULT_PASSWORD } from 'src/constants';
 import { AccountResDto } from './types/account.list.res.dto';
 import { formatDate } from 'src/utils';
 import AccountModal from './components/AccountModal';
 import TopForm from './components/TopForm';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { PlatformMessage } from 'src/enums';
+import yesImg from 'src/assets/images/yes.gif';
+import noImg from 'src/assets/images/no.gif';
 
 const { confirm } = Modal;
 
@@ -110,12 +114,20 @@ const AccountList = () => {
       ],
       filteredValue: filters.status,
       width: 100,
+      render: (_: any, record: AccountResDto) => {
+        if (record.status) {
+          return <img src={yesImg} />;
+        } else {
+          return <img src={noImg} />;
+        }
+      },
     },
     {
       title: '平台',
       dataIndex: 'platform',
       align: 'right' as const,
-      width: 100,
+      width: 150,
+      render: (_: any, record: AccountResDto) => <div>{PlatformMessage[record.platform]}</div>,
     },
     {
       title: '最后登录IP',
@@ -141,7 +153,7 @@ const AccountList = () => {
       key: 'operation',
       align: 'center' as const,
       fixed: 'right' as const,
-      width: 250,
+      width: 300,
       // 当前行的值，当前行数据，行索引
       render: (_: any, record: AccountResDto) => {
         return (
