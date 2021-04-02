@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AccountService from 'src/services/account';
 import styles from './index.module.less';
-import { Table, Form, Input, Button, Space } from 'antd';
+import { Table, Form, Input, Button } from 'antd';
 import { useAntdTable } from 'ahooks';
 import { PaginatedParams } from 'ahooks/lib/useAntdTable';
 import { DEFAULT_PAGE_SIZE } from 'src/constants';
 import { AccountResDto } from './types/account.list.res.dto';
 import { formatDate } from 'src/utils';
+import AccountModal from './components/AccountModal';
 
 // 获取表格数据
 const getTableData = async (
@@ -27,6 +28,7 @@ const getTableData = async (
 
 // 组件
 const AccountList = () => {
+  const [isModifyVisible, setIsModifyVisible] = useState<boolean>(false);
   const [form] = Form.useForm();
   const { tableProps, params, search } = useAntdTable(getTableData, {
     defaultPageSize: DEFAULT_PAGE_SIZE, // 默认请求页数
@@ -39,6 +41,7 @@ const AccountList = () => {
   // 编辑行
   const modifyRow = (rowData: AccountResDto) => {
     console.log(rowData);
+    setIsModifyVisible(true);
   };
   const resetPasswordRow = (rowData: AccountResDto) => {
     console.log(rowData);
@@ -161,6 +164,7 @@ const AccountList = () => {
   return (
     <div className={styles.account}>
       {searchFrom}
+      <AccountModal isModifyVisible={isModifyVisible} setIsModifyVisible={setIsModifyVisible} />
       <Table columns={columns} rowKey="id" {...tableProps} bordered scroll={{ x: 1500 }} />
     </div>
   );
