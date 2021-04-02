@@ -4,6 +4,7 @@ import styles from './index.module.less';
 import { Table, Form, Input, Button, Space } from 'antd';
 import { useAntdTable } from 'ahooks';
 import { PaginatedParams } from 'ahooks/lib/useAntdTable';
+import { DEFAULT_PAGE_SIZE } from 'src/constants';
 
 // 获取表格数据
 const getTableData = async (
@@ -24,7 +25,7 @@ const getTableData = async (
 const AccountList = () => {
   const [form] = Form.useForm();
   const { tableProps, params, search } = useAntdTable(getTableData, {
-    defaultPageSize: 5, // 默认请求页数
+    defaultPageSize: DEFAULT_PAGE_SIZE, // 默认请求页数
     form,
     cacheKey: 'tableProps',
   });
@@ -140,6 +141,4 @@ const AccountList = () => {
   );
 };
 
-const Account = () => <AccountList />;
-
-export default Account;
+export default AccountList;
