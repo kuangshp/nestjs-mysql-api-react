@@ -39,6 +39,13 @@ export const menusDataList: Array<MenusProps> = [
         parentId: 2,
         keyPatch: ['system', 'role'],
       },
+      {
+        id: 5,
+        label: '资源管理',
+        value: '/system/access',
+        parentId: 2,
+        keyPatch: ['system', 'access'],
+      },
     ],
   },
   {
