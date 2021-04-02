@@ -5,6 +5,8 @@ import { Table, Form, Input, Button, Space } from 'antd';
 import { useAntdTable } from 'ahooks';
 import { PaginatedParams } from 'ahooks/lib/useAntdTable';
 import { DEFAULT_PAGE_SIZE } from 'src/constants';
+import { AccountResDto } from './types/account.list.res.dto';
+import { formatDate } from 'src/utils';
 
 // 获取表格数据
 const getTableData = async (
@@ -22,6 +24,8 @@ const getTableData = async (
     list: data,
   };
 };
+
+// 组件
 const AccountList = () => {
   const [form] = Form.useForm();
   const { tableProps, params, search } = useAntdTable(getTableData, {
@@ -84,7 +88,8 @@ const AccountList = () => {
       title: '最后登录时间',
       dataIndex: 'lastLoginTime',
       align: 'center' as const,
-      width: 100,
+      width: 180,
+      render: (_: any, record: AccountResDto) => <div>{formatDate(record.lastLoginTime)}</div>,
     },
     {
       title: '操作',
@@ -93,7 +98,7 @@ const AccountList = () => {
       fixed: 'right' as const,
       width: 200,
       // 当前行的值，当前行数据，行索引
-      render: (a: any, record: any) => {
+      render: (a: any, record: AccountResDto) => {
         console.log(a, 'a');
         console.log(record, 'record');
         return (
@@ -105,10 +110,10 @@ const AccountList = () => {
       },
     },
   ];
-
+  // 顶部搜索栏目
   const searchFrom = (
-    <div style={{ marginBottom: 16 }}>
-      <Form form={form} style={{ display: 'flex', justifyContent: 'flex-end' }}>
+    <div className={styles.top}>
+      <Form form={form} className={styles.form}>
         <Form.Item name="username">
           <Input placeholder="请输入用户名" style={{ width: 140, marginRight: 16 }} />
         </Form.Item>
@@ -133,11 +138,12 @@ const AccountList = () => {
           {type === 'simple' ? '展开' : '收缩'}
         </Button>
       </Form>
+      <Button type="primary">新增账号</Button>
     </div>
   );
 
   return (
-    <div>
+    <div className={styles.account}>
       {searchFrom}
       <Table columns={columns} rowKey="id" {...tableProps} bordered scroll={{ x: 1500 }} />
     </div>
