@@ -3,16 +3,32 @@ import AccountService from 'src/services/account';
 import styles from './index.module.less';
 import { Table, Form, Input, Button } from 'antd';
 import { useAntdTable } from 'ahooks';
+import { PaginatedParams } from 'ahooks/lib/useAntdTable';
 
+// 获取表格数据
+const getTableData = async (
+  { current, pageSize, filters }: PaginatedParams[0],
+  formData: Record<string, any>
+): Promise<any> => {
+  console.log(formData, '表格传递的数据', filters);
+  const { data, total } = await AccountService.accountList({
+    pageNumber: current,
+    pageSize,
+    ...formData,
+  });
+  return {
+    total: total,
+    list: data,
+  };
+};
 const AccountList = () => {
   const [form] = Form.useForm();
-  const { tableProps, params, search } = useAntdTable(() => AccountService.accountList(), {
-    defaultPageSize: 5,
+  const { tableProps, params, search } = useAntdTable(getTableData, {
+    defaultPageSize: 5, // 默认请求页数
     form,
     cacheKey: 'tableProps',
   });
-  console.log(params, '===', tableProps);
-  const { sorter = {}, filters = {} } = params[0] || ({} as any);
+  const { filters = {} } = params[0] || ({} as any);
   const { type, changeType, submit, reset } = search || {};
 
   const columns = [
@@ -24,7 +40,6 @@ const AccountList = () => {
       title: '手机号码',
       dataIndex: 'mobile',
       sorter: true,
-      sortOrder: sorter.field === 'mobile' && sorter.order,
     },
     {
       title: '邮箱',
@@ -60,8 +75,8 @@ const AccountList = () => {
   const searchFrom = (
     <div style={{ marginBottom: 16 }}>
       <Form form={form} style={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <Form.Item name="name">
-          <Input placeholder="请输入名字" style={{ width: 140, marginRight: 16 }} />
+        <Form.Item name="username">
+          <Input placeholder="请输入用户名" style={{ width: 140, marginRight: 16 }} />
         </Form.Item>
         {/* 判断是否要展开更多的搜索 */}
         {type === 'advance' && (
@@ -69,7 +84,7 @@ const AccountList = () => {
             <Form.Item name="email">
               <Input placeholder="请输入邮箱地址" style={{ width: 140, marginRight: 16 }} />
             </Form.Item>
-            <Form.Item name="phone">
+            <Form.Item name="mobile">
               <Input placeholder="请输入手机号码" style={{ width: 140, marginRight: 16 }} />
             </Form.Item>
           </>
