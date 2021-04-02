@@ -105,7 +105,7 @@ const AccountList = () => {
   return (
     <div>
       {searchFrom}
-      <Table columns={columns} rowKey="id" {...tableProps} />
+      <Table columns={columns} rowKey="id" {...tableProps} bordered />
     </div>
   );
 };
