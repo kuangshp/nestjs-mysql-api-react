@@ -26,14 +26,10 @@ const model: Model = {
   subscriptions: {},
   effects: {
     *loginApi({ payload }: ReduxAction, { call, put }) {
-      const data: IApiBaseResDto<ILoginRes> = yield call(() => LoginService.loginApi(payload));
-      const { code, message, result } = data;
-      if (Object.is(code, 0)) {
+      const result = yield call(() => LoginService.loginApi(payload));
+      if (result) {
         yield put({ type: 'setStorage', payload: result });
         yield put(routerRedux.push('/home'));
-      } else {
-        console.log('请求接口失败', message);
-        Message.error(message);
       }
     },
   },
@@ -41,7 +37,6 @@ const model: Model = {
     // 设置存储
     setStorage(state: LoginState, action: ReduxAction) {
       storage.setItem(authToken, action.payload.token);
-      // return { userInfo: Object.assign(state.userInfo, action.payload) };
       return { userInfo: { ...state.userInfo, ...action.payload } };
     },
   },
