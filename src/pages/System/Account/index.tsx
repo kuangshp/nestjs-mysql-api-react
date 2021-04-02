@@ -1,7 +1,7 @@
 import React from 'react';
 import AccountService from 'src/services/account';
 import styles from './index.module.less';
-import { Table, Form, Input, Button } from 'antd';
+import { Table, Form, Input, Button, Space } from 'antd';
 import { useAntdTable } from 'ahooks';
 import { PaginatedParams } from 'ahooks/lib/useAntdTable';
 
@@ -35,40 +35,70 @@ const AccountList = () => {
     {
       title: '用户名',
       dataIndex: 'username',
+      align: 'right' as const,
+      width: 100,
     },
     {
       title: '手机号码',
       dataIndex: 'mobile',
-      sorter: true,
+      align: 'center' as const,
+      width: 150,
     },
     {
       title: '邮箱',
       dataIndex: 'email',
+      align: 'right' as const,
+      width: 150,
     },
     {
       title: '状态',
       dataIndex: 'status',
+      align: 'center' as const,
       filters: [
         { text: '正常', value: '0' },
         { text: '禁止', value: '1' },
       ],
       filteredValue: filters.status,
+      width: 100,
     },
     {
       title: '平台',
       dataIndex: 'platform',
+      align: 'right' as const,
+      width: 100,
     },
     {
       title: '最后登录IP',
       dataIndex: 'lastLoginIp',
+      align: 'right' as const,
+      width: 150,
     },
     {
       title: '最后登录地址',
       dataIndex: 'lastLoginAddress',
+      align: 'right' as const,
+      width: 200,
     },
     {
       title: '最后登录时间',
       dataIndex: 'lastLoginTime',
+      align: 'center' as const,
+      width: 100,
+    },
+    {
+      title: '操作',
+      key: 'operation',
+      align: 'center' as const,
+      fixed: 'right' as const,
+      width: 200,
+      // render: () => {
+      //   return (
+      //     <Space size="middle">
+      //       <a>Delete</a>
+      //       <a className="ant-dropdown-link">More actions</a>
+      //     </Space>
+      //   );
+      // },
     },
   ];
 
@@ -105,7 +135,7 @@ const AccountList = () => {
   return (
     <div>
       {searchFrom}
-      <Table columns={columns} rowKey="id" {...tableProps} bordered />
+      <Table columns={columns} rowKey="id" {...tableProps} bordered scroll={{ x: 1500 }} />
     </div>
   );
 };
