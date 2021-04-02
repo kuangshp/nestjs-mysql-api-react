@@ -45,7 +45,11 @@ const TopForm = (props: Props) => {
       <Button type="primary" onClick={() => setIsModifyVisible(true)}>
         新增账号
       </Button>
-      <AccountModal isModifyVisible={isModifyVisible} setIsModifyVisible={setIsModifyVisible} />
+      <AccountModal
+        isModifyVisible={isModifyVisible}
+        setIsModifyVisible={setIsModifyVisible}
+        loadData={reset}
+      />
     </div>
   );
 };

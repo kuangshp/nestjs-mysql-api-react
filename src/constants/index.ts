@@ -1,2 +1,2 @@
-/** 默认加载几条数据 */
-export const DEFAULT_PAGE_SIZE: number = 5;
+export * from './page';
+export * from './reg';

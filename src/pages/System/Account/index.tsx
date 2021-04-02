@@ -151,6 +151,7 @@ const AccountList = () => {
       <AccountModal
         isModifyVisible={isModifyVisible}
         setIsModifyVisible={setIsModifyVisible}
+        loadData={reset}
         rowData={rowData}
       />
       <Table columns={columns} rowKey="id" {...tableProps} bordered scroll={{ x: 1500 }} />
