@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 import { Form, Input, Button } from 'antd';
-import styles from './index.module.less';
+import styles from './top.form.module.less';
 
 type Props = PropsWithChildren<{
   type: string;
