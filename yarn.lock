@@ -2,6 +2,14 @@
 # yarn lockfile v1
 
 
+"@ahooksjs/use-request@^2.8.4":
+  "integrity" "sha512-Ht3XHIKL6TCNmXtgWovpDZaN9bzdZkZLNDewOwipzLwhVhhVCBeWAP6b3UFygLJAPzDF+OhJs3XJmDRVfO6r6Q=="
+  "resolved" "https://registry.npmjs.org/@ahooksjs/use-request/-/use-request-2.8.4.tgz"
+  "version" "2.8.4"
+  dependencies:
+    "lodash.debounce" "^4.0.8"
+    "lodash.throttle" "^4.1.1"
+
 "@ant-design/colors@^5.0.0":
   "integrity" "sha1-Rrc7TMaTWzX8i4RVXo5CyM/BkOY="
   "resolved" "https://registry.npm.taobao.org/@ant-design/colors/download/@ant-design/colors-5.0.0.tgz"
@@ -1921,6 +1929,11 @@
     "jest-diff" "^26.0.0"
     "pretty-format" "^26.0.0"
 
+"@types/js-cookie@^2.2.6":
+  "integrity" "sha512-+oY0FDTO2GYKEV0YPvSshGq9t7YozVkgvXLty7zogQNuCxBhT9/3INX9Q7H1aRZ4SUDRXAKlJuA4EA5nTt7SNw=="
+  "resolved" "https://registry.npmjs.org/@types/js-cookie/-/js-cookie-2.2.6.tgz"
+  "version" "2.2.6"
+
 "@types/json-schema@*", "@types/json-schema@^7.0.3", "@types/json-schema@^7.0.5", "@types/json-schema@^7.0.6":
   "integrity" "sha1-9MfsQ+gbMZqYFRFQMXCfJph4kfA="
   "resolved" "https://registry.npm.taobao.org/@types/json-schema/download/@types/json-schema-7.0.6.tgz"
@@ -2139,7 +2152,7 @@
     "eslint-scope" "^5.0.0"
     "eslint-utils" "^2.0.0"
 
-"@typescript-eslint/parser@^4.0.0", "@typescript-eslint/parser@^4.19.0":
+"@typescript-eslint/parser@^4.19.0":
   "integrity" "sha1-Sud1E7OfFk8XUfIfNI0ubLLRESg="
   "resolved" "https://registry.npm.taobao.org/@typescript-eslint/parser/download/@typescript-eslint/parser-4.19.0.tgz"
   "version" "4.19.0"
@@ -2432,6 +2445,22 @@
   dependencies:
     "clean-stack" "^2.0.0"
     "indent-string" "^4.0.0"
+
+"ahooks@^2.10.0":
+  "integrity" "sha512-+aq+n+wTLuRZ4oD4iWQbQEYTnAqjhvUjYFWPs8xTxyD2k/mDAZuvAyLrgYOb7Qyn19Bl0Rdxh8M62oBYcBDckQ=="
+  "resolved" "https://registry.npmjs.org/ahooks/-/ahooks-2.10.0.tgz"
+  "version" "2.10.0"
+  dependencies:
+    "@ahooksjs/use-request" "^2.8.4"
+    "@types/js-cookie" "^2.2.6"
+    "dayjs" "^1.9.1"
+    "intersection-observer" "^0.7.0"
+    "js-cookie" "^2.2.1"
+    "lodash.debounce" "^4.0.8"
+    "lodash.isequal" "^4.5.0"
+    "lodash.throttle" "^4.1.1"
+    "resize-observer-polyfill" "^1.5.1"
+    "screenfull" "^5.0.0"
 
 "ajv-errors@^1.0.0":
   "integrity" "sha1-81mGrOuRr63sQQL72FAUlQzvpk0="
@@ -3757,15 +3786,15 @@
   dependencies:
     "delayed-stream" "~1.0.0"
 
+"commander@*", "commander@^4.1.1":
+  "integrity" "sha1-n9YCvZNilOnp70aj9NaWQESxgGg="
+  "resolved" "https://registry.npm.taobao.org/commander/download/commander-4.1.1.tgz?cache=0&sync_timestamp=1605992513187&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcommander%2Fdownload%2Fcommander-4.1.1.tgz"
+  "version" "4.1.1"
+
 "commander@^2.20.0":
   "integrity" "sha1-/UhehMA+tIgcIHIrpIA16FMa6zM="
   "resolved" "https://registry.npm.taobao.org/commander/download/commander-2.20.3.tgz?cache=0&sync_timestamp=1605992513187&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcommander%2Fdownload%2Fcommander-2.20.3.tgz"
   "version" "2.20.3"
-
-"commander@^4.1.1":
-  "integrity" "sha1-n9YCvZNilOnp70aj9NaWQESxgGg="
-  "resolved" "https://registry.npm.taobao.org/commander/download/commander-4.1.1.tgz?cache=0&sync_timestamp=1605992513187&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcommander%2Fdownload%2Fcommander-4.1.1.tgz"
-  "version" "4.1.1"
 
 "commander@^6.2.0":
   "integrity" "sha1-B5LraC37wyWZm7K4T93duhEKxzw="
@@ -4415,7 +4444,7 @@
   "resolved" "https://registry.npm.taobao.org/date-fns/download/date-fns-2.16.1.tgz?cache=0&sync_timestamp=1598884316693&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fdate-fns%2Fdownload%2Fdate-fns-2.16.1.tgz"
   "version" "2.16.1"
 
-"dayjs@^1.8.30":
+"dayjs@^1.8.30", "dayjs@^1.9.1":
   "integrity" "sha1-bwx312rB/2NyDdEZfly4e2eUPXA="
   "resolved" "https://registry.npm.taobao.org/dayjs/download/dayjs-1.9.6.tgz?cache=0&sync_timestamp=1604990379187&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fdayjs%2Fdownload%2Fdayjs-1.9.6.tgz"
   "version" "1.9.6"
@@ -5253,7 +5282,7 @@
     "micromatch" "^4.0.2"
     "schema-utils" "^3.0.0"
 
-"eslint@*", "eslint@^3 || ^4 || ^5 || ^6 || ^7", "eslint@^5.0.0 || ^6.0.0 || ^7.0.0", "eslint@^7.11.0":
+"eslint@^7.11.0":
   "integrity" "sha1-LSysHSgXTFEKl7N38SKlUHlY40Q="
   "resolved" "https://registry.npm.taobao.org/eslint/download/eslint-7.14.0.tgz?cache=0&sync_timestamp=1605910897629&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Feslint%2Fdownload%2Feslint-7.14.0.tgz"
   "version" "7.14.0"
@@ -6629,6 +6658,11 @@
     "has" "^1.0.3"
     "side-channel" "^1.0.4"
 
+"intersection-observer@^0.7.0":
+  "integrity" "sha512-Id0Fij0HsB/vKWGeBe9PxeY45ttRiBmhFyyt/geBdDHBYNctMRTE3dC1U3ujzz3lap+hVXlEcVaB56kZP/eEUg=="
+  "resolved" "https://registry.npmjs.org/intersection-observer/-/intersection-observer-0.7.0.tgz"
+  "version" "0.7.0"
+
 "invariant@^2.2.1", "invariant@^2.2.4":
   "integrity" "sha1-YQ88ksk1nOHbYW5TgAjSP/NRWOY="
   "resolved" "https://registry.npm.taobao.org/invariant/download/invariant-2.2.4.tgz"
@@ -7567,6 +7601,11 @@
     "import-local" "^3.0.2"
     "jest-cli" "^26.6.0"
 
+"js-cookie@^2.2.1":
+  "integrity" "sha512-HvdH2LzI/EAZcUwA8+0nKNtWHqS+ZmijLA30RwZA0bo7ToCckjK5MkGhjED9KoRcXO6BaGI3I9UIzSA1FKFPOQ=="
+  "resolved" "https://registry.npmjs.org/js-cookie/-/js-cookie-2.2.1.tgz"
+  "version" "2.2.1"
+
 "js-tokens@^3.0.0 || ^4.0.0", "js-tokens@^4.0.0":
   "integrity" "sha1-GSA/tZmR35jjoocFDUZHzerzJJk="
   "resolved" "https://registry.npm.taobao.org/js-tokens/download/js-tokens-4.0.0.tgz"
@@ -7993,6 +8032,16 @@
   "resolved" "https://registry.npm.taobao.org/lodash._reinterpolate/download/lodash._reinterpolate-3.0.0.tgz"
   "version" "3.0.0"
 
+"lodash.debounce@^4.0.8":
+  "integrity" "sha1-gteb/zCmfEAF/9XiUVMArZyk168="
+  "resolved" "https://registry.npmjs.org/lodash.debounce/-/lodash.debounce-4.0.8.tgz"
+  "version" "4.0.8"
+
+"lodash.isequal@^4.5.0":
+  "integrity" "sha1-QVxEePK8wwEgwizhDtMib30+GOA="
+  "resolved" "https://registry.npmjs.org/lodash.isequal/-/lodash.isequal-4.5.0.tgz"
+  "version" "4.5.0"
+
 "lodash.memoize@^4.1.2":
   "integrity" "sha1-vMbEmkKihA7Zl/Mj6tpezRguC/4="
   "resolved" "https://registry.npm.taobao.org/lodash.memoize/download/lodash.memoize-4.1.2.tgz?cache=0&sync_timestamp=1589682725270&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Flodash.memoize%2Fdownload%2Flodash.memoize-4.1.2.tgz"
@@ -8017,6 +8066,11 @@
   "version" "4.2.0"
   dependencies:
     "lodash._reinterpolate" "^3.0.0"
+
+"lodash.throttle@^4.1.1":
+  "integrity" "sha1-wj6RtxAkKscMN/HhzaknTMOb8vQ="
+  "resolved" "https://registry.npmjs.org/lodash.throttle/-/lodash.throttle-4.1.1.tgz"
+  "version" "4.1.1"
 
 "lodash.uniq@^4.5.0":
   "integrity" "sha1-0CJTc662Uq3BvILklFM5qEJ1R3M="
@@ -8495,6 +8549,13 @@
   "integrity" "sha1-PrXtYmInVteaXw4qIh3+utdcL34="
   "resolved" "https://registry.npm.taobao.org/mkdirp/download/mkdirp-1.0.4.tgz?cache=0&sync_timestamp=1589682820707&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fmkdirp%2Fdownload%2Fmkdirp-1.0.4.tgz"
   "version" "1.0.4"
+
+"mockjs@^1.1.0":
+  "integrity" "sha512-eQsKcWzIaZzEZ07NuEyO4Nw65g0hdWAyurVol1IPl1gahRwY+svqzfgfey8U8dahLwG44d6/RwEzuK52rSa/JQ=="
+  "resolved" "https://registry.npmjs.org/mockjs/-/mockjs-1.1.0.tgz"
+  "version" "1.1.0"
+  dependencies:
+    "commander" "*"
 
 "moment@^2.24.0", "moment@^2.25.3":
   "integrity" "sha1-sr52n6MZQL6e7qZGnAdeNQBvo9M="
@@ -10005,7 +10066,7 @@
     "postcss-value-parser" "^3.0.0"
     "svgo" "^1.0.0"
 
-"postcss-syntax@^0.36.2", "postcss-syntax@>=0.36.0", "postcss-syntax@>=0.36.2":
+"postcss-syntax@^0.36.2":
   "integrity" "sha1-8IV4x9lYNFdOVZOoLfv6ivrjtRw="
   "resolved" "https://registry.npm.taobao.org/postcss-syntax/download/postcss-syntax-0.36.2.tgz"
   "version" "0.36.2"
@@ -10038,7 +10099,7 @@
     "indexes-of" "^1.0.1"
     "uniq" "^1.0.1"
 
-"postcss@^7", "postcss@^7.0.0", "postcss@^7.0.1", "postcss@^7.0.14", "postcss@^7.0.17", "postcss@^7.0.2", "postcss@^7.0.21", "postcss@^7.0.26", "postcss@^7.0.27", "postcss@^7.0.32", "postcss@^7.0.35", "postcss@^7.0.5", "postcss@^7.0.6", "postcss@>=5.0.0", "postcss@>=7.0.0":
+"postcss@^7", "postcss@^7.0.0", "postcss@^7.0.1", "postcss@^7.0.14", "postcss@^7.0.17", "postcss@^7.0.2", "postcss@^7.0.21", "postcss@^7.0.26", "postcss@^7.0.27", "postcss@^7.0.32", "postcss@^7.0.35", "postcss@^7.0.5", "postcss@^7.0.6":
   "integrity" "sha1-0r4AuZj38hHYonaXQHny6SuXDiQ="
   "resolved" "https://registry.npm.taobao.org/postcss/download/postcss-7.0.35.tgz?cache=0&sync_timestamp=1606168201210&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fpostcss%2Fdownload%2Fpostcss-7.0.35.tgz"
   "version" "7.0.35"
@@ -11026,7 +11087,7 @@
   "resolved" "https://registry.npm.taobao.org/redux-undo/download/redux-undo-1.0.1.tgz"
   "version" "1.0.1"
 
-"redux@^4.0.0", "redux@^4.0.1", "redux@>4.0.0":
+"redux@^4.0.0", "redux@^4.0.1":
   "integrity" "sha1-TbXeWBbheJHeioDEJCMtBvBR2T8="
   "resolved" "https://registry.npm.taobao.org/redux/download/redux-4.0.5.tgz"
   "version" "4.0.5"
@@ -11563,6 +11624,11 @@
     "@types/json-schema" "^7.0.6"
     "ajv" "^6.12.5"
     "ajv-keywords" "^3.5.2"
+
+"screenfull@^5.0.0":
+  "integrity" "sha512-dYaNuOdzr+kc6J6CFcBrzkLCfyGcMg+gWkJ8us93IQ7y1cevhQAugFsaCdMHb6lw8KV3xPzSxzH7zM1dQap9mA=="
+  "resolved" "https://registry.npmjs.org/screenfull/-/screenfull-5.1.0.tgz"
+  "version" "5.1.0"
 
 "scroll-into-view-if-needed@^2.2.25":
   "integrity" "sha1-5JF9oMggE1/2Wtb35LfXr1aMTxM="
@@ -12384,7 +12450,7 @@
   dependencies:
     "stylelint-config-recommended" "^4.0.0"
 
-"stylelint@^13.12.0", "stylelint@>=11.0.0":
+"stylelint@^13.12.0":
   "integrity" "sha1-zOuSK+DQx7e2kmJx7qK5DLkkcz4="
   "resolved" "https://registry.npm.taobao.org/stylelint/download/stylelint-13.12.0.tgz?cache=0&sync_timestamp=1615046619047&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fstylelint%2Fdownload%2Fstylelint-13.12.0.tgz"
   "version" "13.12.0"
