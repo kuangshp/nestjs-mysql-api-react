@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import AccountService from 'src/services/account';
 import styles from './index.module.less';
-import { Table, Form, Button } from 'antd';
+import { Table, Form, Button, Modal, message } from 'antd';
 import { useAntdTable } from 'ahooks';
 import { PaginatedParams } from 'ahooks/lib/useAntdTable';
 import { DEFAULT_PAGE_SIZE } from 'src/constants';
@@ -9,6 +9,9 @@ import { AccountResDto } from './types/account.list.res.dto';
 import { formatDate } from 'src/utils';
 import AccountModal from './components/AccountModal';
 import TopForm from './components/TopForm';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
+
+const { confirm } = Modal;
 
 // 获取表格数据
 const getTableData = async (
@@ -55,7 +58,17 @@ const AccountList = () => {
   // 删除行
   const deleteRow = (rowData: AccountResDto) => {
     setRowData(rowData);
-    console.log(rowData);
+    confirm({
+      icon: <ExclamationCircleOutlined />,
+      content: <h3>您确定要删除该条数据？</h3>,
+      async onOk() {
+        const result = await AccountService.deleteAccountById(rowData.id);
+        if (result) {
+          message.success(result);
+          reset();
+        }
+      },
+    });
   };
   const columns = [
     {

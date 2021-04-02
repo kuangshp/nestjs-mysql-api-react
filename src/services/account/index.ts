@@ -19,7 +19,6 @@ class AccountService extends BaseService {
 
   // 查询列表
   async accountList(params?: any): Promise<any> {
-    console.log(params, '获取到的参数');
     return await this.get('/admin/account', params);
   }
 }
