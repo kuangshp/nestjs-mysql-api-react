@@ -1,6 +1,7 @@
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, useState } from 'react';
 import { Form, Input, Button } from 'antd';
 import styles from './top.form.module.less';
+import AccountModal from './AccountModal';
 
 type Props = PropsWithChildren<{
   type: string;
@@ -12,6 +13,8 @@ type Props = PropsWithChildren<{
 
 const TopForm = (props: Props) => {
   const { type, form, submit, reset, changeType } = props;
+  const [isModifyVisible, setIsModifyVisible] = useState<boolean>(false);
+
   return (
     <div className={styles.top}>
       <Form form={form} className={styles.form}>
@@ -39,7 +42,10 @@ const TopForm = (props: Props) => {
           {type === 'simple' ? '展开' : '收缩'}
         </Button>
       </Form>
-      <Button type="primary">新增账号</Button>
+      <Button type="primary" onClick={() => setIsModifyVisible(true)}>
+        新增账号
+      </Button>
+      <AccountModal isModifyVisible={isModifyVisible} setIsModifyVisible={setIsModifyVisible} />
     </div>
   );
 };

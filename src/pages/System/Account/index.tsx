@@ -29,7 +29,11 @@ const getTableData = async (
 
 // 组件
 const AccountList = () => {
+  // 是否显示修改行弹框
   const [isModifyVisible, setIsModifyVisible] = useState<boolean>(false);
+  // 当前点击行数据
+  const [rowData, setRowData] = useState<AccountResDto>();
+  // 头部搜索表单
   const [searchForm] = Form.useForm();
   const { tableProps, params, search } = useAntdTable(getTableData, {
     defaultPageSize: DEFAULT_PAGE_SIZE, // 默认请求页数
@@ -41,13 +45,16 @@ const AccountList = () => {
 
   // 编辑行
   const modifyRow = (rowData: AccountResDto) => {
-    console.log(rowData);
+    setRowData(rowData);
     setIsModifyVisible(true);
   };
+  // 重置密码
   const resetPasswordRow = (rowData: AccountResDto) => {
-    console.log(rowData);
+    setRowData(rowData);
   };
+  // 删除行
   const deleteRow = (rowData: AccountResDto) => {
+    setRowData(rowData);
     console.log(rowData);
   };
   const columns = [
@@ -132,6 +139,7 @@ const AccountList = () => {
 
   return (
     <div className={styles.account}>
+      {/* 头部搜索 */}
       <TopForm
         form={searchForm}
         type={type}
@@ -139,7 +147,12 @@ const AccountList = () => {
         reset={reset}
         changeType={changeType}
       />
-      <AccountModal isModifyVisible={isModifyVisible} setIsModifyVisible={setIsModifyVisible} />
+      {/* 编辑数据弹框 */}
+      <AccountModal
+        isModifyVisible={isModifyVisible}
+        setIsModifyVisible={setIsModifyVisible}
+        rowData={rowData}
+      />
       <Table columns={columns} rowKey="id" {...tableProps} bordered scroll={{ x: 1500 }} />
     </div>
   );
