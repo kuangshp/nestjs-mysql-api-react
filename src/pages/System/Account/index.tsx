@@ -92,14 +92,17 @@ const AccountList = () => {
       align: 'center' as const,
       fixed: 'right' as const,
       width: 200,
-      // render: () => {
-      //   return (
-      //     <Space size="middle">
-      //       <a>Delete</a>
-      //       <a className="ant-dropdown-link">More actions</a>
-      //     </Space>
-      //   );
-      // },
+      // 当前行的值，当前行数据，行索引
+      render: (a: any, record: any) => {
+        console.log(a, 'a');
+        console.log(record, 'record');
+        return (
+          <Space size="middle">
+            <a>Delete</a>
+            <a className="ant-dropdown-link">More actions</a>
+          </Space>
+        );
+      },
     },
   ];
 
