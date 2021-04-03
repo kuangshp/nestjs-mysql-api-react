@@ -1,18 +1,3 @@
 .account {
   background-color: #fff;
 }
-.account .top {
-  margin-bottom: 16px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-.account .top .form {
-  flex: 1;
-  display: flex;
-  flex-direction: row;
-}
-.account .mr {
-  margin-left: 10px;
-  margin-right: 10px;
-}

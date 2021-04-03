@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Form, Table, Button, Modal, message } from 'antd';
+import { Form, Table, Button, Modal, message, Space } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import useAntdTable, { PaginatedParams } from 'ahooks/lib/useAntdTable';
 
@@ -120,20 +120,16 @@ const Role: React.FC = () => {
       // 当前行的值，当前行数据，行索引
       render: (_: any, record: RoleResDto) => {
         return (
-          <div>
+          <Space size="middle">
             <Button type="primary" onClick={() => modifyRow(record)}>
               编辑
             </Button>
-            <Button onClick={() => dispatchMenus(record)} style={{ marginLeft: 10 }}>
-              分配菜单
-            </Button>
-            <Button onClick={() => dispatchApi(record)} style={{ marginLeft: 10, marginRight: 10 }}>
-              分配接口
-            </Button>
+            <Button onClick={() => dispatchMenus(record)}>分配菜单</Button>
+            <Button onClick={() => dispatchApi(record)}>分配接口</Button>
             <Button type="primary" danger onClick={() => deleteRow(record)}>
               删除
             </Button>
-          </div>
+          </Space>
         );
       },
     },

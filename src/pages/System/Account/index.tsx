@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Table, Form, Button, Modal, message } from 'antd';
+import { Table, Form, Button, Modal, message, Space } from 'antd';
 import { useAntdTable } from 'ahooks';
 import { PaginatedParams } from 'ahooks/lib/useAntdTable';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
@@ -157,20 +157,18 @@ const AccountList = () => {
       // 当前行的值，当前行数据，行索引
       render: (_: any, record: AccountResDto) => {
         return (
-          <div>
+          <Space size="middle">
             <Button type="primary" onClick={() => modifyRow(record)}>
               编辑
             </Button>
-            <Button type="primary" onClick={() => dispatchRole(record)} style={{ marginLeft: 10 }}>
+            <Button type="primary" onClick={() => dispatchRole(record)}>
               分配角色
             </Button>
-            <Button onClick={() => resetPasswordRow(record)} className={styles.mr}>
-              重置密码
-            </Button>
+            <Button onClick={() => resetPasswordRow(record)}>重置密码</Button>
             <Button type="primary" danger onClick={() => deleteRow(record)}>
               删除
             </Button>
-          </div>
+          </Space>
         );
       },
     },
