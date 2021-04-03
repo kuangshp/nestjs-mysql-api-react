@@ -4,7 +4,7 @@ import { useAntdTable } from 'ahooks';
 import { PaginatedParams } from 'ahooks/lib/useAntdTable';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 
-import AccountService from 'src/services/account';
+import AccountService from 'src/services/system/account';
 import styles from './index.module.less';
 import { DEFAULT_PAGE_SIZE, DEFAULT_PASSWORD } from 'src/constants';
 import { AccountResDto, AccountTableDto } from './types/account.list.res.dto';

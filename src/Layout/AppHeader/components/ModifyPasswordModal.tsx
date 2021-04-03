@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 import { Modal, Form, Input } from 'antd';
 import { useRequest } from 'ahooks';
-import AccountService from 'src/services/account';
+import AccountService from 'src/services/system/account';
 import { ModifyPasswordDto } from 'src/pages/System/Account/types/modify.password.dto';
 
 const layout = {
