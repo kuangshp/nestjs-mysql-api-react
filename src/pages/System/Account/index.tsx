@@ -194,12 +194,14 @@ const AccountList = () => {
         rowData={rowData}
       />
       {/* 分配角色弹框 */}
-      <AccountRoleModal
-        isRoleModifyVisible={isRoleModifyVisible}
-        setIsRoleModifyVisible={setIsRoleModifyVisible}
-        rowData={rowData}
-        loadData={reset}
-      />
+      {rowData && (
+        <AccountRoleModal
+          isRoleModifyVisible={isRoleModifyVisible}
+          setIsRoleModifyVisible={setIsRoleModifyVisible}
+          rowData={rowData}
+          loadData={reset}
+        />
+      )}
       {/* 表格数据 */}
       <Table columns={columns} rowKey="id" {...tableProps} bordered scroll={{ x: 1500 }} />
     </div>
