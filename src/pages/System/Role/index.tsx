@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+
+import { Form, Table, Button, Modal, message } from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
+import useAntdTable, { PaginatedParams } from 'ahooks/lib/useAntdTable';
+
 import styles from './index.module.less';
 import RoleService from 'src/services/system/role';
-import useAntdTable, { PaginatedParams } from 'ahooks/lib/useAntdTable';
-import { Form, Table, Button } from 'antd';
 import { DEFAULT_PAGE_SIZE } from 'src/constants';
 import yesImg from 'src/assets/images/yes.gif';
 import noImg from 'src/assets/images/no.gif';
@@ -11,6 +14,7 @@ import TopForm from './components/TopForm';
 import { AccountTableDto, RoleResDto } from './types/role.res.dto';
 import RoleModal from './components/RoleModal';
 
+const { confirm } = Modal;
 // 封装请求数据
 const getTableData = async (
   { current, pageSize }: PaginatedParams[0],
@@ -55,7 +59,17 @@ const Role: React.FC = () => {
   };
   // 删除数据
   const deleteRow = (rowData: RoleResDto) => {
-    console.log(rowData);
+    confirm({
+      icon: <ExclamationCircleOutlined />,
+      content: <h3>您确定要删除该条数据？</h3>,
+      async onOk() {
+        const result = await RoleService.deleteRoleById(rowData.id);
+        if (result) {
+          message.success(result);
+          reset();
+        }
+      },
+    });
   };
   // 表格列数据
   const columns = [
