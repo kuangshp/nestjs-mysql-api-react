@@ -11,6 +11,6 @@ export enum PlatformEnum {
 /** 平台文字描素 */
 export const PlatformMessage = {
   0: '普通人员',
-  1: '运营管理平台',
-  2: '入住商家平台',
+  1: '运营平台',
+  2: '商家平台',
 };

@@ -171,9 +171,8 @@ const AccountModal = (props: Props) => {
             ]}
           >
             <Select placeholder="请选择平台" allowClear>
-              <Option value="0">普通用户</Option>
-              <Option value="1">运营管理</Option>
-              <Option value="2">商家入驻</Option>
+              <Option value="1">运营平台</Option>
+              <Option value="2">商家平台</Option>
             </Select>
           </Form.Item>
         </Form>

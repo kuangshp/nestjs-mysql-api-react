@@ -11,7 +11,7 @@ import { AccountResDto } from './types/account.list.res.dto';
 import { formatDate } from 'src/utils';
 import AccountModal from './components/AccountModal';
 import TopForm from './components/TopForm';
-import { PlatformMessage } from 'src/enums';
+import { PlatformMessage, StatusEnum } from 'src/enums';
 import yesImg from 'src/assets/images/yes.gif';
 import noImg from 'src/assets/images/no.gif';
 
@@ -23,9 +23,14 @@ const getTableData = async (
   formData: Record<string, any>
 ): Promise<any> => {
   console.log(formData, '表格传递的数据', filters);
+  let status = null;
+  if (filters?.status.length === 1) {
+    status = filters.status[0];
+  }
   const { data, total } = await AccountService.accountList({
     pageNumber: current,
     pageSize,
+    status,
     ...formData,
   });
   return {
@@ -108,14 +113,9 @@ const AccountList = () => {
       title: '状态',
       dataIndex: 'status',
       align: 'center' as const,
-      filters: [
-        { text: '正常', value: '0' },
-        { text: '禁止', value: '1' },
-      ],
-      filteredValue: filters.status,
       width: 100,
       render: (_: any, record: AccountResDto) => {
-        if (record.status) {
+        if (Object.is(record.status, StatusEnum.NORMAL)) {
           return <img src={yesImg} />;
         } else {
           return <img src={noImg} />;

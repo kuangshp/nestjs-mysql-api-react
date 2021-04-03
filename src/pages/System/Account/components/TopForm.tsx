@@ -1,7 +1,9 @@
 import React, { PropsWithChildren, useState } from 'react';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Select } from 'antd';
 import styles from './top.form.module.less';
 import AccountModal from './AccountModal';
+
+const { Option } = Select;
 
 type Props = PropsWithChildren<{
   type: string;
@@ -29,6 +31,18 @@ const TopForm = (props: Props) => {
             </Form.Item>
             <Form.Item name="mobile">
               <Input placeholder="请输入手机号码" style={{ width: 140, marginRight: 16 }} />
+            </Form.Item>
+            <Form.Item name="status">
+              <Select placeholder="请选择状态" allowClear style={{ width: 140, marginRight: 16 }}>
+                <Option value="1">正常</Option>
+                <Option value="0">禁用</Option>
+              </Select>
+            </Form.Item>
+            <Form.Item name="platform">
+              <Select placeholder="请选择平台" allowClear style={{ width: 140, marginRight: 16 }}>
+                <Option value="1">运营平台</Option>
+                <Option value="2">商家平台</Option>
+              </Select>
             </Form.Item>
           </>
         )}
