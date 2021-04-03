@@ -2,7 +2,7 @@ import React, { PropsWithChildren, useEffect, useState } from 'react';
 import { Modal, Form, Input, Select } from 'antd';
 import { useRequest } from 'ahooks';
 
-import { AccountResDto } from '../types/account.list.res.dto';
+import { AccountResDto } from '../types/account.res.dto';
 import { mobileReg, usernameReg, emailReg } from 'src/constants';
 import AccountService from 'src/services/system/account';
 

@@ -2,7 +2,7 @@ import BaseService from '../../base';
 import { AccountDto } from 'src/pages/System/Account/types/account.dto';
 import { ModifyPasswordDto } from 'src/pages/System/Account/types/modify.password.dto';
 import { QueryAccountDto } from 'src/pages/System/Account/types/query.account.dto';
-import { AccountListResDto } from 'src/pages/System/Account/types/account.list.res.dto';
+import { AccountListResDto } from 'src/pages/System/Account/types/account.res.dto';
 
 class AccountService extends BaseService {
   // 添加数据
