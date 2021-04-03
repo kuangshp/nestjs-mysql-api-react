@@ -1,27 +1,141 @@
-import React from 'react';
-import Mock from 'mockjs';
-import { useRequest } from 'ahooks';
-import { connect } from 'dva';
+import React, { useState } from 'react';
+import styles from './index.module.less';
+import RoleService from 'src/services/system/role';
+import useAntdTable, { PaginatedParams } from 'ahooks/lib/useAntdTable';
+import { Form, Table, Button } from 'antd';
+import { DEFAULT_PAGE_SIZE } from 'src/constants';
+import yesImg from 'src/assets/images/yes.gif';
+import noImg from 'src/assets/images/no.gif';
+import { StatusEnum, RoleEnum } from 'src/enums';
+import TopForm from './components/TopForm';
+import { AccountTableDto, RoleResDto } from './types/role.res.dto';
+import RoleModal from './components/RoleModal';
 
-function getUsername(): Promise<string> {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve(Mock.mock('@name'));
-    }, 1000);
+// 封装请求数据
+const getTableData = async (
+  { current, pageSize }: PaginatedParams[0],
+  formData: Record<string, any>
+): Promise<AccountTableDto> => {
+  const { data, total } = await RoleService.roleList({
+    pageNumber: current,
+    pageSize,
+    ...formData,
   });
-}
-
-const Role: React.FC = () => {
-  const { data, error, loading } = useRequest(getUsername);
-
-  if (error) {
-    return <div>failed to load</div>;
-  }
-  if (loading) {
-    return <div>loading...</div>;
-  }
-
-  return <div>role页面:{data}</div>;
+  return {
+    total: total,
+    list: data,
+  };
 };
 
-export default connect()(Role);
+const Role: React.FC = () => {
+  // 是否显示修改行弹框
+  const [isModifyVisible, setIsModifyVisible] = useState<boolean>(false);
+  // 当前点击行数据
+  const [rowData, setRowData] = useState<RoleResDto>();
+  // 头部搜索表单
+  const [searchForm] = Form.useForm();
+  const { tableProps, search } = useAntdTable(getTableData, {
+    defaultPageSize: DEFAULT_PAGE_SIZE, // 默认请求页数
+    form: searchForm,
+    cacheKey: 'tableProps',
+  });
+  const { submit, reset } = search || {};
+  // 编辑行数据
+  const modifyRow = (rowData: RoleResDto) => {
+    setRowData(rowData);
+    setIsModifyVisible(true);
+  };
+  // 分配菜单
+  const dispatchMenus = (rowData: RoleResDto) => {
+    console.log(rowData);
+  };
+  // 分配接口
+  const dispatchApi = (rowData: RoleResDto) => {
+    console.log(rowData);
+  };
+  // 删除数据
+  const deleteRow = (rowData: RoleResDto) => {
+    console.log(rowData);
+  };
+  // 表格列数据
+  const columns = [
+    {
+      title: '名称',
+      dataIndex: 'name',
+      align: 'right' as const,
+      width: 100,
+    },
+    {
+      title: '描素',
+      dataIndex: 'description',
+      align: 'right' as const,
+      width: 200,
+    },
+    {
+      title: '状态',
+      dataIndex: 'status',
+      align: 'center' as const,
+      width: 60,
+      render: (_: any, record: RoleResDto) => {
+        if (Object.is(record.status, StatusEnum.NORMAL)) {
+          return <img src={yesImg} />;
+        } else {
+          return <img src={noImg} />;
+        }
+      },
+    },
+    {
+      title: '是否为默认角色',
+      dataIndex: 'isDefault',
+      align: 'center' as const,
+      width: 80,
+      render: (_: any, record: RoleResDto) => {
+        if (Object.is(record.isDefault, RoleEnum.DEFAULT)) {
+          return '是';
+        } else {
+          return '否';
+        }
+      },
+    },
+    {
+      title: '操作',
+      key: 'operation',
+      align: 'center' as const,
+      fixed: 'right' as const,
+      width: 200,
+      // 当前行的值，当前行数据，行索引
+      render: (_: any, record: RoleResDto) => {
+        return (
+          <div>
+            <Button type="primary" onClick={() => modifyRow(record)}>
+              编辑
+            </Button>
+            <Button onClick={() => dispatchMenus(record)} style={{ marginLeft: 10 }}>
+              分配菜单
+            </Button>
+            <Button onClick={() => dispatchApi(record)} style={{ marginLeft: 10, marginRight: 10 }}>
+              分配接口
+            </Button>
+            <Button type="primary" danger onClick={() => deleteRow(record)}>
+              删除
+            </Button>
+          </div>
+        );
+      },
+    },
+  ];
+  return (
+    <div className={styles.role}>
+      <TopForm form={searchForm} submit={submit} reset={reset} />
+      <Table columns={columns} rowKey="id" {...tableProps} bordered scroll={{ x: 1200 }} />
+      <RoleModal
+        isModifyVisible={isModifyVisible}
+        setIsModifyVisible={setIsModifyVisible}
+        rowData={rowData}
+        loadData={reset}
+      />
+    </div>
+  );
+};
+
+export default Role;

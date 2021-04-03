@@ -41,7 +41,7 @@ const AccountList = () => {
   const [rowData, setRowData] = useState<AccountResDto>();
   // 头部搜索表单
   const [searchForm] = Form.useForm();
-  const { tableProps, params, search } = useAntdTable(getTableData, {
+  const { tableProps, search } = useAntdTable(getTableData, {
     defaultPageSize: DEFAULT_PAGE_SIZE, // 默认请求页数
     form: searchForm,
     cacheKey: 'tableProps',

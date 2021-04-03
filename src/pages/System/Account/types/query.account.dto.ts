@@ -1,4 +1,4 @@
-import { ApiQueryDto } from '../../../../dto/api.query.dto';
+import { ApiQueryDto } from 'src/dto/api.query.dto';
 
 export class QueryAccountDto extends ApiQueryDto {
   /** 用户名 */
