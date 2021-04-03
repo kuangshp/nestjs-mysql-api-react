@@ -1,9 +1,10 @@
-import React, { PropsWithChildren, useEffect, useMemo, useState } from 'react';
-import { Modal, Checkbox, Row, Col } from 'antd';
+import React, { PropsWithChildren, useEffect, useState } from 'react';
+import { Modal, Checkbox, Row, Col, Form, message } from 'antd';
 import { AccountResDto } from '../types/account.res.dto';
 import AccountRoleService from 'src/services/system/account-role';
-import { useSelections } from 'ahooks';
 import { AccountRoleDto, AccountRoleResDto } from '../types/account.role.res.dto';
+import { DispatchAccountRoleDto } from '../types/dispatch.account.role.dto';
+import { useRequest } from 'ahooks';
 
 type Props = PropsWithChildren<{
   isRoleModifyVisible: boolean;
@@ -12,46 +13,38 @@ type Props = PropsWithChildren<{
   rowData: AccountResDto;
 }>;
 
+// 包装给账号分配角色
+const dispatchAccountRoleHandler = async (postData: DispatchAccountRoleDto) => {
+  const result = await AccountRoleService.dispatchAccountRole(postData);
+  if (!result) return;
+  return new Promise(resolve => {
+    resolve(true);
+  });
+};
+
 const AccountRoleModal = (props: Props) => {
-  const { isRoleModifyVisible, setIsRoleModifyVisible, rowData } = props;
+  const { isRoleModifyVisible, setIsRoleModifyVisible, loadData, rowData } = props;
   // 全部的角色ID
-  const [roleIdList, setRoleIdList] = useState<number[]>([]);
-  const [roleMap, setRoleMap] = useState<Record<string, any>>();
-  // 已经授权的角色ID
-  const [authRoleList, setAuthRoleList] = useState<number[]>([]);
-  // 全部的角色ID包括未授权的(给第三方组件用的)
-  const roleList = useMemo(() => {
-    return roleIdList;
-  }, [roleIdList, authRoleList]);
+  const [allRoleList, setAllRoleIdList] = useState<AccountRoleDto[]>([]);
+  const [form] = Form.useForm();
 
-  const { selected, allSelected, isSelected, toggle, toggleAll, partiallySelected } = useSelections(
-    roleList,
-    authRoleList
-  );
-  // const {
-  //   selected,
-  //   allSelected,
-  //   isSelected,
-  //   toggle,
-  //   toggleAll,
-  //   partiallySelected,
-  // } = useSelections(roleList, [1]);
+  const { run, loading } = useRequest(dispatchAccountRoleHandler, {
+    manual: true,
+    onSuccess: result => {
+      if (result) {
+        setIsRoleModifyVisible(false);
+        // 告知父组件更新数据
+        loadData();
+        form.resetFields();
+      }
+    },
+  });
 
-  // 将数组转换为对象
-  const roleListToMap = (accountRoleList: AccountRoleDto[]): Record<number, string> => {
-    return accountRoleList.reduce((pre, cur) => {
-      return { ...pre, [cur['id']]: cur['name'] };
-    }, {});
-  };
-  // 获取全部的角色
+  // 获取全部的角色(包括未授权的)
   const getRoleList = async () => {
     const result = await AccountRoleService.accountRoleList();
     if (!result) return;
-    const roleIdList = result.map((item: AccountRoleDto) => item.id);
-    console.log(roleIdList, '11');
-    setRoleMap(roleListToMap(result));
-    setRoleIdList(roleIdList);
-    console.log(roleIdList, '22');
+    setAllRoleIdList(result);
   };
 
   // 获取已经授权的角色ID
@@ -59,9 +52,10 @@ const AccountRoleModal = (props: Props) => {
     const result = await AccountRoleService.accountRoleByAccountId(rowData.id);
     if (!result) return;
     const ids: number[] = result.map((item: AccountRoleResDto) => item.roleId);
-    console.log(ids, 'aaa');
-    setAuthRoleList(ids);
-    console.log(authRoleList, '==已经授权的=>');
+    // 给表单赋值(已经授权的)
+    form.setFieldsValue({
+      roles: ids,
+    });
   };
 
   useEffect(() => {
@@ -69,34 +63,46 @@ const AccountRoleModal = (props: Props) => {
     getRoleList();
   }, [rowData]);
 
-  const handleModifyOk = () => {
-    console.log(selected, '===>');
+  // 提交
+  const handleOk = () => {
+    if (loading) return;
+    form.validateFields(['roles']).then(values => {
+      const { roles } = values;
+      if (!roles.length) {
+        message.error('必须选中一个角色');
+        return;
+      }
+      run({
+        accountId: rowData.id,
+        roleList: roles,
+      });
+    });
+  };
+  // 取消
+  const handleCancel = () => {
+    form.resetFields();
     setIsRoleModifyVisible(false);
   };
-  const handleModifyCancel = () => {
-    setIsRoleModifyVisible(false);
-  };
+
   return (
-    <Modal
-      title="分配角色"
-      visible={isRoleModifyVisible}
-      onOk={handleModifyOk}
-      onCancel={handleModifyCancel}
-    >
-      <div style={{ borderBottom: '1px solid #E9E9E9', padding: '0 0 10px' }}>
-        <Checkbox checked={allSelected} onClick={toggleAll} indeterminate={partiallySelected}>
-          全选
-        </Checkbox>
-      </div>
-      <Row style={{ padding: '10px 0' }}>
-        {roleList.map((o: number) => (
-          <Col span={12} key={o}>
-            <Checkbox checked={isSelected(o)} onClick={() => toggle(o)}>
-              {roleMap && roleMap[o]}
-            </Checkbox>
-          </Col>
-        ))}
-      </Row>
+    <Modal title="分配角色" visible={isRoleModifyVisible} onOk={handleOk} onCancel={handleCancel}>
+      <Form form={form}>
+        <Form.Item name="roles">
+          <Checkbox.Group style={{ width: '100%', paddingTop: 10 }}>
+            <Row>
+              {allRoleList.map((item: AccountRoleDto) => {
+                return (
+                  <Col span={12} key={item.id}>
+                    <Checkbox value={item.id} style={{ lineHeight: '32px' }}>
+                      {item.name}
+                    </Checkbox>
+                  </Col>
+                );
+              })}
+            </Row>
+          </Checkbox.Group>
+        </Form.Item>
+      </Form>
     </Modal>
   );
 };

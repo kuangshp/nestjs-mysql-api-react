@@ -5,6 +5,7 @@ import { useRequest } from 'ahooks';
 import { AccountResDto } from '../types/account.res.dto';
 import { mobileReg, usernameReg, emailReg } from 'src/constants';
 import AccountService from 'src/services/system/account';
+import { AccountDto } from '../types/account.dto';
 
 const { Option } = Select;
 
@@ -21,7 +22,7 @@ type Props = PropsWithChildren<{
 }>;
 
 // 包装提交数据
-const createAccountHandler = async (postData: any) => {
+const createAccountHandler = async (postData: AccountDto) => {
   const result = await AccountService.createAccount(postData);
   if (!result) return;
   return new Promise(resolve => {
@@ -29,7 +30,7 @@ const createAccountHandler = async (postData: any) => {
   });
 };
 
-const modifyAccountHandler = async (id: number, params: any) => {
+const modifyAccountHandler = async (id: number, params: AccountDto) => {
   const result = await AccountService.modifyAccountById(id, params);
   if (!result) return;
   return new Promise(resolve => {
@@ -90,12 +91,13 @@ const AccountModal = (props: Props) => {
     // 提交数据中不重复提交
     if (loading || loading1) return;
     form.validateFields(['username', 'mobile', 'email', 'status', 'platform']).then(values => {
+      const { username, mobile, email, status, platform } = values;
       // 根据当前是否有id区分是新增还是编辑
       if (rowId) {
-        run1(rowId, values);
+        run1(rowId, { username, mobile, email, status, platform });
       } else {
         // 提交数据
-        run(values);
+        run({ username, mobile, email, status, platform });
       }
     });
   };
