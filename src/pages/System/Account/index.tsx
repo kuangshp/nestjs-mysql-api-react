@@ -10,6 +10,7 @@ import { DEFAULT_PAGE_SIZE, DEFAULT_PASSWORD } from 'src/constants';
 import { AccountResDto, AccountTableDto } from './types/account.res.dto';
 import { formatDate } from 'src/utils';
 import AccountModal from './components/AccountModal';
+import AccountRoleModal from './components/AccountRoleModal';
 import TopForm from './components/TopForm';
 import { PlatformMessage, StatusEnum } from 'src/enums';
 import yesImg from 'src/assets/images/yes.gif';
@@ -37,6 +38,7 @@ const getTableData = async (
 const AccountList = () => {
   // 是否显示修改行弹框
   const [isModifyVisible, setIsModifyVisible] = useState<boolean>(false);
+  const [isRoleModifyVisible, setIsRoleModifyVisible] = useState<boolean>(false);
   // 当前点击行数据
   const [rowData, setRowData] = useState<AccountResDto>();
   // 头部搜索表单
@@ -52,6 +54,11 @@ const AccountList = () => {
   const modifyRow = (rowData: AccountResDto) => {
     setRowData(rowData);
     setIsModifyVisible(true);
+  };
+  // 分配角色
+  const dispatchRole = (rowData: AccountResDto) => {
+    setRowData(rowData);
+    setIsRoleModifyVisible(true);
   };
   // 重置密码
   const resetPasswordRow = (rowData: AccountResDto) => {
@@ -154,7 +161,7 @@ const AccountList = () => {
             <Button type="primary" onClick={() => modifyRow(record)}>
               编辑
             </Button>
-            <Button type="primary" onClick={() => modifyRow(record)} style={{ marginLeft: 10 }}>
+            <Button type="primary" onClick={() => dispatchRole(record)} style={{ marginLeft: 10 }}>
               分配角色
             </Button>
             <Button onClick={() => resetPasswordRow(record)} className={styles.mr}>
@@ -186,6 +193,14 @@ const AccountList = () => {
         loadData={reset}
         rowData={rowData}
       />
+      {/* 分配角色弹框 */}
+      <AccountRoleModal
+        isRoleModifyVisible={isRoleModifyVisible}
+        setIsRoleModifyVisible={setIsRoleModifyVisible}
+        rowData={rowData}
+        loadData={reset}
+      />
+      {/* 表格数据 */}
       <Table columns={columns} rowKey="id" {...tableProps} bordered scroll={{ x: 1500 }} />
     </div>
   );
