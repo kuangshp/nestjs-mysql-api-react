@@ -1,7 +1,7 @@
-import { IApiResDto } from 'src/dto/api.res.dto';
+import { ApiResDto } from 'src/dto/api.res.dto';
 
 /** 登录接口返回的数据 */
-export interface ILoginRes extends IApiResDto {
+export interface ILoginRes extends ApiResDto {
   mobile: string;
   email: string;
   username: string;
