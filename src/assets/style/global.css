@@ -2,3 +2,14 @@
   margin: 0;
   padding: 0;
 }
+.top {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.top .form {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+}

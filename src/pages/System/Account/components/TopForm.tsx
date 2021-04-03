@@ -1,6 +1,5 @@
 import React, { PropsWithChildren, useState } from 'react';
 import { Form, Input, Button, Select } from 'antd';
-import styles from './top.form.module.less';
 import AccountModal from './AccountModal';
 
 const { Option } = Select;
@@ -18,8 +17,8 @@ const TopForm = (props: Props) => {
   const [isModifyVisible, setIsModifyVisible] = useState<boolean>(false);
 
   return (
-    <div className={styles.top}>
-      <Form form={form} className={styles.form}>
+    <div className="top">
+      <Form form={form} className="form">
         <Form.Item name="username">
           <Input placeholder="请输入用户名" style={{ width: 140, marginRight: 16 }} />
         </Form.Item>
@@ -51,6 +50,9 @@ const TopForm = (props: Props) => {
         </Button>
         <Button onClick={reset} style={{ marginLeft: 8 }}>
           重置
+        </Button>
+        <Button type="primary" style={{ marginLeft: 8 }}>
+          导出EXCEL
         </Button>
         <Button type="link" onClick={changeType}>
           {type === 'simple' ? '展开' : '收缩'}
