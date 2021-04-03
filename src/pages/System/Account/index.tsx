@@ -119,7 +119,7 @@ const AccountList = () => {
       title: '平台',
       dataIndex: 'platform',
       align: 'right' as const,
-      width: 150,
+      width: 130,
       render: (_: any, record: AccountResDto) => <div>{PlatformMessage[record.platform]}</div>,
     },
     {
@@ -138,7 +138,7 @@ const AccountList = () => {
       title: '最后登录时间',
       dataIndex: 'lastLoginTime',
       align: 'center' as const,
-      width: 180,
+      width: 200,
       render: (_: any, record: AccountResDto) => <div>{formatDate(record.lastLoginTime)}</div>,
     },
     {
@@ -146,13 +146,16 @@ const AccountList = () => {
       key: 'operation',
       align: 'center' as const,
       fixed: 'right' as const,
-      width: 300,
+      width: 380,
       // 当前行的值，当前行数据，行索引
       render: (_: any, record: AccountResDto) => {
         return (
           <div>
             <Button type="primary" onClick={() => modifyRow(record)}>
               编辑
+            </Button>
+            <Button type="primary" onClick={() => modifyRow(record)} style={{ marginLeft: 10 }}>
+              分配角色
             </Button>
             <Button onClick={() => resetPasswordRow(record)} className={styles.mr}>
               重置密码
