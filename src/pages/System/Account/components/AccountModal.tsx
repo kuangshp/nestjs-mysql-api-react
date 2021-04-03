@@ -43,7 +43,7 @@ const AccountModal = (props: Props) => {
   const [title, setTitle] = useState<string>('新增账号');
   const [form] = Form.useForm();
 
-  const { run } = useRequest(createAccountHandler, {
+  const { run, loading } = useRequest(createAccountHandler, {
     manual: true,
     onSuccess: result => {
       if (result) {
@@ -55,7 +55,7 @@ const AccountModal = (props: Props) => {
     },
   });
 
-  const { run: run1 } = useRequest(modifyAccountHandler, {
+  const { run: run1, loading: loading1 } = useRequest(modifyAccountHandler, {
     manual: true,
     onSuccess: result => {
       if (result) {
@@ -85,9 +85,10 @@ const AccountModal = (props: Props) => {
       setRowId(null);
     }
   }, [rowData]);
-
   // 提交
   const handleModifyOk = () => {
+    // 提交数据中不重复提交
+    if (loading || loading1) return;
     form.validateFields(['username', 'mobile', 'email', 'status', 'platform']).then(values => {
       // 根据当前是否有id区分是新增还是编辑
       if (rowId) {

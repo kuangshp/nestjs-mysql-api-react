@@ -42,7 +42,7 @@ const RoleModal = (props: Props) => {
   const [title, setTitle] = useState<string>('新增角色');
   const [form] = Form.useForm();
 
-  const { run } = useRequest(createRoleHandler, {
+  const { run, loading } = useRequest(createRoleHandler, {
     manual: true,
     onSuccess: result => {
       if (result) {
@@ -54,7 +54,7 @@ const RoleModal = (props: Props) => {
     },
   });
 
-  const { run: run1 } = useRequest(modifyRoleHandler, {
+  const { run: run1, loading: loading1 } = useRequest(modifyRoleHandler, {
     manual: true,
     onSuccess: result => {
       if (result) {
@@ -86,6 +86,8 @@ const RoleModal = (props: Props) => {
 
   // 提交
   const handleModifyOk = () => {
+    // 提交数据中不重复提交
+    if (loading || loading1) return;
     form.validateFields(['name', 'description', 'isDefault', 'status']).then(values => {
       // 根据当前是否有id区分是新增还是编辑
       if (rowId) {
