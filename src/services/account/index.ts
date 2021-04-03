@@ -1,10 +1,11 @@
 import BaseService from '../base';
-import { CreateAccountDto } from 'src/pages/System/Account/types/create.account.dto';
+import { AccountDto } from 'src/pages/System/Account/types/account.dto';
 import { ModifyPasswordDto } from 'src/pages/System/Account/types/modify.password.dto';
+import { QueryAccountDto } from 'src/pages/System/Account/types/query.account.dto';
 
 class AccountService extends BaseService {
   // 添加数据
-  async createAccount(postData: CreateAccountDto): Promise<any> {
+  async createAccount(postData: AccountDto): Promise<any> {
     return await this.post<string>('/admin/account', postData);
   }
 
@@ -23,12 +24,12 @@ class AccountService extends BaseService {
   }
 
   // 修改数据
-  async modifyAccountById(id: number, params: any): Promise<any> {
+  async modifyAccountById(id: number, params: AccountDto): Promise<any> {
     return await this.patch('/admin/account', id, params);
   }
 
   // 查询列表
-  async accountList(params?: any): Promise<any> {
+  async accountList(params?: QueryAccountDto): Promise<any> {
     return await this.get('/admin/account', params);
   }
 }

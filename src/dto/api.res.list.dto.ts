@@ -1,4 +1,4 @@
-export class IApiListResDto<T> {
+export class ApiListResDto<T> {
   data: T[];
   total: number;
   pageSize: number;

@@ -7,7 +7,7 @@ import { ExclamationCircleOutlined } from '@ant-design/icons';
 import AccountService from 'src/services/account';
 import styles from './index.module.less';
 import { DEFAULT_PAGE_SIZE, DEFAULT_PASSWORD } from 'src/constants';
-import { AccountResDto } from './types/account.list.res.dto';
+import { AccountResDto, AccountTableDto } from './types/account.list.res.dto';
 import { formatDate } from 'src/utils';
 import AccountModal from './components/AccountModal';
 import TopForm from './components/TopForm';
@@ -19,18 +19,12 @@ const { confirm } = Modal;
 
 // 获取表格数据
 const getTableData = async (
-  { current, pageSize, filters }: PaginatedParams[0],
+  { current, pageSize }: PaginatedParams[0],
   formData: Record<string, any>
-): Promise<any> => {
-  console.log(formData, '表格传递的数据', filters);
-  let status = null;
-  if (filters?.status.length === 1) {
-    status = filters.status[0];
-  }
+): Promise<AccountTableDto> => {
   const { data, total } = await AccountService.accountList({
     pageNumber: current,
     pageSize,
-    status,
     ...formData,
   });
   return {
@@ -52,7 +46,6 @@ const AccountList = () => {
     form: searchForm,
     cacheKey: 'tableProps',
   });
-  const { filters = {} } = params[0] || ({} as any);
   const { type, changeType, submit, reset } = search || {};
 
   // 编辑行
