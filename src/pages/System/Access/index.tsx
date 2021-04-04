@@ -9,6 +9,7 @@ import MenusTable from './components/MenusTable';
 import AccessModuleModal from './components/AccessModuleModal';
 import AccessMenuModal from './components/AccessMenuModal';
 import { AccessResDto } from './types/access.res.dto';
+import { StatusEnum } from 'src/enums';
 const { confirm } = Modal;
 // 统一获取数据方法
 const getTableData = async (queryOptions?: any) => {
@@ -108,6 +109,17 @@ const Access = () => {
       title: '状态',
       dataIndex: 'type',
       align: 'center' as const,
+      render: (_: any, record: AccessResDto) => {
+        if (Object.is(record.status, StatusEnum.FORBIDDEN)) {
+          return (
+            <Button type="primary" danger>
+              禁用
+            </Button>
+          );
+        } else {
+          return <Button type="primary">启用</Button>;
+        }
+      },
     },
     {
       title: '描素',
@@ -141,6 +153,7 @@ const Access = () => {
         className="access"
         rowKey="id"
         bordered
+        size="small"
         columns={columns}
         expandable={{
           expandedRowRender: _ => (

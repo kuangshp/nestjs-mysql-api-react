@@ -8,6 +8,7 @@ import ApiTable from './ApiTable';
 import { AccessResDto } from '../types/access.res.dto';
 import { AccessReqDto } from '../types/access.req.dto';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { StatusEnum } from 'src/enums';
 
 const { confirm } = Modal;
 
@@ -84,6 +85,13 @@ const MenusTable = (props: Props) => {
       title: '状态',
       dataIndex: 'status',
       align: 'center' as const,
+      // render: (_: any, record: AccessResDto) => {
+      //   if (Object.is(record.status, StatusEnum.FORBIDDEN)) {
+      //     return <Button type="primary" danger>禁用</Button>;
+      //   } else {
+      //     return <Button type="primary">启用</Button>;
+      //   }
+      // }
     },
     {
       title: '描素',
