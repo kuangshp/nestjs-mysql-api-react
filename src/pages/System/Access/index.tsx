@@ -2,37 +2,42 @@ import React, { useState, useEffect } from 'react';
 import { Table, Badge, Dropdown, Space, Button } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import AccessService from 'src/services/system/access';
-import { PaginatedParams } from 'ahooks/lib/useAntdTable';
+import useAntdTable, { PaginatedParams } from 'ahooks/lib/useAntdTable';
+import { DEFAULT_PAGE_SIZE } from 'src/constants';
 
+// 统一获取数据方法
+const getTableData = async (queryOptions?: any) => {
+  const { data, total } = await AccessService.accessListByParentId(queryOptions);
+  return { data, total };
+};
+// 获取模块数据
+const getModuleData = async ({ current, pageSize }: PaginatedParams[0]): Promise<any> => {
+  const { data, total } = await getTableData({
+    pageNumber: current,
+    pageSize,
+  });
+  return {
+    total: total,
+    list: data,
+  };
+};
 function NestedTable() {
-  const [tableData, setTableData] = useState([]);
-  const [moduleTableData, setModuleTableData] = useState([]);
   const [menusTableData, setMenusTableData] = useState([]);
   const [defaultExpandedRowKeys, setDefaultExpandedRowKeys] = useState([]);
-  const [moduleTableTotal, setModuleTableTotal] = useState<number>(0);
-
-  // 包装获取数据的方法
-  const getTableData = async (queryOptions?: any): Promise<any> => {
-    const { data, total } = await AccessService.accessListByParentId(queryOptions);
-    console.log(data, total);
-    setModuleTableData(data);
-    setModuleTableTotal(total);
-  };
 
   // 获取模块数据
-  useEffect(() => {
-    getTableData();
-  }, []);
+  const { tableProps: moduleTableData } = useAntdTable(getModuleData, {
+    defaultPageSize: DEFAULT_PAGE_SIZE, // 默认请求页数
+    cacheKey: 'tableProps',
+  });
 
   const fetData = async (parentId: number) => {
-    const { data, total } = await AccessService.accessListByParentId({ parentId });
-    console.log(data, total, '子菜单');
+    const { data, total } = await getTableData({ parentId });
     setMenusTableData(data);
     return { data, total };
   };
 
-  const onExpandHandler = (expanded, record) => {
-    console.log(expanded, record, '点开的');
+  const onExpandHandler = (expanded: boolean, record: any) => {
     const temp: any = [];
     if (expanded) {
       fetData(record.id);
@@ -42,9 +47,7 @@ function NestedTable() {
   };
 
   // 菜单表格
-  const expandedRowRender = (record, index, expanded) => {
-    console.log(record, index, expanded, '===?', menusTableData);
-    // fetData(record!.id);
+  const expandedRowRender = () => {
     const columns = [
       { title: '菜单', dataIndex: 'actionName' },
       { title: 'url地址', dataIndex: 'url' },
@@ -93,7 +96,7 @@ function NestedTable() {
       columns={columns}
       expandable={{ expandedRowRender }}
       expandedRowKeys={defaultExpandedRowKeys}
-      dataSource={moduleTableData}
+      {...moduleTableData}
       onExpand={onExpandHandler}
     />
   );
