@@ -4,6 +4,7 @@ import { DownOutlined } from '@ant-design/icons';
 import AccessService from 'src/services/system/access';
 import useAntdTable, { PaginatedParams } from 'ahooks/lib/useAntdTable';
 import { DEFAULT_PAGE_SIZE } from 'src/constants';
+import NewBtn from './components/NewBtn';
 
 // 统一获取数据方法
 const getTableData = async (queryOptions?: any) => {
@@ -58,11 +59,11 @@ function NestedTable() {
   const [expandedMenusRowKeys, setExpandedMenusRowKeys] = useState([]);
   const [apiTableData, setApiTableData] = useState([]);
   // 获取模块数据
-  const { tableProps: moduleTableData } = useAntdTable(getModuleData, {
+  const { tableProps: moduleTableData, search } = useAntdTable(getModuleData, {
     defaultPageSize: DEFAULT_PAGE_SIZE, // 默认请求页数
     cacheKey: 'tableProps',
   });
-
+  const { reset } = search || {};
   // 展开模块获取菜单
   const onExpandHandler = async (expanded: boolean, record: any) => {
     const temp: any = [];
@@ -161,6 +162,7 @@ function NestedTable() {
 const Access = () => {
   return (
     <div>
+      <NewBtn />
       <NestedTable />
     </div>
   );
