@@ -2,9 +2,11 @@ import React, { PropsWithChildren, useState } from 'react';
 import { Space, Button, Table } from 'antd';
 import AccessService from 'src/services/system/access';
 import AccessMenuModal from './AccessMenuModal';
+import AccessApiModal from './AccessApiModal';
 
 import ApiTable from './ApiTable';
 import { AccessResDto } from '../types/access.res.dto';
+import { AccessReqDto } from '../types/access.req.dto';
 
 type Props = PropsWithChildren<{
   menusTableData: any;
@@ -21,15 +23,22 @@ const MenusTable = (props: Props) => {
   const { menusTableData, loadData } = props;
 
   const [isAccessMenusVisible, setIsAccessMenusVisible] = useState<boolean>(false);
+  const [isAccessApiVisible, setIsAccessApiVisible] = useState<boolean>(false);
   // 展开菜单的
   const [expandedMenusRowKeys, setExpandedMenusRowKeys] = useState([]);
   // api接口数据
   const [apiTableData, setApiTableData] = useState([]);
-  const [rowData, setRowData] = useState<AccessResDto>();
+  const [rowData, setRowData] = useState<AccessResDto | undefined>();
   // 编辑行
   const modifyMenuHandler = (rowData: any) => {
     setRowData(rowData);
     setIsAccessMenusVisible(true);
+  };
+
+  // 新建API
+  const createApiHandler = (rowData: any) => {
+    setRowData(rowData);
+    setIsAccessApiVisible(true);
   };
 
   const columns = [
@@ -40,12 +49,14 @@ const MenusTable = (props: Props) => {
     { title: '描素', dataIndex: 'description' },
     {
       title: '操作',
-      render: (_: any, record: any) => (
+      render: (_: any, record: AccessReqDto) => (
         <Space size="middle">
           <Button type="primary" onClick={() => modifyMenuHandler(record)}>
             编辑
           </Button>
-          <Button type="primary">新增接口</Button>
+          <Button type="primary" onClick={() => createApiHandler(record)}>
+            新增接口
+          </Button>
           <Button type="primary" danger>
             删除
           </Button>
@@ -85,6 +96,13 @@ const MenusTable = (props: Props) => {
         rowData={rowData}
         isAccessMenusVisible={isAccessMenusVisible}
         setIsAccessMenusVisible={setIsAccessMenusVisible}
+      />
+      <AccessApiModal
+        loadData={loadData}
+        rowData={rowData}
+        isNew={true}
+        isAccessApiVisible={isAccessApiVisible}
+        setIsAccessApiVisible={setIsAccessApiVisible}
       />
     </>
   );

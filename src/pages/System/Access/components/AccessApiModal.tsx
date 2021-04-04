@@ -12,8 +12,8 @@ const layout = {
 };
 
 type Props = PropsWithChildren<{
-  isAccessMenusVisible: boolean;
-  setIsAccessMenusVisible: (flag: boolean) => void;
+  isAccessApiVisible: boolean;
+  setIsAccessApiVisible: (flag: boolean) => void;
   isNew?: boolean;
   rowData: AccessResDto | undefined;
   loadData: () => void;
@@ -36,17 +36,17 @@ const modifyAccessHandler = async (id: number, params: AccessReqDto) => {
   });
 };
 
-const AccessMenuModal = (props: Props) => {
-  const { isAccessMenusVisible, setIsAccessMenusVisible, rowData, loadData, isNew } = props;
+const AccessApiModal = (props: Props) => {
+  const { isAccessApiVisible, setIsAccessApiVisible, rowData, loadData, isNew } = props;
   const [rowData1, setRowData1] = useState<AccessResDto>();
-  const [title, setTitle] = useState<string>('新增菜单');
+  const [title, setTitle] = useState<string>('新增API');
   const [form] = Form.useForm();
-  console.log(rowData, '???');
+
   const { run, loading } = useRequest(createAccessHandler, {
     manual: true,
     onSuccess: result => {
       if (result) {
-        setIsAccessMenusVisible(false);
+        setIsAccessApiVisible(false);
         // 告知父组件更新数据
         loadData();
         form.resetFields();
@@ -58,7 +58,7 @@ const AccessMenuModal = (props: Props) => {
     manual: true,
     onSuccess: result => {
       if (result) {
-        setIsAccessMenusVisible(false);
+        setIsAccessApiVisible(false);
         // 告知父组件更新数据
         loadData();
         form.resetFields();
@@ -67,7 +67,7 @@ const AccessMenuModal = (props: Props) => {
   });
 
   useEffect(() => {
-    console.log(rowData, '菜单中');
+    console.log(rowData, 'api中');
     if (!rowData) return;
     if (!isNew) {
       const { actionName, url, icon, sort, status, description } = rowData;
@@ -79,13 +79,13 @@ const AccessMenuModal = (props: Props) => {
         description,
         status: String(status),
       });
-      setTitle('编辑菜单');
+      setTitle('编辑API');
     } else {
       const { moduleName } = rowData;
       form.setFieldsValue({
         moduleName,
       });
-      setTitle('新增菜单');
+      setTitle('新增API');
     }
     setRowData1(rowData);
   }, [rowData]);
@@ -110,7 +110,7 @@ const AccessMenuModal = (props: Props) => {
 
   // 取消
   const handleModifyCancel = () => {
-    setIsAccessMenusVisible(false);
+    setIsAccessApiVisible(false);
     form.resetFields();
   };
 
@@ -118,7 +118,7 @@ const AccessMenuModal = (props: Props) => {
     <>
       <Modal
         title={title}
-        visible={isAccessMenusVisible}
+        visible={isAccessApiVisible}
         onOk={handleModifyOk}
         onCancel={handleModifyCancel}
       >
@@ -173,4 +173,4 @@ const AccessMenuModal = (props: Props) => {
   );
 };
 
-export default AccessMenuModal;
+export default AccessApiModal;
