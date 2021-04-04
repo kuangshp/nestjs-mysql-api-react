@@ -94,24 +94,36 @@ const AccessApiModal = (props: Props) => {
   const handleModifyOk = () => {
     // 提交数据中不重复提交
     if (loading || loading1) return;
-    form.validateFields(['url', 'method', 'sort', 'status', 'description']).then(values => {
-      const { url, method, sort, status, description } = values;
-      const parentId = isNew ? rowData1!.id : rowData1!.parentId;
-      // 编辑提交
-      if (!isNew) {
-        run1(Number(rowData1!.id), {
-          type: AccessTypeEnum.API,
-          url,
-          method,
-          sort,
-          status,
-          description,
-        });
-      } else {
-        // 提交新增数据
-        run({ type: AccessTypeEnum.API, parentId, url, method, sort, status, description });
-      }
-    });
+    form
+      .validateFields(['actionName', 'url', 'method', 'sort', 'status', 'description'])
+      .then(values => {
+        const { actionName, url, method, sort, status, description } = values;
+        const parentId = isNew ? rowData1!.id : rowData1!.parentId;
+        // 编辑提交
+        if (!isNew) {
+          run1(Number(rowData1!.id), {
+            type: AccessTypeEnum.API,
+            actionName,
+            url,
+            method,
+            sort,
+            status,
+            description,
+          });
+        } else {
+          // 提交新增数据
+          run({
+            type: AccessTypeEnum.API,
+            actionName,
+            parentId,
+            url,
+            method,
+            sort,
+            status,
+            description,
+          });
+        }
+      });
   };
 
   // 取消

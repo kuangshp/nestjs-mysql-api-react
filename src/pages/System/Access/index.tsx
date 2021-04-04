@@ -89,13 +89,36 @@ const Access = () => {
 
   // 模块表格
   const columns = [
-    { title: '模块名称', dataIndex: 'moduleName', key: 'moduleName' },
-    { title: '图标', dataIndex: 'icon', key: 'icon' },
-    { title: '排序', dataIndex: 'sort', key: 'sort' },
-    { title: '状态', dataIndex: 'type', key: 'type' },
-    { title: '描素', dataIndex: 'description', key: 'description' },
+    {
+      title: '模块名称',
+      dataIndex: 'moduleName',
+      align: 'right' as const,
+    },
+    {
+      title: '图标',
+      dataIndex: 'icon',
+      align: 'right' as const,
+    },
+    {
+      title: '排序',
+      dataIndex: 'sort',
+      align: 'center' as const,
+    },
+    {
+      title: '状态',
+      dataIndex: 'type',
+      align: 'center' as const,
+    },
+    {
+      title: '描素',
+      dataIndex: 'description',
+      key: 'description',
+      align: 'right' as const,
+    },
     {
       title: '操作',
+      align: 'center' as const,
+      width: 150,
       render: (_: any, record: AccessResDto) => (
         <Space size="middle">
           <Button type="primary" onClick={() => modifyModuleHandler(record)}>

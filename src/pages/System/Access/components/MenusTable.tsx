@@ -60,14 +60,40 @@ const MenusTable = (props: Props) => {
   };
 
   const columns = [
-    { title: '菜单', dataIndex: 'actionName' },
-    { title: 'url地址', dataIndex: 'url' },
-    { title: '图标', dataIndex: 'icon' },
-    { title: '排序', dataIndex: 'sort' },
-    { title: '状态', dataIndex: 'status' },
-    { title: '描素', dataIndex: 'description' },
+    {
+      title: '菜单',
+      dataIndex: 'actionName',
+      align: 'right' as const,
+    },
+    {
+      title: 'url地址',
+      dataIndex: 'url',
+      align: 'right' as const,
+    },
+    {
+      title: '图标',
+      dataIndex: 'icon',
+      align: 'right' as const,
+    },
+    {
+      title: '排序',
+      dataIndex: 'sort',
+      align: 'center' as const,
+    },
+    {
+      title: '状态',
+      dataIndex: 'status',
+      align: 'center' as const,
+    },
+    {
+      title: '描素',
+      dataIndex: 'description',
+      align: 'right' as const,
+    },
     {
       title: '操作',
+      align: 'center' as const,
+      width: 150,
       render: (_: any, record: AccessReqDto) => (
         <Space size="middle">
           <Button type="primary" onClick={() => modifyMenuHandler(record)}>
