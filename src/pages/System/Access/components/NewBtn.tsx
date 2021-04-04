@@ -1,6 +1,6 @@
 import React, { useState, PropsWithChildren } from 'react';
 import { Button } from 'antd';
-import AccessModal from './AccessModal';
+import AccessModuleModal from './AccessModuleModal';
 
 type Props = PropsWithChildren<{
   loadData: () => void;
@@ -16,7 +16,7 @@ const NewBtn = (props: Props) => {
       <Button type="primary" onClick={createNewAccessHandler}>
         新增模块
       </Button>
-      <AccessModal
+      <AccessModuleModal
         loadData={loadData}
         isAccessModalVisible={isAccessModalVisible}
         setIsAccessModalVisible={setIsAccessModalVisible}
