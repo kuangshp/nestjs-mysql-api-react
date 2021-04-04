@@ -7,6 +7,8 @@ import { DEFAULT_PAGE_SIZE } from 'src/constants';
 import NewBtn from './components/NewBtn';
 import MenusTable from './components/MenusTable';
 import AccessModuleModal from './components/AccessModuleModal';
+import AccessMenuModal from './components/AccessMenuModal';
+import { AccessResDto } from './types/access.res.dto';
 const { confirm } = Modal;
 // 统一获取数据方法
 const getTableData = async (queryOptions?: any) => {
@@ -31,7 +33,8 @@ const Access = () => {
   // 展开模块的
   const [expandedModuleRowKeys, setExpandedModuleRowKeys] = useState([]);
   const [isAccessModalVisible, setIsAccessModalVisible] = useState<boolean>(false);
-  const [rowData, setRowData] = useState();
+  const [isAccessMenusVisible, setIsAccessMenusVisible] = useState<boolean>(false);
+  const [rowData, setRowData] = useState<AccessResDto>();
   // 获取模块数据
   const { tableProps: moduleTableData, search } = useAntdTable(getModuleData, {
     defaultPageSize: DEFAULT_PAGE_SIZE, // 默认请求页数
@@ -39,7 +42,7 @@ const Access = () => {
   });
   const { reset } = search || {};
   // 展开模块获取菜单
-  const onExpandHandler = async (expanded: boolean, record: any) => {
+  const onExpandHandler = async (expanded: boolean, record: AccessResDto) => {
     const temp: any = [];
     if (expanded) {
       const { data, total } = await getTableData({ parentId: record!.id });
@@ -51,13 +54,19 @@ const Access = () => {
   };
 
   // 编辑行
-  const modifyModuleHandler = (rowData: any) => {
+  const modifyModuleHandler = (rowData: AccessResDto) => {
     setRowData(rowData);
     setIsAccessModalVisible(true);
   };
 
+  // 新增菜单
+  const createMenuHandler = (rowData: AccessResDto) => {
+    setRowData(rowData);
+    setIsAccessMenusVisible(true);
+  };
+
   // 删除行
-  const deleteRowModuleHandler = (rowData: any) => {
+  const deleteRowModuleHandler = (rowData: AccessResDto) => {
     confirm({
       icon: <ExclamationCircleOutlined />,
       content: <h3>您确定要删除该条数据？</h3>,
@@ -80,12 +89,14 @@ const Access = () => {
     { title: '描素', dataIndex: 'description', key: 'description' },
     {
       title: '操作',
-      render: (_: any, record: any) => (
+      render: (_: any, record: AccessResDto) => (
         <Space size="middle">
           <Button type="primary" onClick={() => modifyModuleHandler(record)}>
             编辑
           </Button>
-          <Button type="primary">新增菜单</Button>
+          <Button type="primary" onClick={() => createMenuHandler(record)}>
+            新增菜单
+          </Button>
           <Button type="primary" danger onClick={() => deleteRowModuleHandler(record)}>
             删除
           </Button>
@@ -113,6 +124,13 @@ const Access = () => {
         rowData={rowData}
         isAccessModalVisible={isAccessModalVisible}
         setIsAccessModalVisible={setIsAccessModalVisible}
+      />
+      <AccessMenuModal
+        loadData={reset}
+        rowData={rowData}
+        isNew={true}
+        isAccessMenusVisible={isAccessMenusVisible}
+        setIsAccessMenusVisible={setIsAccessMenusVisible}
       />
     </div>
   );

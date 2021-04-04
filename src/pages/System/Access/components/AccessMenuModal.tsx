@@ -3,18 +3,19 @@ import { Modal, Form, Input, Select } from 'antd';
 import { useRequest } from 'ahooks';
 import AccessService from 'src/services/system/access';
 import { AccessReqDto } from '../types/access.req.dto';
-
+import { AccessResDto } from './../types/access.res.dto';
 const { Option } = Select;
 
 const layout = {
-  labelCol: { span: 4 },
-  wrapperCol: { span: 20 },
+  labelCol: { span: 6 },
+  wrapperCol: { span: 18 },
 };
 
 type Props = PropsWithChildren<{
-  isAccessModalVisible: boolean;
-  setIsAccessModalVisible: (flag: boolean) => void;
-  rowData?: any;
+  isAccessMenusVisible: boolean;
+  setIsAccessMenusVisible: (flag: boolean) => void;
+  isNew?: boolean;
+  rowData: AccessResDto | undefined;
   loadData: () => void;
 }>;
 
@@ -35,17 +36,17 @@ const modifyAccessHandler = async (id: number, params: AccessReqDto) => {
   });
 };
 
-const AccessModuleModal = (props: Props) => {
-  const { isAccessModalVisible, setIsAccessModalVisible, rowData, loadData } = props;
-  const [rowId, setRowId] = useState<number | null>();
-  const [title, setTitle] = useState<string>('新增模块');
+const AccessMenuModal = (props: Props) => {
+  const { isAccessMenusVisible, setIsAccessMenusVisible, rowData, loadData, isNew } = props;
+  const [rowData1, setRowData1] = useState<AccessResDto>();
+  const [title, setTitle] = useState<string>('新增菜单');
   const [form] = Form.useForm();
 
   const { run, loading } = useRequest(createAccessHandler, {
     manual: true,
     onSuccess: result => {
       if (result) {
-        setIsAccessModalVisible(false);
+        setIsAccessMenusVisible(false);
         // 告知父组件更新数据
         loadData();
         form.resetFields();
@@ -57,7 +58,7 @@ const AccessModuleModal = (props: Props) => {
     manual: true,
     onSuccess: result => {
       if (result) {
-        setIsAccessModalVisible(false);
+        setIsAccessMenusVisible(false);
         // 告知父组件更新数据
         loadData();
         form.resetFields();
@@ -66,44 +67,49 @@ const AccessModuleModal = (props: Props) => {
   });
 
   useEffect(() => {
-    if (rowData) {
-      const { moduleName, icon, sort, status, description } = rowData;
+    if (!rowData) return;
+    if (!isNew) {
+      const { actionName, url, icon, sort, status, description } = rowData;
       form.setFieldsValue({
-        moduleName,
+        actionName,
+        url,
         icon,
         sort,
         description,
         status: String(status),
       });
-      setTitle('编辑模块');
-      setRowId(rowData.id);
+      setTitle('编辑菜单');
     } else {
-      setTitle('新增模块');
-      form.resetFields();
-      setRowId(null);
+      const { moduleName } = rowData;
+      form.setFieldsValue({
+        moduleName,
+      });
+      setTitle('新增菜单');
     }
+    setRowData1(rowData);
   }, [rowData]);
   // 提交
   const handleModifyOk = () => {
     // 提交数据中不重复提交
     if (loading || loading1) return;
-    form.validateFields(['moduleName', 'icon', 'sort', 'status', 'description']).then(values => {
-      const { moduleName, icon, sort, status, description } = values;
-      console.log(rowId, '11');
-      // 根据当前是否有id区分是新增还是编辑
-      if (rowId) {
-        console.log('11');
-        run1(rowId, { type: 1, moduleName, icon, sort, status, description });
-      } else {
-        // 提交数据
-        // run({ type: 1, moduleName, icon, sort, status, description });
-      }
-    });
+    form
+      .validateFields(['actionName', 'url', 'icon', 'sort', 'status', 'description'])
+      .then(values => {
+        const { actionName, url, icon, sort, status, description } = values;
+        const parentId = isNew ? rowData1!.id : rowData1!.parentId;
+        // 编辑提交
+        if (!isNew) {
+          run1(Number(rowData1!.id), { type: 2, actionName, url, icon, sort, status, description });
+        } else {
+          // 提交新增数据
+          run({ type: 2, parentId, actionName, url, icon, sort, status, description });
+        }
+      });
   };
 
   // 取消
   const handleModifyCancel = () => {
-    setIsAccessModalVisible(false);
+    setIsAccessMenusVisible(false);
     form.resetFields();
   };
 
@@ -111,25 +117,42 @@ const AccessModuleModal = (props: Props) => {
     <>
       <Modal
         title={title}
-        visible={isAccessModalVisible}
+        visible={isAccessMenusVisible}
         onOk={handleModifyOk}
         onCancel={handleModifyCancel}
       >
         <Form form={form} {...layout}>
+          {isNew && (
+            <Form.Item name="moduleName" label="模块名称">
+              <Input placeholder="请输入模块名称" />
+            </Form.Item>
+          )}
           <Form.Item
-            name="moduleName"
-            label="模块名称"
+            name="actionName"
+            label="菜单名称"
             rules={[
               {
                 required: true,
-                message: '请输入模块名称',
+                message: '请输入菜单名称',
               },
             ]}
           >
-            <Input placeholder="请输入模块名称" />
+            <Input placeholder="请输入菜单名称" />
           </Form.Item>
-          <Form.Item name="icon" label="模块图标">
-            <Input placeholder="请输入模块图标" />
+          <Form.Item
+            name="url"
+            label="菜单url地址"
+            rules={[
+              {
+                required: true,
+                message: '请输入菜单url地址',
+              },
+            ]}
+          >
+            <Input placeholder="请输入菜单url地址" />
+          </Form.Item>
+          <Form.Item name="icon" label="菜单图标">
+            <Input placeholder="请输入菜单图标" />
           </Form.Item>
           <Form.Item name="status" label="状态">
             <Select placeholder="请选择状态" allowClear>
@@ -137,8 +160,8 @@ const AccessModuleModal = (props: Props) => {
               <Option value="0">禁用</Option>
             </Select>
           </Form.Item>
-          <Form.Item name="sort" label="模块排序">
-            <Input placeholder="请输入模块排序" />
+          <Form.Item name="sort" label="菜单排序">
+            <Input placeholder="请输入菜单排序" />
           </Form.Item>
           <Form.Item name="description" label="描素">
             <Input.TextArea />
@@ -149,4 +172,4 @@ const AccessModuleModal = (props: Props) => {
   );
 };
 
-export default AccessModuleModal;
+export default AccessMenuModal;

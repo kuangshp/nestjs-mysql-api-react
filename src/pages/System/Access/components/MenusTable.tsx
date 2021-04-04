@@ -1,9 +1,10 @@
 import React, { PropsWithChildren, useState } from 'react';
 import { Space, Button, Table } from 'antd';
 import AccessService from 'src/services/system/access';
-import AccessModuleModal from './AccessModuleModal';
+import AccessMenuModal from './AccessMenuModal';
 
 import ApiTable from './ApiTable';
+import { AccessResDto } from '../types/access.res.dto';
 
 type Props = PropsWithChildren<{
   menusTableData: any;
@@ -19,12 +20,17 @@ const getTableData = async (queryOptions?: any) => {
 const MenusTable = (props: Props) => {
   const { menusTableData, loadData } = props;
 
-  const [isAccessModalVisible, setIsAccessModalVisible] = useState<boolean>(false);
+  const [isAccessMenusVisible, setIsAccessMenusVisible] = useState<boolean>(false);
   // 展开菜单的
   const [expandedMenusRowKeys, setExpandedMenusRowKeys] = useState([]);
   // api接口数据
   const [apiTableData, setApiTableData] = useState([]);
-  const [rowData, setRowData] = useState();
+  const [rowData, setRowData] = useState<AccessResDto>();
+  // 编辑行
+  const modifyMenuHandler = (rowData: any) => {
+    setRowData(rowData);
+    setIsAccessMenusVisible(true);
+  };
 
   const columns = [
     { title: '菜单', dataIndex: 'actionName' },
@@ -33,9 +39,11 @@ const MenusTable = (props: Props) => {
     { title: '排序', dataIndex: 'sort' },
     {
       title: '操作',
-      render: () => (
+      render: (_: any, record: any) => (
         <Space size="middle">
-          <Button type="primary">编辑</Button>
+          <Button type="primary" onClick={() => modifyMenuHandler(record)}>
+            编辑
+          </Button>
           <Button type="primary">新增接口</Button>
           <Button type="primary" danger>
             删除
@@ -71,10 +79,11 @@ const MenusTable = (props: Props) => {
         rowKey="id"
         onExpand={onExpandMenusHandler}
       />
-      <AccessModuleModal
+      <AccessMenuModal
         loadData={loadData}
-        isAccessModalVisible={isAccessModalVisible}
-        setIsAccessModalVisible={setIsAccessModalVisible}
+        rowData={rowData}
+        isAccessMenusVisible={isAccessMenusVisible}
+        setIsAccessMenusVisible={setIsAccessMenusVisible}
       />
     </>
   );
