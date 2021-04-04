@@ -1,13 +1,13 @@
 import React, { useState, useEffect, PropsWithChildren } from 'react';
-import { Table, Badge, Dropdown, Space, Button } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
+import { Table, Badge, Dropdown, Space, Button, Modal, message } from 'antd';
+import { DownOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import AccessService from 'src/services/system/access';
 import useAntdTable, { PaginatedParams } from 'ahooks/lib/useAntdTable';
 import { DEFAULT_PAGE_SIZE } from 'src/constants';
 import NewBtn from './components/NewBtn';
 import MenusTable from './components/MenusTable';
 import AccessModuleModal from './components/AccessModuleModal';
-
+const { confirm } = Modal;
 // 统一获取数据方法
 const getTableData = async (queryOptions?: any) => {
   const { data, total } = await AccessService.accessListByParentId(queryOptions);
@@ -51,10 +51,26 @@ const Access = () => {
   };
 
   // 编辑行
-  const modifyModuleHandler = (record: any) => {
-    setRowData(record);
+  const modifyModuleHandler = (rowData: any) => {
+    setRowData(rowData);
     setIsAccessModalVisible(true);
   };
+
+  // 删除行
+  const deleteRowModuleHandler = (rowData: any) => {
+    confirm({
+      icon: <ExclamationCircleOutlined />,
+      content: <h3>您确定要删除该条数据？</h3>,
+      async onOk() {
+        const result = await AccessService.deleteAccessById(rowData.id);
+        if (result) {
+          message.success(result);
+          reset();
+        }
+      },
+    });
+  };
+
   // 模块表格
   const columns = [
     { title: '模块名称', dataIndex: 'moduleName', key: 'moduleName' },
@@ -70,7 +86,7 @@ const Access = () => {
             编辑
           </Button>
           <Button type="primary">新增菜单</Button>
-          <Button type="primary" danger>
+          <Button type="primary" danger onClick={() => deleteRowModuleHandler(record)}>
             删除
           </Button>
         </Space>
