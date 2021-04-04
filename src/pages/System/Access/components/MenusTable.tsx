@@ -1,11 +1,13 @@
 import React, { PropsWithChildren, useState } from 'react';
 import { Space, Button, Table } from 'antd';
 import AccessService from 'src/services/system/access';
+import AccessModuleModal from './AccessModuleModal';
 
 import ApiTable from './ApiTable';
 
 type Props = PropsWithChildren<{
   menusTableData: any;
+  loadData: () => void;
 }>;
 
 // 统一获取数据方法
@@ -15,11 +17,14 @@ const getTableData = async (queryOptions?: any) => {
 };
 
 const MenusTable = (props: Props) => {
-  const { menusTableData } = props;
+  const { menusTableData, loadData } = props;
+
+  const [isAccessModalVisible, setIsAccessModalVisible] = useState<boolean>(false);
   // 展开菜单的
   const [expandedMenusRowKeys, setExpandedMenusRowKeys] = useState([]);
   // api接口数据
   const [apiTableData, setApiTableData] = useState([]);
+  const [rowData, setRowData] = useState();
 
   const columns = [
     { title: '菜单', dataIndex: 'actionName' },
@@ -54,17 +59,24 @@ const MenusTable = (props: Props) => {
   };
 
   return (
-    <Table
-      columns={columns}
-      dataSource={menusTableData}
-      pagination={false}
-      expandedRowKeys={expandedMenusRowKeys}
-      expandable={{
-        expandedRowRender: _ => <ApiTable apiTableData={apiTableData} />,
-      }}
-      rowKey="id"
-      onExpand={onExpandMenusHandler}
-    />
+    <>
+      <Table
+        columns={columns}
+        dataSource={menusTableData}
+        pagination={false}
+        expandedRowKeys={expandedMenusRowKeys}
+        expandable={{
+          expandedRowRender: _ => <ApiTable apiTableData={apiTableData} />,
+        }}
+        rowKey="id"
+        onExpand={onExpandMenusHandler}
+      />
+      <AccessModuleModal
+        loadData={loadData}
+        isAccessModalVisible={isAccessModalVisible}
+        setIsAccessModalVisible={setIsAccessModalVisible}
+      />
+    </>
   );
 };
 

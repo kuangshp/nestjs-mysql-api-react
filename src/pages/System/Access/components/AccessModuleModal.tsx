@@ -27,10 +27,18 @@ const createAccessHandler = async (postData: AccessReqDto) => {
   });
 };
 
+const modifyAccessHandler = async (id: number, params: AccessReqDto) => {
+  const result = await AccessService.modifyAccessById(id, params);
+  if (!result) return;
+  return new Promise(resolve => {
+    resolve(true);
+  });
+};
+
 const AccessModuleModal = (props: Props) => {
   const { isAccessModalVisible, setIsAccessModalVisible, rowData, loadData } = props;
   const [rowId, setRowId] = useState<number | null>();
-  const [title, setTitle] = useState<string>('新增账号');
+  const [title, setTitle] = useState<string>('新增模块');
   const [form] = Form.useForm();
 
   const { run, loading } = useRequest(createAccessHandler, {
@@ -45,36 +53,51 @@ const AccessModuleModal = (props: Props) => {
     },
   });
 
-  // useEffect(() => {
-  //   if (rowData) {
-  //     const { username, mobile, email, status, platform } = rowData;
-  //     form.setFieldsValue({
-  //       username,
-  //       mobile,
-  //       email,
-  //       status: String(status),
-  //       platform: String(platform),
-  //     });
-  //     setTitle('编辑账号');
-  //     setRowId(rowData.id);
-  //   } else {
-  //     setTitle('新增账号');
-  //     form.resetFields();
-  //     setRowId(null);
-  //   }
-  // }, [rowData]);
+  const { run: run1, loading: loading1 } = useRequest(modifyAccessHandler, {
+    manual: true,
+    onSuccess: result => {
+      if (result) {
+        setIsAccessModalVisible(false);
+        // 告知父组件更新数据
+        loadData();
+        form.resetFields();
+      }
+    },
+  });
+
+  useEffect(() => {
+    console.log(rowData, '??');
+    if (rowData) {
+      const { moduleName, icon, sort, status, description } = rowData;
+      form.setFieldsValue({
+        moduleName,
+        icon,
+        sort,
+        description,
+        status: String(status),
+      });
+      setTitle('编辑模块');
+      setRowId(rowData.id);
+    } else {
+      setTitle('新增模块');
+      form.resetFields();
+      setRowId(null);
+    }
+  }, [rowData]);
   // 提交
   const handleModifyOk = () => {
-    // // 提交数据中不重复提交
-    // if (loading || loading1) return;
-    form.validateFields(['username', 'mobile', 'email', 'status', 'platform']).then(values => {
+    // 提交数据中不重复提交
+    if (loading || loading1) return;
+    form.validateFields(['moduleName', 'icon', 'sort', 'status', 'description']).then(values => {
       const { moduleName, icon, sort, status, description } = values;
+      console.log(rowId, '11');
       // 根据当前是否有id区分是新增还是编辑
       if (rowId) {
-        // run1(rowId, { username, mobile, email, status, platform });
+        console.log('11');
+        run1(rowId, { type: 1, moduleName, icon, sort, status, description });
       } else {
         // 提交数据
-        run({ type: 1, moduleName, icon, sort, status, description });
+        // run({ type: 1, moduleName, icon, sort, status, description });
       }
     });
   };
