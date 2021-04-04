@@ -37,6 +37,7 @@ const MenusTable = (props: Props) => {
     { title: 'url地址', dataIndex: 'url' },
     { title: '图标', dataIndex: 'icon' },
     { title: '排序', dataIndex: 'sort' },
+    { title: '描素', dataIndex: 'description' },
     {
       title: '操作',
       render: (_: any, record: any) => (

@@ -67,6 +67,7 @@ const AccessMenuModal = (props: Props) => {
   });
 
   useEffect(() => {
+    console.log(rowData, '菜单中');
     if (!rowData) return;
     if (!isNew) {
       const { actionName, url, icon, sort, status, description } = rowData;
