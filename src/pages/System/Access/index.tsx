@@ -21,6 +21,32 @@ const getModuleData = async ({ current, pageSize }: PaginatedParams[0]): Promise
     list: data,
   };
 };
+
+function ExpandedRowRenderApi() {
+  const columns = [
+    { title: '接口名称', dataIndex: 'actionName' },
+    { title: '请求方式', dataIndex: 'method' },
+    { title: 'url地址', dataIndex: 'url' },
+    {
+      title: '操作',
+      render: () => (
+        <Space size="middle">
+          <Button type="primary">编辑</Button>
+          <Button type="primary" danger>
+            删除
+          </Button>
+        </Space>
+      ),
+    },
+  ];
+  const apiTableData = [];
+  return (
+    <div>
+      <Table columns={columns} dataSource={apiTableData} pagination={false} rowKey="id" />
+    </div>
+  );
+}
+
 function NestedTable() {
   const [menusTableData, setMenusTableData] = useState([]);
   const [defaultExpandedRowKeys, setDefaultExpandedRowKeys] = useState([]);
@@ -30,17 +56,18 @@ function NestedTable() {
     defaultPageSize: DEFAULT_PAGE_SIZE, // 默认请求页数
     cacheKey: 'tableProps',
   });
-
-  const fetData = async (parentId: number) => {
+  // 获取菜单路由
+  const fetMenusData = async (parentId: number) => {
     const { data, total } = await getTableData({ parentId });
     setMenusTableData(data);
     return { data, total };
   };
 
+  // 展开模块获取菜单
   const onExpandHandler = (expanded: boolean, record: any) => {
     const temp: any = [];
     if (expanded) {
-      fetData(record.id);
+      fetMenusData(record.id);
       temp.push(record.id);
     }
     setDefaultExpandedRowKeys(temp);
@@ -66,7 +93,15 @@ function NestedTable() {
       },
     ];
 
-    return <Table columns={columns} dataSource={menusTableData} pagination={false} rowKey="id" />;
+    return (
+      <Table
+        columns={columns}
+        dataSource={menusTableData}
+        pagination={false}
+        expandable={{ expandedRowRender: _ => <ExpandedRowRenderApi /> }}
+        rowKey="id"
+      />
+    );
   };
   // 模块表格
   const columns = [
