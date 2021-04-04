@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, PropsWithChildren } from 'react';
 import { Table, Badge, Dropdown, Space, Button } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import AccessService from 'src/services/system/access';
@@ -22,7 +22,11 @@ const getModuleData = async ({ current, pageSize }: PaginatedParams[0]): Promise
   };
 };
 
-function ExpandedRowRenderApi() {
+type Props = PropsWithChildren<{
+  apiTableData: any;
+}>;
+function ExpandedRowRenderApi(props: Props) {
+  const { apiTableData } = props;
   const columns = [
     { title: '接口名称', dataIndex: 'actionName' },
     { title: '请求方式', dataIndex: 'method' },
@@ -39,7 +43,6 @@ function ExpandedRowRenderApi() {
       ),
     },
   ];
-  const apiTableData = [];
   return (
     <div>
       <Table columns={columns} dataSource={apiTableData} pagination={false} rowKey="id" />
@@ -53,35 +56,34 @@ function NestedTable() {
   const [expandedModuleRowKeys, setExpandedModuleRowKeys] = useState([]);
   // 展开菜单的
   const [expandedMenusRowKeys, setExpandedMenusRowKeys] = useState([]);
-
+  const [apiTableData, setApiTableData] = useState([]);
   // 获取模块数据
   const { tableProps: moduleTableData } = useAntdTable(getModuleData, {
     defaultPageSize: DEFAULT_PAGE_SIZE, // 默认请求页数
     cacheKey: 'tableProps',
   });
-  // 获取菜单路由
-  const fetMenusData = async (parentId: number) => {
-    const { data, total } = await getTableData({ parentId });
-    setMenusTableData(data);
-    return { data, total };
-  };
 
   // 展开模块获取菜单
-  const onExpandHandler = (expanded: boolean, record: any) => {
+  const onExpandHandler = async (expanded: boolean, record: any) => {
     const temp: any = [];
     if (expanded) {
-      fetMenusData(record.id);
+      const { data, total } = await getTableData({ parentId: record!.id });
+      setMenusTableData(data);
+      console.log(total);
       temp.push(record.id);
     }
     setExpandedModuleRowKeys(temp);
   };
 
   // 展开菜单
-  const onExpandMenusHandler = (expanded: boolean, record: any) => {
+  const onExpandMenusHandler = async (expanded: boolean, record: any) => {
     console.log('展开菜单,查询全部的api');
     const temp: any = [];
     if (expanded) {
       temp.push(record.id);
+      const { data, total } = await getTableData({ parentId: record!.id });
+      setApiTableData(data);
+      console.log(data, total);
     }
     setExpandedMenusRowKeys(temp);
   };
@@ -113,7 +115,9 @@ function NestedTable() {
         dataSource={menusTableData}
         pagination={false}
         expandedRowKeys={expandedMenusRowKeys}
-        expandable={{ expandedRowRender: _ => <ExpandedRowRenderApi /> }}
+        expandable={{
+          expandedRowRender: _ => <ExpandedRowRenderApi apiTableData={apiTableData} />,
+        }}
         rowKey="id"
         onExpand={onExpandMenusHandler}
       />
@@ -144,6 +148,7 @@ function NestedTable() {
     <Table
       className="components-table-demo-nested"
       rowKey="id"
+      bordered
       columns={columns}
       expandable={{ expandedRowRender }}
       expandedRowKeys={expandedModuleRowKeys}
