@@ -1,6 +1,6 @@
-import React, { useState, useEffect, PropsWithChildren } from 'react';
-import { Table, Badge, Dropdown, Space, Button, Modal, message } from 'antd';
-import { DownOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
+import React, { useState } from 'react';
+import { Table, Space, Button, Modal, message } from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 import AccessService from 'src/services/system/access';
 import useAntdTable, { PaginatedParams } from 'ahooks/lib/useAntdTable';
 import { DEFAULT_PAGE_SIZE } from 'src/constants';
