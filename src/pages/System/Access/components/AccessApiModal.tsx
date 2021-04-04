@@ -4,6 +4,7 @@ import { useRequest } from 'ahooks';
 import AccessService from 'src/services/system/access';
 import { AccessReqDto } from '../types/access.req.dto';
 import { AccessResDto } from './../types/access.res.dto';
+import { AccessTypeEnum } from 'src/enums';
 const { Option } = Select;
 
 const layout = {
@@ -93,19 +94,24 @@ const AccessApiModal = (props: Props) => {
   const handleModifyOk = () => {
     // 提交数据中不重复提交
     if (loading || loading1) return;
-    form
-      .validateFields(['actionName', 'url', 'icon', 'sort', 'status', 'description'])
-      .then(values => {
-        const { actionName, url, icon, sort, status, description } = values;
-        const parentId = isNew ? rowData1!.id : rowData1!.parentId;
-        // 编辑提交
-        if (!isNew) {
-          run1(Number(rowData1!.id), { type: 2, actionName, url, icon, sort, status, description });
-        } else {
-          // 提交新增数据
-          run({ type: 2, parentId, actionName, url, icon, sort, status, description });
-        }
-      });
+    form.validateFields(['url', 'method', 'sort', 'status', 'description']).then(values => {
+      const { url, method, sort, status, description } = values;
+      const parentId = isNew ? rowData1!.id : rowData1!.parentId;
+      // 编辑提交
+      if (!isNew) {
+        run1(Number(rowData1!.id), {
+          type: AccessTypeEnum.API,
+          url,
+          method,
+          sort,
+          status,
+          description,
+        });
+      } else {
+        // 提交新增数据
+        run({ type: AccessTypeEnum.API, parentId, url, method, sort, status, description });
+      }
+    });
   };
 
   // 取消
@@ -123,46 +129,40 @@ const AccessApiModal = (props: Props) => {
         onCancel={handleModifyCancel}
       >
         <Form form={form} {...layout}>
-          {isNew && (
-            <Form.Item name="moduleName" label="模块名称">
-              <Input placeholder="请输入模块名称" />
-            </Form.Item>
-          )}
-          <Form.Item
-            name="actionName"
-            label="菜单名称"
-            rules={[
-              {
-                required: true,
-                message: '请输入菜单名称',
-              },
-            ]}
-          >
+          <Form.Item name="actionName" label="菜单名称">
             <Input placeholder="请输入菜单名称" />
           </Form.Item>
           <Form.Item
             name="url"
-            label="菜单url地址"
+            label="url地址"
             rules={[
               {
                 required: true,
-                message: '请输入菜单url地址',
+                message: '请输入url地址',
               },
             ]}
           >
-            <Input placeholder="请输入菜单url地址" />
+            <Input placeholder="请输入url地址" />
           </Form.Item>
-          <Form.Item name="icon" label="菜单图标">
-            <Input placeholder="请输入菜单图标" />
-          </Form.Item>
-          <Form.Item name="status" label="状态">
-            <Select placeholder="请选择状态" allowClear>
-              <Option value="1">正常</Option>
-              <Option value="0">禁用</Option>
+          <Form.Item
+            name="method"
+            label="请求方式"
+            rules={[
+              {
+                required: true,
+                message: '请选择请求方式',
+              },
+            ]}
+          >
+            <Select placeholder="请选择请求方式" allowClear>
+              <Option value="Get">GET</Option>
+              <Option value="Post">POST</Option>
+              <Option value="Patch">POST</Option>
+              <Option value="Delete">DELETE</Option>
             </Select>
           </Form.Item>
-          <Form.Item name="sort" label="菜单排序">
-            <Input placeholder="请输入菜单排序" />
+          <Form.Item name="sort" label="接口排序">
+            <Input placeholder="请输入接口排序" />
           </Form.Item>
           <Form.Item name="description" label="描素">
             <Input.TextArea />

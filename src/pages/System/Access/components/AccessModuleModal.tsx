@@ -3,6 +3,7 @@ import { Modal, Form, Input, Select } from 'antd';
 import { useRequest } from 'ahooks';
 import AccessService from 'src/services/system/access';
 import { AccessReqDto } from '../types/access.req.dto';
+import { AccessTypeEnum } from 'src/enums';
 
 const { Option } = Select;
 
@@ -89,14 +90,12 @@ const AccessModuleModal = (props: Props) => {
     if (loading || loading1) return;
     form.validateFields(['moduleName', 'icon', 'sort', 'status', 'description']).then(values => {
       const { moduleName, icon, sort, status, description } = values;
-      console.log(rowId, '11');
       // 根据当前是否有id区分是新增还是编辑
       if (rowId) {
-        console.log('11');
-        run1(rowId, { type: 1, moduleName, icon, sort, status, description });
+        run1(rowId, { type: AccessTypeEnum.MODULE, moduleName, icon, sort, status, description });
       } else {
         // 提交数据
-        // run({ type: 1, moduleName, icon, sort, status, description });
+        run({ type: AccessTypeEnum.MODULE, moduleName, icon, sort, status, description });
       }
     });
   };

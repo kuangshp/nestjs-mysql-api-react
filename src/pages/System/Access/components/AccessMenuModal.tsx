@@ -4,6 +4,7 @@ import { useRequest } from 'ahooks';
 import AccessService from 'src/services/system/access';
 import { AccessReqDto } from '../types/access.req.dto';
 import { AccessResDto } from './../types/access.res.dto';
+import { AccessTypeEnum } from 'src/enums';
 const { Option } = Select;
 
 const layout = {
@@ -99,10 +100,27 @@ const AccessMenuModal = (props: Props) => {
         const parentId = isNew ? rowData1!.id : rowData1!.parentId;
         // 编辑提交
         if (!isNew) {
-          run1(Number(rowData1!.id), { type: 2, actionName, url, icon, sort, status, description });
+          run1(Number(rowData1!.id), {
+            type: AccessTypeEnum.MENUS,
+            actionName,
+            url,
+            icon,
+            sort,
+            status,
+            description,
+          });
         } else {
           // 提交新增数据
-          run({ type: 2, parentId, actionName, url, icon, sort, status, description });
+          run({
+            type: AccessTypeEnum.MENUS,
+            parentId,
+            actionName,
+            url,
+            icon,
+            sort,
+            status,
+            description,
+          });
         }
       });
   };
