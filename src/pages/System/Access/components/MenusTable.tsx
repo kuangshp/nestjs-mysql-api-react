@@ -9,6 +9,8 @@ import { AccessResDto } from '../types/access.res.dto';
 import { AccessReqDto } from '../types/access.req.dto';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { StatusEnum } from 'src/enums';
+import yesImg from 'src/assets/images/yes.gif';
+import noImg from 'src/assets/images/no.gif';
 
 const { confirm } = Modal;
 
@@ -87,11 +89,11 @@ const MenusTable = (props: Props) => {
       align: 'center' as const,
       // render: (_: any, record: AccessResDto) => {
       //   if (Object.is(record.status, StatusEnum.FORBIDDEN)) {
-      //     return <Button type="primary" danger>禁用</Button>;
-      //   } else {
-      //     return <Button type="primary">启用</Button>;
+      //     <img src={noImg} />;
+      //   } else if (Object.is(record.status, StatusEnum.NORMAL)) {
+      //     <img src={yesImg} />;
       //   }
-      // }
+      // },
     },
     {
       title: '描素',

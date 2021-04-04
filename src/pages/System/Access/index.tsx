@@ -10,6 +10,9 @@ import AccessModuleModal from './components/AccessModuleModal';
 import AccessMenuModal from './components/AccessMenuModal';
 import { AccessResDto } from './types/access.res.dto';
 import { StatusEnum } from 'src/enums';
+import yesImg from 'src/assets/images/yes.gif';
+import noImg from 'src/assets/images/no.gif';
+
 const { confirm } = Modal;
 // 统一获取数据方法
 const getTableData = async (queryOptions?: any) => {
@@ -111,13 +114,9 @@ const Access = () => {
       align: 'center' as const,
       render: (_: any, record: AccessResDto) => {
         if (Object.is(record.status, StatusEnum.FORBIDDEN)) {
-          return (
-            <Button type="primary" danger>
-              禁用
-            </Button>
-          );
+          return <img src={noImg} />;
         } else {
-          return <Button type="primary">启用</Button>;
+          return <img src={yesImg} />;
         }
       },
     },
