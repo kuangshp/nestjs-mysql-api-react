@@ -152,7 +152,6 @@ const Access = () => {
         className="access"
         rowKey="id"
         bordered
-        size="small"
         columns={columns}
         expandable={{
           expandedRowRender: _ => (
