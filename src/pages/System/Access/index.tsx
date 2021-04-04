@@ -49,7 +49,10 @@ function ExpandedRowRenderApi() {
 
 function NestedTable() {
   const [menusTableData, setMenusTableData] = useState([]);
-  const [defaultExpandedRowKeys, setDefaultExpandedRowKeys] = useState([]);
+  // 展开模块的
+  const [expandedModuleRowKeys, setExpandedModuleRowKeys] = useState([]);
+  // 展开菜单的
+  const [expandedMenusRowKeys, setExpandedMenusRowKeys] = useState([]);
 
   // 获取模块数据
   const { tableProps: moduleTableData } = useAntdTable(getModuleData, {
@@ -70,7 +73,17 @@ function NestedTable() {
       fetMenusData(record.id);
       temp.push(record.id);
     }
-    setDefaultExpandedRowKeys(temp);
+    setExpandedModuleRowKeys(temp);
+  };
+
+  // 展开菜单
+  const onExpandMenusHandler = (expanded: boolean, record: any) => {
+    console.log('展开菜单,查询全部的api');
+    const temp: any = [];
+    if (expanded) {
+      temp.push(record.id);
+    }
+    setExpandedMenusRowKeys(temp);
   };
 
   // 菜单表格
@@ -85,6 +98,7 @@ function NestedTable() {
         render: () => (
           <Space size="middle">
             <Button type="primary">编辑</Button>
+            <Button type="primary">新增接口</Button>
             <Button type="primary" danger>
               删除
             </Button>
@@ -98,8 +112,10 @@ function NestedTable() {
         columns={columns}
         dataSource={menusTableData}
         pagination={false}
+        expandedRowKeys={expandedMenusRowKeys}
         expandable={{ expandedRowRender: _ => <ExpandedRowRenderApi /> }}
         rowKey="id"
+        onExpand={onExpandMenusHandler}
       />
     );
   };
@@ -130,7 +146,7 @@ function NestedTable() {
       rowKey="id"
       columns={columns}
       expandable={{ expandedRowRender }}
-      expandedRowKeys={defaultExpandedRowKeys}
+      expandedRowKeys={expandedModuleRowKeys}
       {...moduleTableData}
       onExpand={onExpandHandler}
     />
