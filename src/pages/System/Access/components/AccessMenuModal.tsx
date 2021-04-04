@@ -41,7 +41,6 @@ const AccessMenuModal = (props: Props) => {
   const [rowData1, setRowData1] = useState<AccessResDto>();
   const [title, setTitle] = useState<string>('新增菜单');
   const [form] = Form.useForm();
-  console.log(rowData, '???');
   const { run, loading } = useRequest(createAccessHandler, {
     manual: true,
     onSuccess: result => {

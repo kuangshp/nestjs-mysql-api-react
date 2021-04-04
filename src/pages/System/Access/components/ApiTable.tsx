@@ -11,6 +11,7 @@ const ApiTable = (props: Props) => {
     { title: '接口名称', dataIndex: 'actionName' },
     { title: '请求方式', dataIndex: 'method' },
     { title: 'url地址', dataIndex: 'url' },
+    { title: '状态', dataIndex: 'status' },
     {
       title: '操作',
       render: () => (

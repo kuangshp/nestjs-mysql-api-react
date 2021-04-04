@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, useState } from 'react';
-import { Space, Button, Table } from 'antd';
+import { Space, Button, Table, Modal, message } from 'antd';
 import AccessService from 'src/services/system/access';
 import AccessMenuModal from './AccessMenuModal';
 import AccessApiModal from './AccessApiModal';
@@ -7,6 +7,9 @@ import AccessApiModal from './AccessApiModal';
 import ApiTable from './ApiTable';
 import { AccessResDto } from '../types/access.res.dto';
 import { AccessReqDto } from '../types/access.req.dto';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
+
+const { confirm } = Modal;
 
 type Props = PropsWithChildren<{
   menusTableData: any;
@@ -41,11 +44,27 @@ const MenusTable = (props: Props) => {
     setIsAccessApiVisible(true);
   };
 
+  // 删除菜单
+  const deleteMenuHandler = (rowData: any) => {
+    confirm({
+      icon: <ExclamationCircleOutlined />,
+      content: <h3>您确定要删除该条数据？</h3>,
+      async onOk() {
+        const result = await AccessService.deleteAccessById(rowData.id);
+        if (result) {
+          message.success(result);
+          loadData();
+        }
+      },
+    });
+  };
+
   const columns = [
     { title: '菜单', dataIndex: 'actionName' },
     { title: 'url地址', dataIndex: 'url' },
     { title: '图标', dataIndex: 'icon' },
     { title: '排序', dataIndex: 'sort' },
+    { title: '状态', dataIndex: 'status' },
     { title: '描素', dataIndex: 'description' },
     {
       title: '操作',
@@ -57,7 +76,7 @@ const MenusTable = (props: Props) => {
           <Button type="primary" onClick={() => createApiHandler(record)}>
             新增接口
           </Button>
-          <Button type="primary" danger>
+          <Button type="primary" danger onClick={() => deleteMenuHandler(record)}>
             删除
           </Button>
         </Space>
@@ -73,7 +92,6 @@ const MenusTable = (props: Props) => {
       temp.push(record.id);
       const { data, total } = await getTableData({ parentId: record!.id });
       setApiTableData(data);
-      // console.log(data, total);
     }
     setExpandedMenusRowKeys(temp);
   };

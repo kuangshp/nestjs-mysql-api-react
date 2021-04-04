@@ -41,6 +41,7 @@ const Access = () => {
     cacheKey: 'tableProps',
   });
   const { reset } = search || {};
+
   // 展开模块获取菜单
   const onExpandHandler = async (expanded: boolean, record: AccessResDto) => {
     const temp: any = [];
@@ -51,6 +52,12 @@ const Access = () => {
       temp.push(record.id);
     }
     setExpandedModuleRowKeys(temp);
+  };
+
+  // 重新请求菜单接口
+  const loadMenu = async () => {
+    // const { data } = await getTableData({ parentId: rowData!.id });
+    // setMenusTableData(data);
   };
 
   // 编辑行
@@ -113,7 +120,9 @@ const Access = () => {
         bordered
         columns={columns}
         expandable={{
-          expandedRowRender: _ => <MenusTable menusTableData={menusTableData} loadData={reset} />,
+          expandedRowRender: _ => (
+            <MenusTable menusTableData={menusTableData} loadData={loadMenu} />
+          ),
         }}
         expandedRowKeys={expandedModuleRowKeys}
         {...moduleTableData}
