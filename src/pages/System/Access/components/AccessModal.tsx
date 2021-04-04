@@ -13,11 +13,11 @@ type Props = PropsWithChildren<{
   isAccessModalVisible: boolean;
   setIsAccessModalVisible: (flag: boolean) => void;
   rowData?: any;
-  // loadData: () => void;
+  loadData: () => void;
 }>;
 
 const AccessModal = (props: Props) => {
-  const { isAccessModalVisible, setIsAccessModalVisible, rowData } = props;
+  const { isAccessModalVisible, setIsAccessModalVisible, rowData, loadData } = props;
   const [rowId, setRowId] = useState<number | null>();
   const [title, setTitle] = useState<string>('新增账号');
   const [form] = Form.useForm();
