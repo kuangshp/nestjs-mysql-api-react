@@ -42,6 +42,7 @@ const AccessMenuModal = (props: Props) => {
   const { isAccessMenusVisible, setIsAccessMenusVisible, loadData, isNew } = props;
   const { accessRowData } = useSelector((state: any): AccessState => state.present.access);
   const [title, setTitle] = useState<string>('新增菜单');
+  const [isDisabledMenusInput, setIsDisabledMenusInput] = useState<boolean>(false);
   const [form] = Form.useForm();
   const { run, loading } = useRequest(createAccessHandler, {
     manual: true,
@@ -80,12 +81,14 @@ const AccessMenuModal = (props: Props) => {
           status: String(status),
         });
         setTitle('编辑菜单');
+        setIsDisabledMenusInput(true);
       } else {
         const { moduleName } = accessRowData;
         form.setFieldsValue({
           moduleName,
         });
         setTitle('新增菜单');
+        setIsDisabledMenusInput(false);
       }
     }
   }, [accessRowData]);
@@ -143,7 +146,7 @@ const AccessMenuModal = (props: Props) => {
         <Form form={form} {...layout}>
           {isNew && (
             <Form.Item name="moduleName" label="模块名称">
-              <Input placeholder="请输入模块名称" />
+              <Input placeholder="请输入模块名称" disabled />
             </Form.Item>
           )}
           <Form.Item

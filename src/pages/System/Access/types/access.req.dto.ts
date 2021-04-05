@@ -28,4 +28,7 @@ export class AccessReqDto {
 
   /** 描素 */
   description?: string;
+
+  /** 接口名称 */
+  apiName?: string;
 }

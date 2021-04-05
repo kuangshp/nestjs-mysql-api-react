@@ -12,6 +12,7 @@ export class AccessResDto extends ApiResDto {
   sort: number;
   status: number;
   description: string | null;
+  apiName: string;
 }
 
 export class AccessListResDto extends ApiListResDto<AccessResDto> {

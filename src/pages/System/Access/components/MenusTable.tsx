@@ -67,6 +67,11 @@ const MenusTable = (props: Props) => {
 
   const columns = [
     {
+      title: 'ID',
+      dataIndex: 'id',
+      align: 'right' as const,
+    },
+    {
       title: '菜单',
       dataIndex: 'actionName',
       align: 'right' as const,
@@ -125,6 +130,7 @@ const MenusTable = (props: Props) => {
 
   // 展开菜单
   const onExpandMenusHandler = async (expanded: boolean, record: AccessResDto) => {
+    console.log(record, '展开接');
     const temp: any = [];
     if (expanded) {
       temp.push(record.id);

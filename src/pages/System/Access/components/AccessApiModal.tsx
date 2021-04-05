@@ -71,7 +71,7 @@ const AccessApiModal = (props: Props) => {
   useEffect(() => {
     if (accessRowData && Object.keys(accessRowData).length) {
       if (!isNew) {
-        const { actionName, url, icon, sort, status, description, method } = accessRowData;
+        const { actionName, url, icon, sort, status, description, method, apiName } = accessRowData;
         form.setFieldsValue({
           actionName,
           url,
@@ -79,6 +79,7 @@ const AccessApiModal = (props: Props) => {
           sort,
           description,
           method,
+          apiName,
           status: String(status),
         });
         setTitle('编辑API');
@@ -96,9 +97,9 @@ const AccessApiModal = (props: Props) => {
     // 提交数据中不重复提交
     if (loading || loading1) return;
     form
-      .validateFields(['actionName', 'url', 'method', 'sort', 'status', 'description'])
+      .validateFields(['actionName', 'url', 'method', 'sort', 'status', 'description', 'apiName'])
       .then(values => {
-        const { actionName, url, method, sort, status, description } = values;
+        const { actionName, url, method, sort, status, description, apiName } = values;
         const parentId = isNew ? accessRowData!.id : accessRowData!.parentId;
         // 编辑提交
         if (!isNew) {
@@ -110,6 +111,7 @@ const AccessApiModal = (props: Props) => {
             sort,
             status,
             description,
+            apiName,
           });
         } else {
           // 提交新增数据
@@ -122,6 +124,7 @@ const AccessApiModal = (props: Props) => {
             sort,
             status,
             description,
+            apiName,
           });
         }
       });
@@ -143,7 +146,19 @@ const AccessApiModal = (props: Props) => {
       >
         <Form form={form} {...layout}>
           <Form.Item name="actionName" label="菜单名称">
-            <Input placeholder="请输入菜单名称" />
+            <Input placeholder="请输入菜单名称" disabled />
+          </Form.Item>
+          <Form.Item
+            name="apiName"
+            label="接口名称"
+            rules={[
+              {
+                required: true,
+                message: '请输入接口名称',
+              },
+            ]}
+          >
+            <Input placeholder="请输入接口名称" />
           </Form.Item>
           <Form.Item
             name="url"
