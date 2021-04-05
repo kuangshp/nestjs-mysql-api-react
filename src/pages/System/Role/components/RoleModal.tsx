@@ -4,6 +4,8 @@ import { useRequest } from 'ahooks';
 
 import RoleService from 'src/services/system/role';
 import { RoleResDto } from '../types/role.res.dto';
+import { useSelector } from 'dva';
+import { RoleState } from 'src/models/role';
 
 const { Option } = Select;
 
@@ -16,7 +18,6 @@ type Props = PropsWithChildren<{
   isModifyVisible: boolean;
   setIsModifyVisible: (isShow: boolean) => void;
   loadData: () => void;
-  rowData?: RoleResDto;
 }>;
 
 // 包装提交数据
@@ -37,9 +38,9 @@ const modifyRoleHandler = async (id: number, params: any) => {
 };
 
 const RoleModal = (props: Props) => {
-  const { isModifyVisible, setIsModifyVisible, rowData, loadData } = props;
-  const [rowId, setRowId] = useState<number | null>();
+  const { isModifyVisible, setIsModifyVisible, loadData } = props;
   const [title, setTitle] = useState<string>('新增角色');
+  const { roleRowData } = useSelector((state: any): RoleState => state.present.role);
   const [form] = Form.useForm();
 
   const { run, loading } = useRequest(createRoleHandler, {
@@ -67,8 +68,8 @@ const RoleModal = (props: Props) => {
   });
 
   useEffect(() => {
-    if (rowData) {
-      const { name, description, status, isDefault } = rowData;
+    if (roleRowData && Object.keys(roleRowData).length) {
+      const { name, description, status, isDefault } = roleRowData;
       form.setFieldsValue({
         name,
         description,
@@ -76,13 +77,11 @@ const RoleModal = (props: Props) => {
         isDefault: String(isDefault),
       });
       setTitle('编辑角色');
-      setRowId(rowData.id);
     } else {
       setTitle('新增角色');
       form.resetFields();
-      setRowId(null);
     }
-  }, [rowData]);
+  }, [roleRowData]);
 
   // 提交
   const handleModifyOk = () => {
@@ -90,6 +89,7 @@ const RoleModal = (props: Props) => {
     if (loading || loading1) return;
     form.validateFields(['name', 'description', 'isDefault', 'status']).then(values => {
       // 根据当前是否有id区分是新增还是编辑
+      const rowId = roleRowData?.id;
       if (rowId) {
         run1(rowId, values);
       } else {

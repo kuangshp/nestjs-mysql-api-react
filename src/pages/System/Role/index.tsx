@@ -13,6 +13,8 @@ import { StatusEnum, RoleEnum } from 'src/enums';
 import TopForm from './components/TopForm';
 import { AccountTableDto, RoleResDto } from './types/role.res.dto';
 import RoleModal from './components/RoleModal';
+import RoleMenuModal from './components/RoleMenuModal';
+import { useDispatch } from 'dva';
 
 const { confirm } = Modal;
 // 封装请求数据
@@ -34,8 +36,10 @@ const getTableData = async (
 const Role: React.FC = () => {
   // 是否显示修改行弹框
   const [isModifyVisible, setIsModifyVisible] = useState<boolean>(false);
+  const [isRoleMenuVisible, setIsRoleMenuVisible] = useState<boolean>(false);
   // 当前点击行数据
   const [rowData, setRowData] = useState<RoleResDto>();
+  const dispatch = useDispatch();
   // 头部搜索表单
   const [searchForm] = Form.useForm();
   const { tableProps, search } = useAntdTable(getTableData, {
@@ -46,19 +50,21 @@ const Role: React.FC = () => {
   const { submit, reset } = search || {};
   // 编辑行数据
   const modifyRow = (rowData: RoleResDto) => {
-    setRowData(Object.assign({}, rowData));
+    dispatch({ type: 'role/setRowData', payload: rowData });
     setIsModifyVisible(true);
   };
   // 分配菜单
   const dispatchMenus = (rowData: RoleResDto) => {
-    console.log(rowData);
+    dispatch({ type: 'role/setRowData', payload: rowData });
+    setIsRoleMenuVisible(true);
   };
   // 分配接口
   const dispatchApi = (rowData: RoleResDto) => {
-    console.log(rowData);
+    dispatch({ type: 'role/setRowData', payload: rowData });
   };
   // 删除数据
   const deleteRow = (rowData: RoleResDto) => {
+    dispatch({ type: 'role/setRowData', payload: rowData });
     confirm({
       icon: <ExclamationCircleOutlined />,
       content: <h3>您确定要删除该条数据？</h3>,
@@ -141,8 +147,11 @@ const Role: React.FC = () => {
       <RoleModal
         isModifyVisible={isModifyVisible}
         setIsModifyVisible={setIsModifyVisible}
-        rowData={rowData}
         loadData={reset}
+      />
+      <RoleMenuModal
+        isRoleMenuVisible={isRoleMenuVisible}
+        setIsRoleMenuVisible={setIsRoleMenuVisible}
       />
     </div>
   );
