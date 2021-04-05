@@ -149,7 +149,6 @@ const MenusTable = (props: Props) => {
       />
       <AccessMenuModal
         loadData={loadData}
-        rowData={rowData}
         isAccessMenusVisible={isAccessMenusVisible}
         setIsAccessMenusVisible={setIsAccessMenusVisible}
       />

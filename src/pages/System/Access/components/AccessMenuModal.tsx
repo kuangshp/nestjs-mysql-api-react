@@ -5,6 +5,8 @@ import AccessService from 'src/services/system/access';
 import { AccessReqDto } from '../types/access.req.dto';
 import { AccessResDto } from './../types/access.res.dto';
 import { AccessTypeEnum } from 'src/enums';
+import { useSelector } from 'dva';
+import { AccessState } from 'src/models/access';
 const { Option } = Select;
 
 const layout = {
@@ -16,7 +18,6 @@ type Props = PropsWithChildren<{
   isAccessMenusVisible: boolean;
   setIsAccessMenusVisible: (flag: boolean) => void;
   isNew?: boolean;
-  rowData: AccessResDto | undefined;
   loadData: () => void;
 }>;
 
@@ -38,8 +39,8 @@ const modifyAccessHandler = async (id: number, params: AccessReqDto) => {
 };
 
 const AccessMenuModal = (props: Props) => {
-  const { isAccessMenusVisible, setIsAccessMenusVisible, rowData, loadData, isNew } = props;
-  const [rowData1, setRowData1] = useState<AccessResDto>();
+  const { isAccessMenusVisible, setIsAccessMenusVisible, loadData, isNew } = props;
+  const { accessRowData } = useSelector((state: any): AccessState => state.present.access);
   const [title, setTitle] = useState<string>('新增菜单');
   const [form] = Form.useForm();
   const { run, loading } = useRequest(createAccessHandler, {
@@ -67,28 +68,27 @@ const AccessMenuModal = (props: Props) => {
   });
 
   useEffect(() => {
-    console.log(rowData, '菜单中');
-    if (!rowData) return;
-    if (!isNew) {
-      const { actionName, url, icon, sort, status, description } = rowData;
-      form.setFieldsValue({
-        actionName,
-        url,
-        icon,
-        sort,
-        description,
-        status: String(status),
-      });
-      setTitle('编辑菜单');
-    } else {
-      const { moduleName } = rowData;
-      form.setFieldsValue({
-        moduleName,
-      });
-      setTitle('新增菜单');
+    if (accessRowData && Object.keys(accessRowData).length) {
+      if (!isNew) {
+        const { actionName, url, icon, sort, status, description } = accessRowData;
+        form.setFieldsValue({
+          actionName,
+          url,
+          icon,
+          sort,
+          description,
+          status: String(status),
+        });
+        setTitle('编辑菜单');
+      } else {
+        const { moduleName } = accessRowData;
+        form.setFieldsValue({
+          moduleName,
+        });
+        setTitle('新增菜单');
+      }
     }
-    setRowData1(rowData);
-  }, [rowData]);
+  }, [accessRowData]);
   // 提交
   const handleModifyOk = () => {
     // 提交数据中不重复提交
@@ -97,10 +97,11 @@ const AccessMenuModal = (props: Props) => {
       .validateFields(['actionName', 'url', 'icon', 'sort', 'status', 'description'])
       .then(values => {
         const { actionName, url, icon, sort, status, description } = values;
-        const parentId = isNew ? rowData1!.id : rowData1!.parentId;
+        // 如果是新增的就取当前id,否则就是parentId
+        const parentId = isNew ? accessRowData!.id : accessRowData!.parentId;
         // 编辑提交
         if (!isNew) {
-          run1(Number(rowData1!.id), {
+          run1(Number(accessRowData!.id), {
             type: AccessTypeEnum.MENUS,
             actionName,
             url,

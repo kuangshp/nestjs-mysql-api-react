@@ -40,7 +40,6 @@ const Access = () => {
   const [expandedModuleRowKeys, setExpandedModuleRowKeys] = useState([]);
   const [isAccessModalVisible, setIsAccessModalVisible] = useState<boolean>(false);
   const [isAccessMenusVisible, setIsAccessMenusVisible] = useState<boolean>(false);
-  const [rowData, setRowData] = useState<AccessResDto | undefined>();
   const dispatch = useDispatch();
   const { accessRowData } = useSelector((state: any): AccessState => state.present.access);
   // 获取模块数据
@@ -176,7 +175,6 @@ const Access = () => {
       />
       <AccessMenuModal
         loadData={reset}
-        rowData={rowData}
         isNew={true}
         isAccessMenusVisible={isAccessMenusVisible}
         setIsAccessMenusVisible={setIsAccessMenusVisible}
