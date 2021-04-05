@@ -26,6 +26,7 @@ const ApiTable = (props: Props) => {
   };
   // 删除数据
   const deleteApiHandler = (rowData: AccessResDto) => {
+    dispatch({ type: 'access/setRowData', payload: rowData });
     confirm({
       icon: <ExclamationCircleOutlined />,
       content: <h3>您确定要删除该条数据？</h3>,
@@ -39,11 +40,16 @@ const ApiTable = (props: Props) => {
     });
   };
   const columns = [
-    {
-      title: 'ID',
-      dataIndex: 'id',
-      align: 'right' as const,
-    },
+    // {
+    //   title: 'ID',
+    //   dataIndex: 'id',
+    //   align: 'right' as const,
+    // },
+    // {
+    //   title: '父节点',
+    //   dataIndex: 'parentId',
+    //   align: 'right' as const,
+    // },
     {
       title: '接口名称',
       dataIndex: 'apiName',

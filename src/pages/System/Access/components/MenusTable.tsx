@@ -52,6 +52,7 @@ const MenusTable = (props: Props) => {
 
   // 删除菜单
   const deleteMenuHandler = (rowData: AccessResDto) => {
+    dispatch({ type: 'access/setRowData', payload: rowData });
     confirm({
       icon: <ExclamationCircleOutlined />,
       content: <h3>您确定要删除该条数据？</h3>,
@@ -66,11 +67,16 @@ const MenusTable = (props: Props) => {
   };
 
   const columns = [
-    {
-      title: 'ID',
-      dataIndex: 'id',
-      align: 'right' as const,
-    },
+    // {
+    //   title: 'ID',
+    //   dataIndex: 'id',
+    //   align: 'right' as const,
+    // },
+    // {
+    //   title: '父节点',
+    //   dataIndex: 'parentId',
+    //   align: 'right' as const,
+    // },
     {
       title: '菜单',
       dataIndex: 'actionName',

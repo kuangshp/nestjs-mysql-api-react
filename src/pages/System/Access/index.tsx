@@ -90,6 +90,7 @@ const Access = () => {
 
   // 删除行
   const deleteRowModuleHandler = (rowData: AccessResDto) => {
+    dispatch({ type: 'access/setRowData', payload: rowData });
     confirm({
       icon: <ExclamationCircleOutlined />,
       content: <h3>您确定要删除该条数据？</h3>,
@@ -105,6 +106,16 @@ const Access = () => {
 
   // 模块表格
   const columns = [
+    // {
+    //   title: 'ID',
+    //   dataIndex: 'id',
+    //   align: 'right' as const,
+    // },
+    // {
+    //   title: '父节点',
+    //   dataIndex: 'parentId',
+    //   align: 'right' as const,
+    // },
     {
       title: '模块名称',
       dataIndex: 'moduleName',
