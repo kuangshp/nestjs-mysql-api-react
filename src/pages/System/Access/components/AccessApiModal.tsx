@@ -99,13 +99,12 @@ const AccessApiModal = (props: Props) => {
     form
       .validateFields(['actionName', 'url', 'method', 'sort', 'status', 'description', 'apiName'])
       .then(values => {
-        const { actionName, url, method, sort, status, description, apiName } = values;
+        const { url, method, sort, status, description, apiName } = values;
         const parentId = isNew ? accessRowData!.id : accessRowData!.parentId;
         // 编辑提交
         if (!isNew) {
           run1(Number(accessRowData!.id), {
             type: AccessTypeEnum.API,
-            actionName,
             url,
             method,
             sort,
@@ -117,7 +116,6 @@ const AccessApiModal = (props: Props) => {
           // 提交新增数据
           run({
             type: AccessTypeEnum.API,
-            actionName,
             parentId,
             url,
             method,

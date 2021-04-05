@@ -70,8 +70,16 @@ const Access = () => {
   // 重新请求菜单接口
   const loadMenu = async () => {
     console.log(accessRowData, '重新请求菜单');
+    setExpandedModuleRowKeys([]);
     if (accessRowData && Object.keys(accessRowData).length) {
       const { data } = await getTableData({ parentId: accessRowData!.parentId, pageSize: 100 });
+      setMenusTableData(data);
+    }
+  };
+
+  const loadNewMenu = async () => {
+    if (accessRowData && Object.keys(accessRowData).length) {
+      const { data } = await getTableData({ parentId: accessRowData!.id, pageSize: 100 });
       setMenusTableData(data);
     }
   };
@@ -106,16 +114,16 @@ const Access = () => {
 
   // 模块表格
   const columns = [
-    // {
-    //   title: 'ID',
-    //   dataIndex: 'id',
-    //   align: 'right' as const,
-    // },
-    // {
-    //   title: '父节点',
-    //   dataIndex: 'parentId',
-    //   align: 'right' as const,
-    // },
+    {
+      title: 'ID',
+      dataIndex: 'id',
+      align: 'right' as const,
+    },
+    {
+      title: '父节点',
+      dataIndex: 'parentId',
+      align: 'right' as const,
+    },
     {
       title: '模块名称',
       dataIndex: 'moduleName',
@@ -191,7 +199,7 @@ const Access = () => {
         setIsAccessModalVisible={setIsAccessModalVisible}
       />
       <AccessMenuModal
-        loadData={reset}
+        loadData={loadNewMenu}
         isNew={true}
         isAccessMenusVisible={isAccessMenusVisible}
         setIsAccessMenusVisible={setIsAccessMenusVisible}

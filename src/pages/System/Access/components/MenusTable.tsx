@@ -67,16 +67,16 @@ const MenusTable = (props: Props) => {
   };
 
   const columns = [
-    // {
-    //   title: 'ID',
-    //   dataIndex: 'id',
-    //   align: 'right' as const,
-    // },
-    // {
-    //   title: '父节点',
-    //   dataIndex: 'parentId',
-    //   align: 'right' as const,
-    // },
+    {
+      title: 'ID',
+      dataIndex: 'id',
+      align: 'right' as const,
+    },
+    {
+      title: '父节点',
+      dataIndex: 'parentId',
+      align: 'right' as const,
+    },
     {
       title: '菜单',
       dataIndex: 'actionName',
@@ -147,8 +147,17 @@ const MenusTable = (props: Props) => {
   };
   // 刷新api数据
   const loadApiData = async () => {
+    console.log(accessRowData, '更新接口');
+    setExpandedMenusRowKeys([]);
     if (accessRowData && Object.keys(accessRowData).length) {
       const { data } = await getTableData({ parentId: accessRowData!.parentId, pageSize: 100 });
+      setApiTableData(data);
+    }
+  };
+  const loadApiData1 = async () => {
+    console.log(accessRowData, '更新接口1');
+    if (accessRowData && Object.keys(accessRowData).length) {
+      const { data } = await getTableData({ parentId: accessRowData!.id, pageSize: 100 });
       setApiTableData(data);
     }
   };
@@ -171,7 +180,7 @@ const MenusTable = (props: Props) => {
         setIsAccessMenusVisible={setIsAccessMenusVisible}
       />
       <AccessApiModal
-        loadData={loadData}
+        loadData={loadApiData1}
         isNew={true}
         isAccessApiVisible={isAccessApiVisible}
         setIsAccessApiVisible={setIsAccessApiVisible}
