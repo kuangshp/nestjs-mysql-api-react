@@ -40,7 +40,6 @@ const modifyAccessHandler = async (id: number, params: AccessReqDto) => {
 const AccessModuleModal = (props: Props) => {
   const { isAccessModalVisible, setIsAccessModalVisible, loadData } = props;
   const [title, setTitle] = useState<string>('新增模块');
-  const [isDisabledModuleInput, setIsDisabledModuleInput] = useState<boolean>(false);
   const { accessRowData } = useSelector((state: any): AccessState => state.present.access);
   const [form] = Form.useForm();
 
@@ -79,11 +78,9 @@ const AccessModuleModal = (props: Props) => {
         status: String(status),
       });
       setTitle('编辑模块');
-      setIsDisabledModuleInput(true);
     } else {
       setTitle('新增模块');
       form.resetFields();
-      setIsDisabledModuleInput(false);
     }
   }, [accessRowData]);
   // 提交
@@ -128,7 +125,7 @@ const AccessModuleModal = (props: Props) => {
               },
             ]}
           >
-            <Input placeholder="请输入模块名称" disabled={isDisabledModuleInput} />
+            <Input placeholder="请输入模块名称" />
           </Form.Item>
           <Form.Item name="icon" label="模块图标">
             <Input placeholder="请输入模块图标" />
