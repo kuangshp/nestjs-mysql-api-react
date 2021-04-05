@@ -42,9 +42,7 @@ const Access = () => {
   const [isAccessMenusVisible, setIsAccessMenusVisible] = useState<boolean>(false);
   const [rowData, setRowData] = useState<AccessResDto | undefined>();
   const dispatch = useDispatch();
-  const result = useSelector((state: any): AccessState => state.present.access);
-  console.log(result, '当前状态机');
-  const accessRowData = { id: 0 };
+  const { accessRowData } = useSelector((state: any): AccessState => state.present.access);
   // 获取模块数据
   const { tableProps: moduleTableData, search } = useAntdTable(getModuleData, {
     defaultPageSize: DEFAULT_PAGE_SIZE, // 默认请求页数

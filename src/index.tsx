@@ -4,6 +4,9 @@ import createHistory from 'history/createBrowserHistory';
 import './assets/style/global.less';
 import 'antd/dist/antd.css';
 import globalModel from 'src/models/global';
+import loginModel from 'src/models/login';
+import accessModel from 'src/models/access';
+import accountModel from 'src/models/account';
 import createLoading from 'dva-loading';
 import ReactDOM from 'react-dom';
 import { ConfigProvider } from 'antd';
@@ -45,6 +48,9 @@ const app = dva({
 
 app.use(createLoading());
 app.model(globalModel);
+app.model(loginModel);
+app.model(accessModel);
+app.model(accountModel);
 app.router(routeConfig as any);
 
 const App = app.start();

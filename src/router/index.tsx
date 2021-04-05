@@ -20,7 +20,7 @@ function RouterConfig({ history, app }: any) {
       name: '登录',
       path: '/login',
       component: () => import('src/pages/Login'),
-      models: () => [import('src/models/login')],
+      // models: () => [import('src/models/login')],
     },
     {
       id: 'index',
