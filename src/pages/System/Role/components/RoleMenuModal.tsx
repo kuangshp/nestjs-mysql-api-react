@@ -72,8 +72,8 @@ const RoleMenuModal = (props: Props) => {
   // 反填删除顶级节点(因为就算是该下面的全部选中了，顶级会自动选中)
   const fullCheckNodeId = (fetchCheckedList: RoleMenuAuthResDto[]): string[] => {
     const checkedList = fetchCheckedList.map((item: RoleMenuAuthResDto) => item.accessId);
+    console.log(allMenus, '全部的菜单');
     for (const item of allMenus) {
-      console.log(checkedList.includes(item.id) && !item.parentId, '是否为真', item);
       // 当前包括在此项中且父节点是null的时候，删除
       if (checkedList.includes(item.id) && !item.parentId) {
         const index = checkedList.findIndex((it: number) => it == item.id);
@@ -84,31 +84,27 @@ const RoleMenuModal = (props: Props) => {
     return checkedList.map(item => String(item));
   };
 
-  // 请求授权数据
-  const getAuthRoleMenusList = async (roleId: number) => {
-    const result: RoleMenuAuthResDto[] = await RoleAccessService.authMenusListByRoleId(roleId);
-    console.log(result, '删除前');
-    if (result && result.length) {
+  // 串行获取数据
+  const getData = async (roleId: number) => {
+    const [allMenus, authMenus] = await Promise.all([
+      RoleAccessService.allMenusList(),
+      RoleAccessService.authMenusListByRoleId(roleId),
+    ]);
+    setAllMenus(allMenus);
+    setMenusTree(getTreeList(allMenus));
+    if (authMenus && authMenus.length) {
       // 手动修复删除不是全部选中父节点
-      console.log(fullCheckNodeId(result), '删除后');
-      setAuthChecked(fullCheckNodeId(result));
+      console.log(fullCheckNodeId(authMenus), '删除后');
+      setAuthChecked(fullCheckNodeId(authMenus));
     } else {
       setAuthChecked([]);
     }
   };
 
-  // 获取全部数据
-  const getAllMenusList = async () => {
-    const result = await RoleAccessService.allMenusList();
-    setAllMenus(result);
-    setMenusTree(getTreeList(result));
-  };
-
   useEffect(() => {
     setAuthChecked([]);
     if (roleRowData && Object.keys(roleRowData).length) {
-      getAuthRoleMenusList(roleRowData.id);
-      getAllMenusList();
+      getData(roleRowData.id);
     }
   }, [roleRowData]);
 
