@@ -1,4 +1,5 @@
 import { ApiResDto } from 'src/dto/api.res.dto';
+import { ApiListResDto } from 'src/dto/api.res.list.dto';
 
 export class AccessResDto extends ApiResDto {
   moduleName: string | null;
@@ -11,4 +12,10 @@ export class AccessResDto extends ApiResDto {
   sort: number;
   status: number;
   description: string | null;
+}
+
+export class AccessListResDto extends ApiListResDto<AccessResDto> {
+  constructor(data: AccessResDto[]) {
+    super(data);
+  }
 }

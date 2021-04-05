@@ -1,17 +1,17 @@
 import React, { PropsWithChildren, useState } from 'react';
 import { Space, Button, Table, Modal, message } from 'antd';
 import AccessApiModal from './AccessApiModal';
-import { AccessReqDto } from '../types/access.req.dto';
 import { AccessResDto } from '../types/access.res.dto';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import AccessService from 'src/services/system/access';
 import { StatusEnum } from 'src/enums';
-import { useDispatch, useSelector } from 'dva';
-import { AccessState } from 'src/models/access';
+import { useDispatch } from 'dva';
+import yesImg from 'src/assets/images/yes.gif';
+import noImg from 'src/assets/images/no.gif';
 const { confirm } = Modal;
 
 type Props = PropsWithChildren<{
-  apiTableData: any;
+  apiTableData: AccessResDto[];
   loadData: () => void;
 }>;
 
@@ -20,12 +20,12 @@ const ApiTable = (props: Props) => {
   const [isAccessApiVisible, setIsAccessApiVisible] = useState<boolean>(false);
   const dispatch = useDispatch();
 
-  const modifyApiHandler = (rowData: any) => {
+  const modifyApiHandler = (rowData: AccessResDto) => {
     dispatch({ type: 'access/setRowData', payload: rowData });
     setIsAccessApiVisible(true);
   };
   // 删除数据
-  const deleteApiHandler = (rowData: any) => {
+  const deleteApiHandler = (rowData: AccessResDto) => {
     confirm({
       icon: <ExclamationCircleOutlined />,
       content: <h3>您确定要删除该条数据？</h3>,
@@ -58,17 +58,13 @@ const ApiTable = (props: Props) => {
       title: '状态',
       dataIndex: 'status',
       align: 'center' as const,
-      // render: (_: any, record: AccessResDto) => {
-      //   if (Object.is(record.status, StatusEnum.FORBIDDEN)) {
-      //     return (
-      //       <Button type="primary" danger>
-      //         禁用
-      //       </Button>
-      //     );
-      //   } else {
-      //     return <Button type="primary">启用</Button>;
-      //   }
-      // },
+      render: (_: any, record: AccessResDto) => {
+        if (Object.is(record.status, StatusEnum.FORBIDDEN)) {
+          return <img src={noImg} />;
+        } else {
+          return <img src={yesImg} />;
+        }
+      },
     },
     {
       title: '描素',
@@ -79,7 +75,7 @@ const ApiTable = (props: Props) => {
       title: '操作',
       align: 'center' as const,
       width: 150,
-      render: (_: any, record: AccessReqDto) => (
+      render: (_: any, record: AccessResDto) => (
         <Space size="middle">
           <Button type="primary" onClick={() => modifyApiHandler(record)}>
             编辑

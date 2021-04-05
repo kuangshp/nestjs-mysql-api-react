@@ -1,5 +1,7 @@
 import BaseService from './../../base';
 import { AccessReqDto } from 'src/pages/System/Access/types/access.req.dto';
+import { QueryAccessDto } from 'src/pages/System/Access/types/query.access.dto';
+import { AccessListResDto } from 'src/pages/System/Access/types/access.res.dto';
 
 class AccessService extends BaseService {
   // 创建资源
@@ -18,8 +20,8 @@ class AccessService extends BaseService {
   }
 
   // 根据父节点id获取资源列表
-  async accessListByParentId(queryOptions?: any): Promise<any> {
-    return await this.get('/admin/access', queryOptions);
+  async accessListByParentId(queryOptions?: QueryAccessDto): Promise<AccessListResDto> {
+    return await this.get<AccessListResDto>('/admin/access', queryOptions);
   }
 }
 

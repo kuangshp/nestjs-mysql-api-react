@@ -6,23 +6,23 @@ import AccessApiModal from './AccessApiModal';
 
 import ApiTable from './ApiTable';
 import { AccessResDto } from '../types/access.res.dto';
-import { AccessReqDto } from '../types/access.req.dto';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { StatusEnum } from 'src/enums';
 import yesImg from 'src/assets/images/yes.gif';
 import noImg from 'src/assets/images/no.gif';
 import { useDispatch, useSelector } from 'dva';
 import { AccessState } from 'src/models/access';
+import { QueryAccessDto } from './../types/query.access.dto';
 
 const { confirm } = Modal;
 
 type Props = PropsWithChildren<{
-  menusTableData: any;
+  menusTableData: AccessResDto[];
   loadData: () => void;
 }>;
 
 // 统一获取数据方法
-const getTableData = async (queryOptions?: any) => {
+const getTableData = async (queryOptions: QueryAccessDto) => {
   const { data, total } = await AccessService.accessListByParentId(queryOptions);
   return { data, total };
 };
@@ -35,23 +35,23 @@ const MenusTable = (props: Props) => {
   // 展开菜单的
   const [expandedMenusRowKeys, setExpandedMenusRowKeys] = useState([]);
   // api接口数据
-  const [apiTableData, setApiTableData] = useState([]);
+  const [apiTableData, setApiTableData] = useState<AccessResDto[]>([]);
   const { accessRowData } = useSelector((state: any): AccessState => state.present.access);
   const dispatch = useDispatch();
   // 编辑行
-  const modifyMenuHandler = (rowData: any) => {
+  const modifyMenuHandler = (rowData: AccessResDto) => {
     dispatch({ type: 'access/setRowData', payload: rowData });
     setIsAccessMenusVisible(true);
   };
 
   // 新建API
-  const createApiHandler = (rowData: any) => {
+  const createApiHandler = (rowData: AccessResDto) => {
     dispatch({ type: 'access/setRowData', payload: rowData });
     setIsAccessApiVisible(true);
   };
 
   // 删除菜单
-  const deleteMenuHandler = (rowData: any) => {
+  const deleteMenuHandler = (rowData: AccessResDto) => {
     confirm({
       icon: <ExclamationCircleOutlined />,
       content: <h3>您确定要删除该条数据？</h3>,
@@ -90,13 +90,13 @@ const MenusTable = (props: Props) => {
       title: '状态',
       dataIndex: 'status',
       align: 'center' as const,
-      // render: (_: any, record: AccessResDto) => {
-      //   if (Object.is(record.status, StatusEnum.FORBIDDEN)) {
-      //     <img src={noImg} />;
-      //   } else if (Object.is(record.status, StatusEnum.NORMAL)) {
-      //     <img src={yesImg} />;
-      //   }
-      // },
+      render: (_: any, record: AccessResDto) => {
+        if (Object.is(record.status, StatusEnum.FORBIDDEN)) {
+          return <img src={noImg} />;
+        } else {
+          return <img src={yesImg} />;
+        }
+      },
     },
     {
       title: '描素',
@@ -107,7 +107,7 @@ const MenusTable = (props: Props) => {
       title: '操作',
       align: 'center' as const,
       width: 150,
-      render: (_: any, record: AccessReqDto) => (
+      render: (_: any, record: AccessResDto) => (
         <Space size="middle">
           <Button type="primary" onClick={() => modifyMenuHandler(record)}>
             编辑
@@ -124,12 +124,11 @@ const MenusTable = (props: Props) => {
   ];
 
   // 展开菜单
-  const onExpandMenusHandler = async (expanded: boolean, record: any) => {
-    console.log('展开菜单,查询全部的api');
+  const onExpandMenusHandler = async (expanded: boolean, record: AccessResDto) => {
     const temp: any = [];
     if (expanded) {
       temp.push(record.id);
-      const { data, total } = await getTableData({ parentId: record!.id });
+      const { data } = await getTableData({ parentId: record!.id, pageSize: 100 });
       setApiTableData(data);
     }
     setExpandedMenusRowKeys(temp);
@@ -137,7 +136,7 @@ const MenusTable = (props: Props) => {
   // 刷新api数据
   const loadApiData = async () => {
     if (accessRowData && Object.keys(accessRowData).length) {
-      const { data } = await getTableData({ parentId: accessRowData!.parentId });
+      const { data } = await getTableData({ parentId: accessRowData!.parentId, pageSize: 100 });
       setApiTableData(data);
     }
   };

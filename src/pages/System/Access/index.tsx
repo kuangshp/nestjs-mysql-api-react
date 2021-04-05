@@ -14,16 +14,22 @@ import yesImg from 'src/assets/images/yes.gif';
 import noImg from 'src/assets/images/no.gif';
 import { useDispatch, useSelector } from 'dva';
 import { AccessState } from 'src/models/access';
+import { QueryAccessDto } from './types/query.access.dto';
 
 const { confirm } = Modal;
 // 统一获取数据方法
-const getTableData = async (queryOptions?: any) => {
+const getTableData = async (queryOptions: QueryAccessDto) => {
   const { data, total } = await AccessService.accessListByParentId(queryOptions);
   return { data, total };
 };
 
+interface IModuleResult {
+  total: number;
+  list: AccessResDto[];
+}
+
 // 获取模块数据
-const getModuleData = async ({ current, pageSize }: PaginatedParams[0]): Promise<any> => {
+const getModuleData = async ({ current, pageSize }: PaginatedParams[0]): Promise<IModuleResult> => {
   const { data, total } = await getTableData({
     pageNumber: current,
     pageSize,
@@ -35,7 +41,7 @@ const getModuleData = async ({ current, pageSize }: PaginatedParams[0]): Promise
 };
 
 const Access = () => {
-  const [menusTableData, setMenusTableData] = useState([]);
+  const [menusTableData, setMenusTableData] = useState<AccessResDto[]>([]);
   // 展开模块的
   const [expandedModuleRowKeys, setExpandedModuleRowKeys] = useState([]);
   const [isAccessModalVisible, setIsAccessModalVisible] = useState<boolean>(false);
@@ -53,7 +59,7 @@ const Access = () => {
   const onExpandHandler = async (expanded: boolean, record: AccessResDto) => {
     const temp: any = [];
     if (expanded) {
-      const { data, total } = await getTableData({ parentId: record!.id });
+      const { data, total } = await getTableData({ parentId: record!.id, pageSize: 100 });
       setMenusTableData(data);
       console.log(total);
       temp.push(record.id);
@@ -65,7 +71,7 @@ const Access = () => {
   const loadMenu = async () => {
     console.log(accessRowData, '重新请求菜单');
     if (accessRowData && Object.keys(accessRowData).length) {
-      const { data } = await getTableData({ parentId: accessRowData!.parentId });
+      const { data } = await getTableData({ parentId: accessRowData!.parentId, pageSize: 100 });
       setMenusTableData(data);
     }
   };
