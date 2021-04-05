@@ -193,17 +193,21 @@ const Access = () => {
         {...moduleTableData}
         onExpand={onExpandHandler}
       />
-      <AccessModuleModal
-        loadData={reset}
-        isAccessModalVisible={isAccessModalVisible}
-        setIsAccessModalVisible={setIsAccessModalVisible}
-      />
-      <AccessMenuModal
-        loadData={loadNewMenu}
-        isNew={true}
-        isAccessMenusVisible={isAccessMenusVisible}
-        setIsAccessMenusVisible={setIsAccessMenusVisible}
-      />
+      {isAccessModalVisible && (
+        <AccessModuleModal
+          loadData={reset}
+          isAccessModalVisible={isAccessModalVisible}
+          setIsAccessModalVisible={setIsAccessModalVisible}
+        />
+      )}
+      {isAccessMenusVisible && (
+        <AccessMenuModal
+          loadData={loadNewMenu}
+          isNew={true}
+          isAccessMenusVisible={isAccessMenusVisible}
+          setIsAccessMenusVisible={setIsAccessMenusVisible}
+        />
+      )}
     </div>
   );
 };

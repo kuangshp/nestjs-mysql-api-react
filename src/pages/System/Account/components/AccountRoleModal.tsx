@@ -1,16 +1,16 @@
 import React, { PropsWithChildren, useEffect, useState } from 'react';
 import { Modal, Checkbox, Row, Col, Form, message } from 'antd';
-import { AccountResDto } from '../types/account.res.dto';
 import AccountRoleService from 'src/services/system/account-role';
 import { AccountRoleDto, AccountRoleResDto } from '../types/account.role.res.dto';
 import { DispatchAccountRoleDto } from '../types/dispatch.account.role.dto';
 import { useRequest } from 'ahooks';
+import { useSelector } from 'dva';
+import { AccountState } from 'src/models/account';
 
 type Props = PropsWithChildren<{
   isRoleModifyVisible: boolean;
   setIsRoleModifyVisible: (isShow: boolean) => void;
   loadData: () => void;
-  rowData: AccountResDto;
 }>;
 
 // 包装给账号分配角色
@@ -23,9 +23,10 @@ const dispatchAccountRoleHandler = async (postData: DispatchAccountRoleDto) => {
 };
 
 const AccountRoleModal = (props: Props) => {
-  const { isRoleModifyVisible, setIsRoleModifyVisible, loadData, rowData } = props;
+  const { isRoleModifyVisible, setIsRoleModifyVisible, loadData } = props;
   // 全部的角色ID
   const [allRoleList, setAllRoleIdList] = useState<AccountRoleDto[]>([]);
+  const { accountRowData } = useSelector((state: any): AccountState => state.present.account);
   const [form] = Form.useForm();
 
   const { run, loading } = useRequest(dispatchAccountRoleHandler, {
@@ -49,7 +50,7 @@ const AccountRoleModal = (props: Props) => {
 
   // 获取已经授权的角色ID
   const accountHasRoleList = async () => {
-    const result = await AccountRoleService.accountRoleByAccountId(rowData.id);
+    const result = await AccountRoleService.accountRoleByAccountId(accountRowData.id);
     if (!result) return;
     const ids: number[] = result.map((item: AccountRoleResDto) => item.roleId);
     // 给表单赋值(已经授权的)
@@ -59,9 +60,11 @@ const AccountRoleModal = (props: Props) => {
   };
 
   useEffect(() => {
-    accountHasRoleList();
-    getRoleList();
-  }, [rowData]);
+    if (accountRowData && Object.keys(accountRowData).length) {
+      accountHasRoleList();
+      getRoleList();
+    }
+  }, [accountRowData]);
 
   // 提交
   const handleOk = () => {
@@ -73,7 +76,7 @@ const AccountRoleModal = (props: Props) => {
         return;
       }
       run({
-        accountId: rowData.id,
+        accountId: accountRowData.id,
         roleList: roles,
       });
     });

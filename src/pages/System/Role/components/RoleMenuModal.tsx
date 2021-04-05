@@ -73,12 +73,14 @@ const RoleMenuModal = (props: Props) => {
   const fullCheckNodeId = (fetchCheckedList: RoleMenuAuthResDto[]): string[] => {
     const checkedList = fetchCheckedList.map((item: RoleMenuAuthResDto) => item.accessId);
     for (const item of allMenus) {
+      console.log(checkedList.includes(item.id) && !item.parentId, '是否为真', item);
       // 当前包括在此项中且父节点是null的时候，删除
       if (checkedList.includes(item.id) && !item.parentId) {
         const index = checkedList.findIndex((it: number) => it == item.id);
         checkedList.splice(index, 1);
       }
     }
+    console.log(checkedList, '最后的');
     return checkedList.map(item => String(item));
   };
 
@@ -103,6 +105,7 @@ const RoleMenuModal = (props: Props) => {
   };
 
   useEffect(() => {
+    setAuthChecked([]);
     if (roleRowData && Object.keys(roleRowData).length) {
       getAuthRoleMenusList(roleRowData.id);
       getAllMenusList();

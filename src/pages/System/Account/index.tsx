@@ -41,8 +41,6 @@ const AccountList = () => {
   const [isModifyVisible, setIsModifyVisible] = useState<boolean>(false);
   const [isRoleModifyVisible, setIsRoleModifyVisible] = useState<boolean>(false);
   const dispatch = useDispatch();
-  // 当前点击行数据
-  const [rowData, setRowData] = useState<AccountResDto>();
   // 头部搜索表单
   const [searchForm] = Form.useForm();
   const { tableProps, search } = useAntdTable(getTableData, {
@@ -55,17 +53,16 @@ const AccountList = () => {
   // 编辑行
   const modifyRow = (rowData: AccountResDto) => {
     dispatch({ type: 'account/setRowData', payload: rowData });
-    setRowData(rowData);
     setIsModifyVisible(true);
   };
   // 分配角色
   const dispatchRole = (rowData: AccountResDto) => {
-    setRowData(rowData);
+    dispatch({ type: 'account/setRowData', payload: rowData });
     setIsRoleModifyVisible(true);
   };
   // 重置密码
   const resetPasswordRow = (rowData: AccountResDto) => {
-    setRowData(rowData);
+    dispatch({ type: 'account/setRowData', payload: rowData });
     confirm({
       icon: <ExclamationCircleOutlined />,
       content: <h3>您是否要重置密码为:{DEFAULT_PASSWORD}</h3>,
@@ -80,7 +77,7 @@ const AccountList = () => {
   };
   // 删除行
   const deleteRow = (rowData: AccountResDto) => {
-    setRowData(rowData);
+    dispatch({ type: 'account/setRowData', payload: rowData });
     confirm({
       icon: <ExclamationCircleOutlined />,
       content: <h3>您确定要删除该条数据？</h3>,
@@ -188,18 +185,19 @@ const AccountList = () => {
         changeType={changeType}
       />
       {/* 编辑数据弹框 */}
-      <AccountModal
-        isModifyVisible={isModifyVisible}
-        setIsModifyVisible={setIsModifyVisible}
-        loadData={reset}
-        rowData={rowData}
-      />
+      {isModifyVisible && (
+        <AccountModal
+          isModifyVisible={isModifyVisible}
+          setIsModifyVisible={setIsModifyVisible}
+          loadData={reset}
+        />
+      )}
+
       {/* 分配角色弹框 */}
-      {rowData && (
+      {isRoleModifyVisible && (
         <AccountRoleModal
           isRoleModifyVisible={isRoleModifyVisible}
           setIsRoleModifyVisible={setIsRoleModifyVisible}
-          rowData={rowData}
           loadData={reset}
         />
       )}

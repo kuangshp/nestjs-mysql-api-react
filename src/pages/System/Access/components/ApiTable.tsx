@@ -104,11 +104,13 @@ const ApiTable = (props: Props) => {
   return (
     <div>
       <Table columns={columns} dataSource={apiTableData} pagination={false} rowKey="id" />
-      <AccessApiModal
-        isAccessApiVisible={isAccessApiVisible}
-        setIsAccessApiVisible={setIsAccessApiVisible}
-        loadData={loadData}
-      />
+      {isAccessApiVisible && (
+        <AccessApiModal
+          isAccessApiVisible={isAccessApiVisible}
+          setIsAccessApiVisible={setIsAccessApiVisible}
+          loadData={loadData}
+        />
+      )}
     </div>
   );
 };

@@ -174,17 +174,21 @@ const MenusTable = (props: Props) => {
         rowKey="id"
         onExpand={onExpandMenusHandler}
       />
-      <AccessMenuModal
-        loadData={loadData}
-        isAccessMenusVisible={isAccessMenusVisible}
-        setIsAccessMenusVisible={setIsAccessMenusVisible}
-      />
-      <AccessApiModal
-        loadData={loadApiData1}
-        isNew={true}
-        isAccessApiVisible={isAccessApiVisible}
-        setIsAccessApiVisible={setIsAccessApiVisible}
-      />
+      {isAccessMenusVisible && (
+        <AccessMenuModal
+          loadData={loadData}
+          isAccessMenusVisible={isAccessMenusVisible}
+          setIsAccessMenusVisible={setIsAccessMenusVisible}
+        />
+      )}
+      {isAccessApiVisible && (
+        <AccessApiModal
+          loadData={loadApiData1}
+          isNew={true}
+          isAccessApiVisible={isAccessApiVisible}
+          setIsAccessApiVisible={setIsAccessApiVisible}
+        />
+      )}
     </>
   );
 };

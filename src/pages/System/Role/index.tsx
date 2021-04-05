@@ -144,15 +144,19 @@ const Role: React.FC = () => {
     <div className={styles.role}>
       <TopForm form={searchForm} submit={submit} reset={reset} />
       <Table columns={columns} rowKey="id" {...tableProps} bordered scroll={{ x: 1200 }} />
-      <RoleModal
-        isModifyVisible={isModifyVisible}
-        setIsModifyVisible={setIsModifyVisible}
-        loadData={reset}
-      />
-      <RoleMenuModal
-        isRoleMenuVisible={isRoleMenuVisible}
-        setIsRoleMenuVisible={setIsRoleMenuVisible}
-      />
+      {isModifyVisible && (
+        <RoleModal
+          isModifyVisible={isModifyVisible}
+          setIsModifyVisible={setIsModifyVisible}
+          loadData={reset}
+        />
+      )}
+      {isRoleMenuVisible && (
+        <RoleMenuModal
+          isRoleMenuVisible={isRoleMenuVisible}
+          setIsRoleMenuVisible={setIsRoleMenuVisible}
+        />
+      )}
     </div>
   );
 };
