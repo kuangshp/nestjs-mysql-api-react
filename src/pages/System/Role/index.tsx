@@ -46,7 +46,7 @@ const Role: React.FC = () => {
   const { submit, reset } = search || {};
   // 编辑行数据
   const modifyRow = (rowData: RoleResDto) => {
-    setRowData(rowData);
+    setRowData(Object.assign({}, rowData));
     setIsModifyVisible(true);
   };
   // 分配菜单

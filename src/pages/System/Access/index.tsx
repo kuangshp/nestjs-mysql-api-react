@@ -38,7 +38,7 @@ const Access = () => {
   const [expandedModuleRowKeys, setExpandedModuleRowKeys] = useState([]);
   const [isAccessModalVisible, setIsAccessModalVisible] = useState<boolean>(false);
   const [isAccessMenusVisible, setIsAccessMenusVisible] = useState<boolean>(false);
-  const [rowData, setRowData] = useState<AccessResDto>();
+  const [rowData, setRowData] = useState<AccessResDto | undefined>();
   // 获取模块数据
   const { tableProps: moduleTableData, search } = useAntdTable(getModuleData, {
     defaultPageSize: DEFAULT_PAGE_SIZE, // 默认请求页数
@@ -60,19 +60,22 @@ const Access = () => {
 
   // 重新请求菜单接口
   const loadMenu = async () => {
-    // const { data } = await getTableData({ parentId: rowData!.id });
-    // setMenusTableData(data);
+    console.log(rowData, '重新请求菜单');
+    if (rowData) {
+      const { data } = await getTableData({ parentId: rowData.id });
+      setMenusTableData(data);
+    }
   };
 
   // 编辑行
   const modifyModuleHandler = (rowData: AccessResDto) => {
-    setRowData(rowData);
+    setRowData(Object.assign({}, rowData));
     setIsAccessModalVisible(true);
   };
 
   // 新增菜单
   const createMenuHandler = (rowData: AccessResDto) => {
-    setRowData(rowData);
+    setRowData(Object.assign({}, rowData));
     setIsAccessMenusVisible(true);
   };
 

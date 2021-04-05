@@ -37,13 +37,13 @@ const MenusTable = (props: Props) => {
   const [rowData, setRowData] = useState<AccessResDto | undefined>();
   // 编辑行
   const modifyMenuHandler = (rowData: any) => {
-    setRowData(rowData);
+    setRowData(Object.assign({}, rowData));
     setIsAccessMenusVisible(true);
   };
 
   // 新建API
   const createApiHandler = (rowData: any) => {
-    setRowData(rowData);
+    setRowData(Object.assign({}, rowData));
     setIsAccessApiVisible(true);
   };
 

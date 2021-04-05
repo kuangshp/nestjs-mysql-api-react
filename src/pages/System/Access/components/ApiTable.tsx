@@ -18,7 +18,7 @@ const ApiTable = (props: Props) => {
   const [rowData, setRowData] = useState<AccessResDto | undefined>();
 
   const modifyApiHandler = (rowData: any) => {
-    setRowData(rowData);
+    setRowData(Object.assign({}, rowData));
   };
   const loadData = () => {
     console.log('加载');
