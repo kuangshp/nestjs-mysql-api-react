@@ -5,6 +5,8 @@ import { useSelector } from 'dva';
 import RoleAccessService from 'src/services/system/role-access';
 import { RoleMenuApiReqDto } from './../types/role.menu.api.req.dto';
 import { RoleState } from 'src/models/role';
+import { RoleApiResDto } from '../types/role.api.res.dto';
+import { RoleMenuAuthResDto } from '../types/role.menu.auth.res.dto';
 
 type Props = PropsWithChildren<{
   isRoleApiVisible: boolean;
@@ -23,8 +25,7 @@ const dispatchApiToRoleHandler = async (postData: RoleMenuApiReqDto) => {
 const RoleApiModal = (props: Props) => {
   const { isRoleApiVisible, setIsRoleApiVisible } = props;
   // 全部的接口ID
-  // const [allRoleList, setAllRoleIdList] = useState<AccountRoleDto[]>([]);
-  // const { accountRowData } = useSelector((state: any): AccountState => state.present.account);
+  const [allApiList, setAllApiList] = useState<RoleApiResDto[]>([]);
   const { roleRowData } = useSelector((state: any): RoleState => state.present.role);
   const [form] = Form.useForm();
 
@@ -38,44 +39,37 @@ const RoleApiModal = (props: Props) => {
     },
   });
 
-  // 获取全部的接口(包括未授权的)
-  const getRoleList = async () => {
-    // const result = await AccountRoleService.accountRoleList();
-    // if (!result) return;
-    // setAllRoleIdList(result);
-  };
-
-  // 获取已经授权的接口ID
-  const accountHasRoleList = async () => {
-    // const result = await AccountRoleService.accountRoleByAccountId(accountRowData.id);
-    // if (!result) return;
-    // const ids: number[] = result.map((item: AccountRoleResDto) => item.roleId);
-    // // 给表单赋值(已经授权的)
-    // form.setFieldsValue({
-    //   roles: ids,
-    // });
+  // 串行获取数据
+  const getData = async (roleId: number) => {
+    const [allApiList, authApiList] = await Promise.all([
+      RoleAccessService.allApiList(),
+      RoleAccessService.authApiListByRoleId(roleId),
+    ]);
+    setAllApiList(allApiList);
+    const ids = authApiList.map((item: RoleMenuAuthResDto) => item.accessId);
+    form.setFieldsValue({ accessApi: ids });
   };
 
   useEffect(() => {
     if (roleRowData && Object.keys(roleRowData).length) {
-      accountHasRoleList();
-      getRoleList();
+      getData(roleRowData.id);
     }
   }, [roleRowData]);
 
   // 提交
   const handleOk = () => {
     if (loading) return;
-    form.validateFields(['roles']).then(values => {
-      const { roles } = values;
-      if (!roles.length) {
+    form.validateFields(['accessApi']).then(values => {
+      const { accessApi } = values;
+      if (!accessApi.length) {
         message.error('必须选中一个接口');
         return;
       }
-      // run({
-      //   accountId: accountRowData.id,
-      //   roleList: roles,
-      // });
+      run({
+        roleId: roleRowData.id,
+        accessList: accessApi,
+        type: 3,
+      });
     });
   };
   // 取消
@@ -85,20 +79,25 @@ const RoleApiModal = (props: Props) => {
   };
 
   return (
-    <Modal title="分配接口" visible={isRoleApiVisible} onOk={handleOk} onCancel={handleCancel}>
+    <Modal
+      title="给角色分配接口"
+      visible={isRoleApiVisible}
+      onOk={handleOk}
+      onCancel={handleCancel}
+    >
       <Form form={form}>
-        <Form.Item name="roles">
+        <Form.Item name="accessApi">
           <Checkbox.Group style={{ width: '100%', paddingTop: 10 }}>
             <Row>
-              {/* {allRoleList.map((item: AccountRoleDto) => {
+              {allApiList.map((item: RoleApiResDto) => {
                 return (
                   <Col span={12} key={item.id}>
                     <Checkbox value={item.id} style={{ lineHeight: '32px' }}>
-                      {item.name}
+                      {item.apiName}
                     </Checkbox>
                   </Col>
                 );
-              })} */}
+              })}
             </Row>
           </Checkbox.Group>
         </Form.Item>

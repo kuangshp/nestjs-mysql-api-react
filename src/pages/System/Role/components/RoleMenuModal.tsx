@@ -125,6 +125,7 @@ const RoleMenuModal = (props: Props) => {
       {authChecked}
       <Tree
         checkable
+        key="key"
         defaultCheckedKeys={authChecked} // 默认选中的
         onCheck={onCheck}
         treeData={menusTree}

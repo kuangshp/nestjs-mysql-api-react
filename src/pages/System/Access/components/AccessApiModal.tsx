@@ -181,10 +181,10 @@ const AccessApiModal = (props: Props) => {
             ]}
           >
             <Select placeholder="请选择请求方式" allowClear>
-              <Option value="Get">GET</Option>
-              <Option value="Post">POST</Option>
-              <Option value="Patch">POST</Option>
-              <Option value="Delete">DELETE</Option>
+              <Option value="GET">GET</Option>
+              <Option value="POST">POST</Option>
+              <Option value="PATCH">PATCH</Option>
+              <Option value="DELETE">DELETE</Option>
             </Select>
           </Form.Item>
           <Form.Item name="sort" label="接口排序">
