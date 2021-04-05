@@ -71,13 +71,14 @@ const AccessApiModal = (props: Props) => {
   useEffect(() => {
     if (accessRowData && Object.keys(accessRowData).length) {
       if (!isNew) {
-        const { actionName, url, icon, sort, status, description } = accessRowData;
+        const { actionName, url, icon, sort, status, description, method } = accessRowData;
         form.setFieldsValue({
           actionName,
           url,
           icon,
           sort,
           description,
+          method,
           status: String(status),
         });
         setTitle('编辑API');
