@@ -7,6 +7,11 @@ export interface GlobalState {
   collapsed: boolean;
 }
 
+export interface ReduxAction {
+  type: string;
+  [propName: string]: any;
+}
+
 const model: Model = {
   namespace: 'global',
   state: {

@@ -19,7 +19,10 @@ const AppHeader = (props: Props) => {
   const [isModifyVisible, setIsModifyVisible] = useState<boolean>(false);
   const dispatch = useDispatch();
   // 从状态中获取用户信息
-  const { userInfo } = useSelector((state: any): LoginState => state.present?.login);
+  const { userInfo } = useSelector((state: any): LoginState => state.present.login) || {
+    userInfo: '',
+  };
+  console.log(userInfo, '当前用户信息');
   // const userInfo = { username: 'admin' };
   // 退出操作
   const logoutHandler = () => {

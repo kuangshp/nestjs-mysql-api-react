@@ -1,0 +1,28 @@
+import { Model } from 'dva';
+import { AccountResDto } from './../../pages/System/Account/types/account.res.dto';
+import { ReduxAction } from './../global';
+
+export interface AccountState {
+  accountRowData: AccountResDto;
+}
+
+const model: Model = {
+  namespace: 'account',
+  state: {
+    accountRowData: {},
+  },
+  subscriptions: {},
+  effects: {},
+  reducers: {
+    // 设置存储
+    setRowData(state: AccountState, action: ReduxAction) {
+      console.log(action, '??');
+      if (action.payload) {
+        return { accountRowData: { ...state.accountRowData, ...action.payload } };
+      } else {
+        return { accountRowData: {} };
+      }
+    },
+  },
+};
+export default model;

@@ -5,11 +5,7 @@ import { ObjectType } from '../typings';
 import { routerRedux } from 'dva/router';
 import { storage } from './../utils';
 import { authToken } from './../config';
-
-export interface ReduxAction {
-  type: string;
-  [propName: string]: any;
-}
+import { ReduxAction } from './global';
 
 export interface LoginState {
   userInfo: ObjectType;

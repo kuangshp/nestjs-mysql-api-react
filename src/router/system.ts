@@ -4,6 +4,7 @@ const SystemRoute = [
     name: '账号管理',
     path: '/system/account',
     component: () => import('src/pages/System/Account'),
+    models: () => [import('src/models/system/account')],
   },
   {
     id: 'system/role',

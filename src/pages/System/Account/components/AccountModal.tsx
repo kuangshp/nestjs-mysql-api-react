@@ -6,6 +6,8 @@ import { AccountResDto } from '../types/account.res.dto';
 import { mobileReg, usernameReg, emailReg } from 'src/constants';
 import AccountService from 'src/services/system/account';
 import { AccountDto } from '../types/account.dto';
+import { AccountState } from 'src/models/system/account';
+import { useSelector } from 'dva';
 
 const { Option } = Select;
 
@@ -40,6 +42,7 @@ const modifyAccountHandler = async (id: number, params: AccountDto) => {
 
 const AccountModal = (props: Props) => {
   const { isModifyVisible, setIsModifyVisible, rowData, loadData } = props;
+  const { accountRowData } = useSelector((state: any): AccountState => state.present.account);
   const [rowId, setRowId] = useState<number | null>();
   const [title, setTitle] = useState<string>('新增账号');
   const [form] = Form.useForm();
@@ -69,8 +72,9 @@ const AccountModal = (props: Props) => {
   });
 
   useEffect(() => {
-    if (rowData) {
-      const { username, mobile, email, status, platform } = rowData;
+    console.log(accountRowData, '组件种');
+    if (accountRowData && Object.keys(accountRowData).length) {
+      const { username, mobile, email, status, platform } = accountRowData;
       form.setFieldsValue({
         username,
         mobile,
@@ -79,13 +83,13 @@ const AccountModal = (props: Props) => {
         platform: String(platform),
       });
       setTitle('编辑账号');
-      setRowId(rowData.id);
+      setRowId(accountRowData.id);
     } else {
       setTitle('新增账号');
       form.resetFields();
       setRowId(null);
     }
-  }, [rowData]);
+  }, [accountRowData]);
   // 提交
   const handleModifyOk = () => {
     // 提交数据中不重复提交

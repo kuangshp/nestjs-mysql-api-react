@@ -15,6 +15,7 @@ import TopForm from './components/TopForm';
 import { PlatformMessage, StatusEnum } from 'src/enums';
 import yesImg from 'src/assets/images/yes.gif';
 import noImg from 'src/assets/images/no.gif';
+import { useDispatch } from 'dva';
 
 const { confirm } = Modal;
 
@@ -39,6 +40,7 @@ const AccountList = () => {
   // 是否显示修改行弹框
   const [isModifyVisible, setIsModifyVisible] = useState<boolean>(false);
   const [isRoleModifyVisible, setIsRoleModifyVisible] = useState<boolean>(false);
+  const dispatch = useDispatch();
   // 当前点击行数据
   const [rowData, setRowData] = useState<AccountResDto>();
   // 头部搜索表单
@@ -52,6 +54,7 @@ const AccountList = () => {
 
   // 编辑行
   const modifyRow = (rowData: AccountResDto) => {
+    dispatch({ type: 'account/setRowData', payload: rowData });
     setRowData(rowData);
     setIsModifyVisible(true);
   };

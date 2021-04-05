@@ -1,6 +1,7 @@
 import React, { PropsWithChildren, useState } from 'react';
 import { Form, Input, Button, Select } from 'antd';
 import AccountModal from './AccountModal';
+import { useDispatch } from 'dva';
 
 const { Option } = Select;
 
@@ -15,6 +16,13 @@ type Props = PropsWithChildren<{
 const TopForm = (props: Props) => {
   const { type, form, submit, reset, changeType } = props;
   const [isModifyVisible, setIsModifyVisible] = useState<boolean>(false);
+  const dispatch = useDispatch();
+
+  const createAccount = () => {
+    console.log('aa');
+    dispatch({ type: 'account/setRowData', payload: null });
+    setIsModifyVisible(true);
+  };
 
   return (
     <div className="top">
@@ -58,7 +66,7 @@ const TopForm = (props: Props) => {
           {type === 'simple' ? '展开' : '收缩'}
         </Button>
       </Form>
-      <Button type="primary" onClick={() => setIsModifyVisible(true)}>
+      <Button type="primary" onClick={createAccount}>
         新增账号
       </Button>
       <AccountModal
