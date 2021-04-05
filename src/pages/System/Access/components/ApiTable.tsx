@@ -6,6 +6,7 @@ import { AccessResDto } from '../types/access.res.dto';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import AccessService from 'src/services/system/access';
 import { StatusEnum } from 'src/enums';
+import { useDispatch } from 'dva';
 const { confirm } = Modal;
 
 type Props = PropsWithChildren<{
@@ -16,9 +17,10 @@ const ApiTable = (props: Props) => {
   const { apiTableData } = props;
   const [isAccessApiVisible, setIsAccessApiVisible] = useState<boolean>(false);
   const [rowData, setRowData] = useState<AccessResDto | undefined>();
+  const dispatch = useDispatch();
 
   const modifyApiHandler = (rowData: any) => {
-    setRowData(Object.assign({}, rowData));
+    dispatch({ type: 'access/setRowData', payload: rowData });
   };
   const loadData = () => {
     console.log('加载');

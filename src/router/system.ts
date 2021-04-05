@@ -17,6 +17,7 @@ const SystemRoute = [
     name: '资源管理',
     path: '/system/access',
     component: () => import('src/pages/System/Access'),
+    models: () => [import('src/models/system/access')],
   },
 ];
 export default SystemRoute;

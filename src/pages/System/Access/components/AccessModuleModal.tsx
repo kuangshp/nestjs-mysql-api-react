@@ -4,6 +4,8 @@ import { useRequest } from 'ahooks';
 import AccessService from 'src/services/system/access';
 import { AccessReqDto } from '../types/access.req.dto';
 import { AccessTypeEnum } from 'src/enums';
+import { useSelector } from 'dva';
+import { AccessState } from 'src/models/system/access';
 
 const { Option } = Select;
 
@@ -15,7 +17,6 @@ const layout = {
 type Props = PropsWithChildren<{
   isAccessModalVisible: boolean;
   setIsAccessModalVisible: (flag: boolean) => void;
-  rowData?: any;
   loadData: () => void;
 }>;
 
@@ -37,9 +38,9 @@ const modifyAccessHandler = async (id: number, params: AccessReqDto) => {
 };
 
 const AccessModuleModal = (props: Props) => {
-  const { isAccessModalVisible, setIsAccessModalVisible, rowData, loadData } = props;
-  const [rowId, setRowId] = useState<number | null>();
+  const { isAccessModalVisible, setIsAccessModalVisible, loadData } = props;
   const [title, setTitle] = useState<string>('新增模块');
+  const { accessRowData } = useSelector((state: any): AccessState => state.present.account);
   const [form] = Form.useForm();
 
   const { run, loading } = useRequest(createAccessHandler, {
@@ -67,8 +68,8 @@ const AccessModuleModal = (props: Props) => {
   });
 
   useEffect(() => {
-    if (rowData) {
-      const { moduleName, icon, sort, status, description } = rowData;
+    if (accessRowData && Object.keys(accessRowData).length) {
+      const { moduleName, icon, sort, status, description } = accessRowData;
       form.setFieldsValue({
         moduleName,
         icon,
@@ -77,13 +78,11 @@ const AccessModuleModal = (props: Props) => {
         status: String(status),
       });
       setTitle('编辑模块');
-      setRowId(rowData.id);
     } else {
       setTitle('新增模块');
       form.resetFields();
-      setRowId(null);
     }
-  }, [rowData]);
+  }, [accessRowData]);
   // 提交
   const handleModifyOk = () => {
     // 提交数据中不重复提交
@@ -91,6 +90,7 @@ const AccessModuleModal = (props: Props) => {
     form.validateFields(['moduleName', 'icon', 'sort', 'status', 'description']).then(values => {
       const { moduleName, icon, sort, status, description } = values;
       // 根据当前是否有id区分是新增还是编辑
+      const rowId = accessRowData && Object.keys(accessRowData).length ? accessRowData.id : null;
       if (rowId) {
         run1(rowId, { type: AccessTypeEnum.MODULE, moduleName, icon, sort, status, description });
       } else {

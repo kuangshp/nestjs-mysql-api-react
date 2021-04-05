@@ -11,6 +11,7 @@ import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { StatusEnum } from 'src/enums';
 import yesImg from 'src/assets/images/yes.gif';
 import noImg from 'src/assets/images/no.gif';
+import { useDispatch } from 'dva';
 
 const { confirm } = Modal;
 
@@ -35,15 +36,16 @@ const MenusTable = (props: Props) => {
   // api接口数据
   const [apiTableData, setApiTableData] = useState([]);
   const [rowData, setRowData] = useState<AccessResDto | undefined>();
+  const dispatch = useDispatch();
   // 编辑行
   const modifyMenuHandler = (rowData: any) => {
-    setRowData(Object.assign({}, rowData));
+    dispatch({ type: 'access/setRowData', payload: rowData });
     setIsAccessMenusVisible(true);
   };
 
   // 新建API
   const createApiHandler = (rowData: any) => {
-    setRowData(Object.assign({}, rowData));
+    dispatch({ type: 'access/setRowData', payload: rowData });
     setIsAccessApiVisible(true);
   };
 

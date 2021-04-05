@@ -12,6 +12,8 @@ import { AccessResDto } from './types/access.res.dto';
 import { StatusEnum } from 'src/enums';
 import yesImg from 'src/assets/images/yes.gif';
 import noImg from 'src/assets/images/no.gif';
+import { useDispatch, useSelector } from 'dva';
+import { AccessState } from 'src/models/system/access';
 
 const { confirm } = Modal;
 // 统一获取数据方法
@@ -39,6 +41,10 @@ const Access = () => {
   const [isAccessModalVisible, setIsAccessModalVisible] = useState<boolean>(false);
   const [isAccessMenusVisible, setIsAccessMenusVisible] = useState<boolean>(false);
   const [rowData, setRowData] = useState<AccessResDto | undefined>();
+  const dispatch = useDispatch();
+  const result = useSelector((state: any): AccessState => state.present.access);
+  console.log(result, '当前状态机');
+  const accessRowData = { id: 0 };
   // 获取模块数据
   const { tableProps: moduleTableData, search } = useAntdTable(getModuleData, {
     defaultPageSize: DEFAULT_PAGE_SIZE, // 默认请求页数
@@ -60,22 +66,22 @@ const Access = () => {
 
   // 重新请求菜单接口
   const loadMenu = async () => {
-    console.log(rowData, '重新请求菜单');
-    if (rowData) {
-      const { data } = await getTableData({ parentId: rowData.id });
+    console.log(accessRowData, '重新请求菜单');
+    if (accessRowData && Object.keys(accessRowData).length) {
+      const { data } = await getTableData({ parentId: accessRowData.id });
       setMenusTableData(data);
     }
   };
 
   // 编辑行
   const modifyModuleHandler = (rowData: AccessResDto) => {
-    setRowData(Object.assign({}, rowData));
+    dispatch({ type: 'access/setRowData', payload: rowData });
     setIsAccessModalVisible(true);
   };
 
   // 新增菜单
   const createMenuHandler = (rowData: AccessResDto) => {
-    setRowData(Object.assign({}, rowData));
+    dispatch({ type: 'access/setRowData', payload: rowData });
     setIsAccessMenusVisible(true);
   };
 
@@ -167,7 +173,6 @@ const Access = () => {
       />
       <AccessModuleModal
         loadData={reset}
-        rowData={rowData}
         isAccessModalVisible={isAccessModalVisible}
         setIsAccessModalVisible={setIsAccessModalVisible}
       />

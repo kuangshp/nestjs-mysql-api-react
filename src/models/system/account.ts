@@ -16,7 +16,6 @@ const model: Model = {
   reducers: {
     // 设置存储
     setRowData(state: AccountState, action: ReduxAction) {
-      console.log(action, '??');
       if (action.payload) {
         return { accountRowData: { ...state.accountRowData, ...action.payload } };
       } else {
