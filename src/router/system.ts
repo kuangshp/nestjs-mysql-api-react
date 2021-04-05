@@ -4,7 +4,7 @@ const SystemRoute = [
     name: '账号管理',
     path: '/system/account',
     component: () => import('src/pages/System/Account'),
-    models: () => [import('src/models/system/account')],
+    models: () => [import('src/models/account')],
   },
   {
     id: 'system/role',
@@ -17,7 +17,7 @@ const SystemRoute = [
     name: '资源管理',
     path: '/system/access',
     component: () => import('src/pages/System/Access'),
-    models: () => [import('src/models/system/access')],
+    models: () => [import('src/models/access')],
   },
 ];
 export default SystemRoute;

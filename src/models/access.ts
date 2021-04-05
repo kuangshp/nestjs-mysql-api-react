@@ -1,6 +1,6 @@
 import { Model } from 'dva';
-import { AccessResDto } from './../../pages/System/Access/types/access.res.dto';
-import { ReduxAction } from './../global';
+import { AccessResDto } from '../pages/System/Access/types/access.res.dto';
+import { ReduxAction } from './global';
 
 export interface AccessState {
   accessRowData: AccessResDto;

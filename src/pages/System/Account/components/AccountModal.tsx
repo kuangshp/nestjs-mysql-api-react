@@ -6,7 +6,7 @@ import { AccountResDto } from '../types/account.res.dto';
 import { mobileReg, usernameReg, emailReg } from 'src/constants';
 import AccountService from 'src/services/system/account';
 import { AccountDto } from '../types/account.dto';
-import { AccountState } from 'src/models/system/account';
+import { AccountState } from 'src/models/account';
 import { useSelector } from 'dva';
 
 const { Option } = Select;
