@@ -15,6 +15,7 @@ import { AccountTableDto, RoleResDto } from './types/role.res.dto';
 import RoleModal from './components/RoleModal';
 import RoleMenuModal from './components/RoleMenuModal';
 import { useDispatch } from 'dva';
+import RoleApiModal from './components/RoleApiModal';
 
 const { confirm } = Modal;
 // 封装请求数据
@@ -37,6 +38,7 @@ const Role: React.FC = () => {
   // 是否显示修改行弹框
   const [isModifyVisible, setIsModifyVisible] = useState<boolean>(false);
   const [isRoleMenuVisible, setIsRoleMenuVisible] = useState<boolean>(false);
+  const [isRoleApiVisible, setIsRoleApiVisible] = useState<boolean>(false);
   // 当前点击行数据
   const [rowData, setRowData] = useState<RoleResDto>();
   const dispatch = useDispatch();
@@ -58,10 +60,13 @@ const Role: React.FC = () => {
     dispatch({ type: 'role/setRowData', payload: rowData });
     setIsRoleMenuVisible(true);
   };
+
   // 分配接口
   const dispatchApi = (rowData: RoleResDto) => {
     dispatch({ type: 'role/setRowData', payload: rowData });
+    setIsRoleApiVisible(true);
   };
+
   // 删除数据
   const deleteRow = (rowData: RoleResDto) => {
     dispatch({ type: 'role/setRowData', payload: rowData });
@@ -155,6 +160,12 @@ const Role: React.FC = () => {
         <RoleMenuModal
           isRoleMenuVisible={isRoleMenuVisible}
           setIsRoleMenuVisible={setIsRoleMenuVisible}
+        />
+      )}
+      {isRoleApiVisible && (
+        <RoleApiModal
+          isRoleApiVisible={isRoleApiVisible}
+          setIsRoleApiVisible={setIsRoleApiVisible}
         />
       )}
     </div>
