@@ -11,7 +11,8 @@ import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { StatusEnum } from 'src/enums';
 import yesImg from 'src/assets/images/yes.gif';
 import noImg from 'src/assets/images/no.gif';
-import { useDispatch } from 'dva';
+import { useDispatch, useSelector } from 'dva';
+import { AccessState } from 'src/models/access';
 
 const { confirm } = Modal;
 
@@ -35,6 +36,7 @@ const MenusTable = (props: Props) => {
   const [expandedMenusRowKeys, setExpandedMenusRowKeys] = useState([]);
   // api接口数据
   const [apiTableData, setApiTableData] = useState([]);
+  const { accessRowData } = useSelector((state: any): AccessState => state.present.access);
   const dispatch = useDispatch();
   // 编辑行
   const modifyMenuHandler = (rowData: any) => {
@@ -132,7 +134,13 @@ const MenusTable = (props: Props) => {
     }
     setExpandedMenusRowKeys(temp);
   };
-
+  // 刷新api数据
+  const loadApiData = async () => {
+    if (accessRowData && Object.keys(accessRowData).length) {
+      const { data } = await getTableData({ parentId: accessRowData!.parentId });
+      setApiTableData(data);
+    }
+  };
   return (
     <>
       <Table
@@ -141,7 +149,7 @@ const MenusTable = (props: Props) => {
         pagination={false}
         expandedRowKeys={expandedMenusRowKeys}
         expandable={{
-          expandedRowRender: _ => <ApiTable apiTableData={apiTableData} />,
+          expandedRowRender: _ => <ApiTable apiTableData={apiTableData} loadData={loadApiData} />,
         }}
         rowKey="id"
         onExpand={onExpandMenusHandler}

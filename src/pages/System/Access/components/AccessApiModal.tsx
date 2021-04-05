@@ -82,9 +82,9 @@ const AccessApiModal = (props: Props) => {
         });
         setTitle('编辑API');
       } else {
-        const { moduleName } = accessRowData;
+        const { actionName } = accessRowData;
         form.setFieldsValue({
-          moduleName,
+          actionName,
         });
         setTitle('新增API');
       }

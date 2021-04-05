@@ -6,23 +6,23 @@ import { AccessResDto } from '../types/access.res.dto';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import AccessService from 'src/services/system/access';
 import { StatusEnum } from 'src/enums';
-import { useDispatch } from 'dva';
+import { useDispatch, useSelector } from 'dva';
+import { AccessState } from 'src/models/access';
 const { confirm } = Modal;
 
 type Props = PropsWithChildren<{
   apiTableData: any;
+  loadData: () => void;
 }>;
 
 const ApiTable = (props: Props) => {
-  const { apiTableData } = props;
+  const { apiTableData, loadData } = props;
   const [isAccessApiVisible, setIsAccessApiVisible] = useState<boolean>(false);
   const dispatch = useDispatch();
 
   const modifyApiHandler = (rowData: any) => {
     dispatch({ type: 'access/setRowData', payload: rowData });
-  };
-  const loadData = () => {
-    console.log('加载');
+    setIsAccessApiVisible(true);
   };
   // 删除数据
   const deleteApiHandler = (rowData: any) => {

@@ -65,7 +65,7 @@ const Access = () => {
   const loadMenu = async () => {
     console.log(accessRowData, '重新请求菜单');
     if (accessRowData && Object.keys(accessRowData).length) {
-      const { data } = await getTableData({ parentId: accessRowData.id });
+      const { data } = await getTableData({ parentId: accessRowData!.parentId });
       setMenusTableData(data);
     }
   };
