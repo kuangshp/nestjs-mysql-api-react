@@ -13,6 +13,7 @@ import { ConfigProvider } from 'antd';
 import zhCN from 'antd/es/locale/zh_CN';
 import routeConfig from 'src/router';
 import 'moment/locale/zh-cn';
+import { createLogger } from 'redux-logger';
 
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
@@ -45,7 +46,7 @@ const app = dva({
     },
   ],
 });
-
+app.use({ onAction: createLogger() });
 app.use(createLoading());
 app.model(globalModel);
 app.model(loginModel);
