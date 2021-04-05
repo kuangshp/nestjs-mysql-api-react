@@ -16,7 +16,6 @@ type Props = PropsWithChildren<{
 const ApiTable = (props: Props) => {
   const { apiTableData } = props;
   const [isAccessApiVisible, setIsAccessApiVisible] = useState<boolean>(false);
-  const [rowData, setRowData] = useState<AccessResDto | undefined>();
   const dispatch = useDispatch();
 
   const modifyApiHandler = (rowData: any) => {
@@ -98,7 +97,6 @@ const ApiTable = (props: Props) => {
       <AccessApiModal
         isAccessApiVisible={isAccessApiVisible}
         setIsAccessApiVisible={setIsAccessApiVisible}
-        rowData={rowData}
         loadData={loadData}
       />
     </div>

@@ -35,7 +35,6 @@ const MenusTable = (props: Props) => {
   const [expandedMenusRowKeys, setExpandedMenusRowKeys] = useState([]);
   // api接口数据
   const [apiTableData, setApiTableData] = useState([]);
-  const [rowData, setRowData] = useState<AccessResDto | undefined>();
   const dispatch = useDispatch();
   // 编辑行
   const modifyMenuHandler = (rowData: any) => {
@@ -154,7 +153,6 @@ const MenusTable = (props: Props) => {
       />
       <AccessApiModal
         loadData={loadData}
-        rowData={rowData}
         isNew={true}
         isAccessApiVisible={isAccessApiVisible}
         setIsAccessApiVisible={setIsAccessApiVisible}

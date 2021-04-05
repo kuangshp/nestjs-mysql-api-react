@@ -5,6 +5,8 @@ import AccessService from 'src/services/system/access';
 import { AccessReqDto } from '../types/access.req.dto';
 import { AccessResDto } from './../types/access.res.dto';
 import { AccessTypeEnum } from 'src/enums';
+import { useSelector } from 'dva';
+import { AccessState } from 'src/models/access';
 const { Option } = Select;
 
 const layout = {
@@ -16,7 +18,6 @@ type Props = PropsWithChildren<{
   isAccessApiVisible: boolean;
   setIsAccessApiVisible: (flag: boolean) => void;
   isNew?: boolean;
-  rowData: AccessResDto | undefined;
   loadData: () => void;
 }>;
 
@@ -38,8 +39,8 @@ const modifyAccessHandler = async (id: number, params: AccessReqDto) => {
 };
 
 const AccessApiModal = (props: Props) => {
-  const { isAccessApiVisible, setIsAccessApiVisible, rowData, loadData, isNew } = props;
-  const [rowData1, setRowData1] = useState<AccessResDto>();
+  const { isAccessApiVisible, setIsAccessApiVisible, loadData, isNew } = props;
+  const { accessRowData } = useSelector((state: any): AccessState => state.present.access);
   const [title, setTitle] = useState<string>('新增API');
   const [form] = Form.useForm();
 
@@ -68,28 +69,27 @@ const AccessApiModal = (props: Props) => {
   });
 
   useEffect(() => {
-    console.log(rowData, 'api中');
-    if (!rowData) return;
-    if (!isNew) {
-      const { actionName, url, icon, sort, status, description } = rowData;
-      form.setFieldsValue({
-        actionName,
-        url,
-        icon,
-        sort,
-        description,
-        status: String(status),
-      });
-      setTitle('编辑API');
-    } else {
-      const { moduleName } = rowData;
-      form.setFieldsValue({
-        moduleName,
-      });
-      setTitle('新增API');
+    if (accessRowData && Object.keys(accessRowData).length) {
+      if (!isNew) {
+        const { actionName, url, icon, sort, status, description } = accessRowData;
+        form.setFieldsValue({
+          actionName,
+          url,
+          icon,
+          sort,
+          description,
+          status: String(status),
+        });
+        setTitle('编辑API');
+      } else {
+        const { moduleName } = accessRowData;
+        form.setFieldsValue({
+          moduleName,
+        });
+        setTitle('新增API');
+      }
     }
-    setRowData1(rowData);
-  }, [rowData]);
+  }, [accessRowData]);
   // 提交
   const handleModifyOk = () => {
     // 提交数据中不重复提交
@@ -98,10 +98,10 @@ const AccessApiModal = (props: Props) => {
       .validateFields(['actionName', 'url', 'method', 'sort', 'status', 'description'])
       .then(values => {
         const { actionName, url, method, sort, status, description } = values;
-        const parentId = isNew ? rowData1!.id : rowData1!.parentId;
+        const parentId = isNew ? accessRowData!.id : accessRowData!.parentId;
         // 编辑提交
         if (!isNew) {
-          run1(Number(rowData1!.id), {
+          run1(Number(accessRowData!.id), {
             type: AccessTypeEnum.API,
             actionName,
             url,
