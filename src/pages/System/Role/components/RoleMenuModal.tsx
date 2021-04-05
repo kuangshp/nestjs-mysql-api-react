@@ -70,7 +70,10 @@ const RoleMenuModal = (props: Props) => {
     });
   };
   // 反填删除顶级节点(因为就算是该下面的全部选中了，顶级会自动选中)
-  const fullCheckNodeId = (fetchCheckedList: RoleMenuAuthResDto[]): string[] => {
+  const fullCheckNodeId = (
+    allMenus: RoleMenusResDto[],
+    fetchCheckedList: RoleMenuAuthResDto[]
+  ): string[] => {
     const checkedList = fetchCheckedList.map((item: RoleMenuAuthResDto) => item.accessId);
     console.log(allMenus, '全部的菜单');
     for (const item of allMenus) {
@@ -80,7 +83,6 @@ const RoleMenuModal = (props: Props) => {
         checkedList.splice(index, 1);
       }
     }
-    console.log(checkedList, '最后的');
     return checkedList.map(item => String(item));
   };
 
@@ -94,8 +96,8 @@ const RoleMenuModal = (props: Props) => {
     setMenusTree(getTreeList(allMenus));
     if (authMenus && authMenus.length) {
       // 手动修复删除不是全部选中父节点
-      console.log(fullCheckNodeId(authMenus), '删除后');
-      setAuthChecked(fullCheckNodeId(authMenus));
+      console.log(fullCheckNodeId(allMenus, authMenus), '删除后');
+      setAuthChecked(fullCheckNodeId(allMenus, authMenus));
     } else {
       setAuthChecked([]);
     }
