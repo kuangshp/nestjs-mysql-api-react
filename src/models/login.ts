@@ -1,13 +1,10 @@
 import { Model } from 'dva';
-import { message as Message } from 'antd';
 
 import LoginService from './../services/login';
 import { ObjectType } from '../typings';
 import { routerRedux } from 'dva/router';
 import { storage } from './../utils';
 import { authToken } from './../config';
-import { IApiBaseResDto } from 'src/dto/api.res.base.dto';
-import { ILoginRes } from 'src/pages/Login/types/login.res.dto';
 
 export interface ReduxAction {
   type: string;

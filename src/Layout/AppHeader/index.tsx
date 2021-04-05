@@ -19,7 +19,8 @@ const AppHeader = (props: Props) => {
   const [isModifyVisible, setIsModifyVisible] = useState<boolean>(false);
   const dispatch = useDispatch();
   // 从状态中获取用户信息
-  const { userInfo } = useSelector((state: any): LoginState => state.present.login);
+  const { userInfo } = useSelector((state: any): LoginState => state.present?.login);
+  // const userInfo = { username: 'admin' };
   // 退出操作
   const logoutHandler = () => {
     confirm({
@@ -70,7 +71,7 @@ const AppHeader = (props: Props) => {
       <div className={styles.header_view}>
         {/* 用户中心 */}
         <div className={styles.user_info}>
-          <span>{userInfo.username}</span>
+          <span>{userInfo?.username}</span>
           <Dropdown overlay={menu}>
             <img
               className={styles.avatar}
