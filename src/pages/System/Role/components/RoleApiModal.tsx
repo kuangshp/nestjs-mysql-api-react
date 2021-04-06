@@ -14,8 +14,8 @@ type Props = PropsWithChildren<{
 }>;
 
 // 包装提交数据
-const dispatchApiToRoleHandler = async (postData: RoleMenuApiReqDto) => {
-  const result = await RoleAccessService.dispatchMenuToRole(postData);
+const dispatchApiToRoleHandler = async (roleId: number, postData: RoleMenuApiReqDto) => {
+  const result = await RoleAccessService.dispatchMenuApiToRole(roleId, postData);
   if (!result) return;
   return new Promise(resolve => {
     resolve(true);
@@ -61,8 +61,7 @@ const RoleApiModal = (props: Props) => {
     if (loading) return;
     form.validateFields(['accessApi']).then(values => {
       const { accessApi } = values;
-      run({
-        roleId: roleRowData.id,
+      run(roleRowData.id, {
         accessList: accessApi,
         type: 3,
       });

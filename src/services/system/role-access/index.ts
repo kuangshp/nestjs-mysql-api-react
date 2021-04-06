@@ -14,9 +14,9 @@ class RoleAccessService extends BaseService {
     return await this.get<RoleMenuAuthResDto[]>(`/admin/role_access/${roleId}/3`);
   }
 
-  // 给当前角色分配菜单
-  async dispatchMenuToRole(postData: RoleMenuApiReqDto): Promise<string> {
-    return await this.post<string>('/admin/role_access/menus', postData);
+  // 给当前角色API分配菜单
+  async dispatchMenuApiToRole(roleId: number, postData: RoleMenuApiReqDto): Promise<string> {
+    return await this.patch<string>('/admin/role_access/menus', roleId, postData);
   }
 
   //获取全部的菜单

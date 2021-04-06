@@ -15,8 +15,8 @@ type Props = PropsWithChildren<{
 }>;
 
 // 包装提交数据
-const dispatchMenuToRoleHandler = async (postData: RoleMenuApiReqDto) => {
-  const result = await RoleAccessService.dispatchMenuToRole(postData);
+const dispatchMenuApiToRoleHandler = async (roleId: number, postData: RoleMenuApiReqDto) => {
+  const result = await RoleAccessService.dispatchMenuApiToRole(roleId, postData);
   if (!result) return;
   return new Promise(resolve => {
     resolve(true);
@@ -30,7 +30,7 @@ const RoleMenuModal = (props: Props) => {
   const [checkIdList, setCheckIdList] = useState<string[]>([]);
   const [authChecked, setAuthChecked] = useState<string[]>([]);
 
-  const { run, loading } = useRequest(dispatchMenuToRoleHandler, {
+  const { run, loading } = useRequest(dispatchMenuApiToRoleHandler, {
     manual: true,
     onSuccess: result => {
       if (result) {
@@ -42,9 +42,8 @@ const RoleMenuModal = (props: Props) => {
   const handleOk = () => {
     if (loading) return;
     const postAccessIdList = checkedParentId();
-    run({
+    run(roleRowData.id, {
       type: 2,
-      roleId: roleRowData.id,
       accessList: postAccessIdList,
     });
     console.log('提交', postAccessIdList);
