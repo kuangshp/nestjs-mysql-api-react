@@ -61,10 +61,6 @@ const RoleApiModal = (props: Props) => {
     if (loading) return;
     form.validateFields(['accessApi']).then(values => {
       const { accessApi } = values;
-      if (!accessApi.length) {
-        message.error('必须选中一个接口');
-        return;
-      }
       run({
         roleId: roleRowData.id,
         accessList: accessApi,
