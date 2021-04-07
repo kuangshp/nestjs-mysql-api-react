@@ -130,6 +130,19 @@ const AccountList = () => {
       render: (_: any, record: AccountResDto) => <div>{PlatformMessage[record.platform]}</div>,
     },
     {
+      title: '是否超管',
+      dataIndex: 'isSuper',
+      align: 'center' as const,
+      width: 100,
+      render: (_: any, record: AccountResDto) => {
+        if (record.isSuper) {
+          return '是';
+        } else {
+          return '否';
+        }
+      },
+    },
+    {
       title: '最后登录IP',
       dataIndex: 'lastLoginIp',
       align: 'right' as const,

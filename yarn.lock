@@ -4533,6 +4533,11 @@
   "resolved" "https://registry.npm.taobao.org/dedent/download/dedent-0.7.0.tgz"
   "version" "0.7.0"
 
+"deep-diff@^0.3.5":
+  "integrity" "sha1-wB3mPvsO7JeYgB1Ax+Da4ltYLIQ="
+  "resolved" "https://registry.npmjs.org/deep-diff/-/deep-diff-0.3.8.tgz"
+  "version" "0.3.8"
+
 "deep-equal@^1.0.1":
   "integrity" "sha1-tcmMlCzv+vfLBR4k4UNKJaLmB2o="
   "resolved" "https://registry.npm.taobao.org/deep-equal/download/deep-equal-1.1.1.tgz"
@@ -11071,6 +11076,13 @@
   dependencies:
     "indent-string" "^4.0.0"
     "strip-indent" "^3.0.0"
+
+"redux-logger@^3.0.6":
+  "integrity" "sha1-91VZZvMJjzyIYExEnPC69XeCdL8="
+  "resolved" "https://registry.npmjs.org/redux-logger/-/redux-logger-3.0.6.tgz"
+  "version" "3.0.6"
+  dependencies:
+    "deep-diff" "^0.3.5"
 
 "redux-persist@^6.0.0":
   "integrity" "sha1-tNKXL5hZWXwTDUDUsUb+zatRs6g="

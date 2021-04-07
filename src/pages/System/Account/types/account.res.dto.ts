@@ -7,6 +7,7 @@ export class AccountResDto extends ApiResDto {
   email: string;
   status: number;
   platform: number;
+  isSuper: number;
   lastLoginIp: string;
   lastLoginAddress: string;
   lastLoginTime: Date;

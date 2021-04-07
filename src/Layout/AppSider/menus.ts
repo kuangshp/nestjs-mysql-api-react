@@ -15,14 +15,14 @@ export const menusDataList: Array<MenusProps> = [
     id: 1,
     label: '文件中心',
     value: '/file',
-    parentId: -1,
+    parentId: 0,
     keyPatch: ['file'],
   },
   {
     id: 2,
     label: '系统管理',
     value: '/system',
-    parentId: -1,
+    parentId: 0,
     keyPatch: ['system'],
     children: [
       {
@@ -52,7 +52,7 @@ export const menusDataList: Array<MenusProps> = [
     id: 5,
     label: '测试',
     value: '/test',
-    parentId: -1,
+    parentId: 0,
     keyPatch: ['test'],
   },
 ];

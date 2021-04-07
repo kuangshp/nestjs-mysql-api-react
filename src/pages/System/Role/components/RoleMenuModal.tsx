@@ -64,9 +64,9 @@ const RoleMenuModal = (props: Props) => {
         resultList.push(String(item.parentId));
       }
     }
-    return Array.from(new Set(resultList.concat(checkedKeys)))
-      .filter(item => item !== 'null')
-      .filter(item => Boolean(item));
+    return Array.from(new Set(resultList.concat(checkedKeys))).filter(item =>
+      Boolean(Number(item))
+    );
   };
   // 反填删除顶级节点(因为就算是该下面的全部选中了，顶级会自动选中)
   const fullCheckNodeId = (
