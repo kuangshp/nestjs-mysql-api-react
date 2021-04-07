@@ -1,6 +1,7 @@
 import dva from 'dva';
 import React from 'react';
-import createHistory from 'history/createBrowserHistory';
+import createHistory from 'history/createHashHistory';
+// import createHistory from 'history/createBrowserHistory';
 import './assets/style/global.less';
 import 'antd/dist/antd.css';
 import globalModel from 'src/models/global';
