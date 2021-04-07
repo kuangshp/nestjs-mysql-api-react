@@ -74,7 +74,6 @@ const RoleMenuModal = (props: Props) => {
     fetchCheckedList: RoleMenuAuthResDto[]
   ): string[] => {
     const checkedList = fetchCheckedList.map((item: RoleMenuAuthResDto) => item.accessId);
-    console.log(allMenus, '全部的菜单');
     for (const item of allMenus) {
       if (item.parentId === 0) {
         // 判断是否顶层菜单

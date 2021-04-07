@@ -18,6 +18,7 @@ const model: Model = {
   },
   subscriptions: {},
   effects: {
+    // 登录接口
     *loginApi({ payload }: ReduxAction, { call, put }) {
       const result = yield call(() => LoginService.loginApi(payload));
       if (result) {
