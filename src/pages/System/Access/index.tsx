@@ -114,16 +114,16 @@ const Access = () => {
 
   // 模块表格
   const columns = [
-    {
-      title: 'ID',
-      dataIndex: 'id',
-      align: 'right' as const,
-    },
-    {
-      title: '父节点',
-      dataIndex: 'parentId',
-      align: 'right' as const,
-    },
+    // {
+    //   title: 'ID',
+    //   dataIndex: 'id',
+    //   align: 'right' as const,
+    // },
+    // {
+    //   title: '父节点',
+    //   dataIndex: 'parentId',
+    //   align: 'right' as const,
+    // },
     {
       title: '模块名称',
       dataIndex: 'moduleName',

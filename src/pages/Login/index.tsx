@@ -50,7 +50,7 @@ const Login = (props: Props) => {
               登录
             </Button>
           </Form.Item>
-          <div className={styles.tools}>用户名和密码随便输入</div>
+          <div className={styles.tools}>账号和密码:admin/123456</div>
         </Form>
       </div>
     </div>
