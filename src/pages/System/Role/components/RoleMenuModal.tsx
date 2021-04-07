@@ -76,10 +76,16 @@ const RoleMenuModal = (props: Props) => {
     const checkedList = fetchCheckedList.map((item: RoleMenuAuthResDto) => item.accessId);
     console.log(allMenus, '全部的菜单');
     for (const item of allMenus) {
-      // 当前包括在此项中且父节点是null的时候，删除
-      if (checkedList.includes(item.id) && !item.parentId) {
-        const index = checkedList.findIndex((it: number) => it == item.id);
-        checkedList.splice(index, 1);
+      if (item.parentId === 0) {
+        // 判断是否顶层菜单
+        const isTop = allMenus.find(it => it.parentId == item.id);
+        // 当前包括在此项中且父节点是0的时候且没有子节点的时候删除
+        if (isTop) {
+          if (checkedList.includes(item.id) && !item.parentId) {
+            const index = checkedList.findIndex((it: number) => it == item.id);
+            checkedList.splice(index, 1);
+          }
+        }
       }
     }
     return checkedList.map(item => String(item));
