@@ -4,7 +4,7 @@ import { ReduxAction } from './global';
 import { MenusResDto } from './../Layout/AppSider/types/menu.res.dto';
 import MenusService from './../services/menus';
 
-export interface LoginState {
+export interface MenusState {
   menusList: MenusResDto[];
 }
 
@@ -21,12 +21,13 @@ const model: Model = {
       if (result) {
         yield put({ type: 'setMenus', payload: result });
       }
+      return result;
     },
   },
   reducers: {
     // 存储菜单
-    setMenus(state: LoginState, action: ReduxAction) {
-      return { menusList: { ...state.menusList, ...action.payload } };
+    setMenus(state: MenusState, action: ReduxAction) {
+      return { menusList: action.payload };
     },
   },
 };

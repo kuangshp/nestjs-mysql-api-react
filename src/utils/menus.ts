@@ -1,4 +1,5 @@
 import { ObjectType } from './../typings/obj-type';
+import * as _ from 'lodash';
 /**
  * @Author: 水痕
  * @Date: 2021-04-05 16:09:38
@@ -7,10 +8,11 @@ import { ObjectType } from './../typings/obj-type';
  * @param {*}
  * @return {*}
  */
-export const getTreeList = (dataList: ObjectType[], sortField = ''): any => {
-  if (!Array.isArray(dataList)) {
-    throw new TypeError(`${dataList}不是数组`);
+export const getTreeList = (oldDataList: ObjectType[], sortField = ''): any => {
+  if (!Array.isArray(oldDataList)) {
+    throw new TypeError(`${oldDataList}不是数组`);
   }
+  const dataList: ObjectType[] = _.cloneDeep(oldDataList);
   // 第一次是将全部的permissionId作为对象的key重组成一个对象
   const formatObj = dataList.reduce((pre, cur) => {
     return { ...pre, [cur['id']]: cur };

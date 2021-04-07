@@ -8,6 +8,7 @@ import loginModel from 'src/models/login';
 import accessModel from 'src/models/system/access';
 import accountModel from 'src/models/system/account';
 import roleModel from 'src/models/system/role';
+import menusModel from 'src/models/menus';
 import createLoading from 'dva-loading';
 import ReactDOM from 'react-dom';
 import { ConfigProvider } from 'antd';
@@ -54,6 +55,7 @@ app.model(loginModel);
 app.model(accessModel);
 app.model(accountModel);
 app.model(roleModel);
+app.model(menusModel);
 app.router(routeConfig as any);
 
 const App = app.start();

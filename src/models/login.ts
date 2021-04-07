@@ -6,6 +6,7 @@ import { routerRedux } from 'dva/router';
 import { storage } from './../utils';
 import { authToken } from './../config';
 import { ReduxAction } from './global';
+import { MenusResDto } from 'src/Layout/AppSider/types/menu.res.dto';
 
 export interface LoginState {
   userInfo: ObjectType;
@@ -23,6 +24,8 @@ const model: Model = {
       const result = yield call(() => LoginService.loginApi(payload));
       if (result) {
         yield put({ type: 'setStorage', payload: result });
+        // 调用菜单接口
+        yield put({ type: 'menus/menusApi' });
         yield put(routerRedux.push('/home'));
       }
     },

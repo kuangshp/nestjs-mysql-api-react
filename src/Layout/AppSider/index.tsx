@@ -1,12 +1,14 @@
-import React, { useState, useMemo, PropsWithChildren } from 'react';
+import React, { useState, useMemo, PropsWithChildren, useEffect } from 'react';
 import { Layout, Menu } from 'antd';
 import { ObjectType, CombinedState } from '../../typings';
 import styles from './index.module.css';
-import { menusDataList, MenusProps } from './menus';
+import { MenusProps } from './menus';
 import { FolderOpenOutlined, FileTextOutlined } from '@ant-design/icons';
-import { connect, useSelector } from 'dva';
+import { connect, useSelector, useDispatch } from 'dva';
 import { RouteComponentProps, withRouter } from 'dva/router';
 import { GlobalState } from '../../models/global';
+import { MenusState } from 'src/models/menus';
+import { getTreeList } from 'src/utils';
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 
@@ -14,21 +16,21 @@ type Props = PropsWithChildren<RouteComponentProps & ReturnType<typeof mapStateT
 
 // 查找当前父节点
 const findMenus = (menusList: Array<MenusProps>, currentPath: string): string | undefined => {
-  let currentItem: MenusProps = { id: 0, label: '', value: '', parentId: 0 };
+  let currentItem: MenusProps = { id: 0, name: '', url: '', parentId: 0 };
   // 递归查找
   function findItem(menusList: Array<MenusProps>) {
     for (const item of menusList) {
       if (item.children && item.children.length) {
         findItem(item.children);
       }
-      if (item.value === currentPath) {
+      if (item.url === currentPath) {
         currentItem = item;
       }
     }
   }
   findItem(menusList);
   return currentItem.id
-    ? menusList.find((item: MenusProps) => item.id === currentItem.parentId)?.value
+    ? menusList.find((item: MenusProps) => item.id === currentItem.parentId)?.url
     : '';
 };
 
@@ -36,9 +38,21 @@ const AppSider = (props: Props) => {
   const { location, history } = props;
   const [selectKey, setSelectKey] = useState<string>('');
   const [openKey, setOpenKey] = useState<string>('');
+  const [menusDataList, setMenusDataList] = useState<MenusProps[]>([]);
   // 可以使用hooks代替下面的connect
-  // const state = useSelector((state: CombinedState) => state.global);
-  // console.log(state, '===>');
+  const { menusList } = useSelector((state: any): MenusState => state.present.menus);
+
+  // 初始化菜单
+  const initMenus = () => {
+    console.log(menusList, '当前的菜单');
+    // 格式化菜单成树结构
+    const menusTree = getTreeList(menusList);
+    setMenusDataList(menusTree);
+  };
+
+  useEffect(() => {
+    initMenus();
+  }, [menusList]);
 
   // 选择菜单的事件
   const selectMenuHandler = (ev: ObjectType) => {
@@ -69,17 +83,17 @@ const AppSider = (props: Props) => {
             if (item.children && item.children.length) {
               return (
                 <SubMenu
-                  key={item.value}
+                  key={item.url}
                   icon={item.icon ? item.icon : <FolderOpenOutlined />}
-                  title={item.label}
+                  title={item.name}
                 >
                   {item.children.map((childrenItem: MenusProps) => renderMenu(childrenItem))}
                 </SubMenu>
               );
             } else {
               return (
-                <Menu.Item key={item.value} icon={item.icon ? item.icon : <FileTextOutlined />}>
-                  {item.label}
+                <Menu.Item key={item.url} icon={item.icon ? item.icon : <FileTextOutlined />}>
+                  {item.name}
                 </Menu.Item>
               );
             }
