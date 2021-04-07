@@ -26,6 +26,7 @@ const model: Model = {
   subscriptions: {
     setup({ dispatch, history }) {
       return history.listen(({ pathname }) => {
+        console.log(pathname, '当前的路径');
         // 判断当前是否有token,没有就到登录页面
         if (!storage.getItem(authToken)) {
           history.push('/login');
