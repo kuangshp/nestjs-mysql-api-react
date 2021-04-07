@@ -72,7 +72,6 @@ const AccountModal = (props: Props) => {
   });
 
   useEffect(() => {
-    console.log(accountRowData, '组件种');
     if (accountRowData && Object.keys(accountRowData).length) {
       const { username, mobile, email, status, platform } = accountRowData;
       form.setFieldsValue({

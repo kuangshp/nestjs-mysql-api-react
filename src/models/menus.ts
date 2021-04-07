@@ -11,7 +11,7 @@ export interface MenusState {
 const model: Model = {
   namespace: 'menus',
   state: {
-    userInfo: {},
+    menusList: [],
   },
   subscriptions: {},
   effects: {
@@ -29,6 +29,10 @@ const model: Model = {
     setMenus(state: MenusState, action: ReduxAction) {
       return { menusList: action.payload };
     },
+    // isAuthMenus(state: MenusState) {
+    //   console.log(state.menusList, '菜单');
+    //   return true;
+    // },
   },
 };
 export default model;

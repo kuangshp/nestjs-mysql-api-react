@@ -44,7 +44,6 @@ const AppSider = (props: Props) => {
 
   // 初始化菜单
   const initMenus = () => {
-    console.log(menusList, '当前的菜单');
     // 格式化菜单成树结构
     const menusTree = getTreeList(menusList);
     setMenusDataList(menusTree);
