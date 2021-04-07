@@ -4,7 +4,7 @@ import { ApiListResDto } from 'src/dto/api.res.list.dto';
 export class RoleResDto extends ApiResDto {
   /** 角色名称 */
   name: string;
-  /** 角色描素 */
+  /** 角色描述 */
   description: string;
   /** 状态 */
   status: number;

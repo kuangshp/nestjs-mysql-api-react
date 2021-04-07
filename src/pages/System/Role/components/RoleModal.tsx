@@ -138,7 +138,7 @@ const RoleModal = (props: Props) => {
               <Option value="1">默认</Option>
             </Select>
           </Form.Item>
-          <Form.Item name="description" label="描素">
+          <Form.Item name="description" label="描述">
             <Input.TextArea />
           </Form.Item>
         </Form>

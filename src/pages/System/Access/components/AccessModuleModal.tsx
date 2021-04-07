@@ -139,7 +139,7 @@ const AccessModuleModal = (props: Props) => {
           <Form.Item name="sort" label="模块排序">
             <Input placeholder="请输入模块排序" />
           </Form.Item>
-          <Form.Item name="description" label="描素">
+          <Form.Item name="description" label="描述">
             <Input.TextArea />
           </Form.Item>
         </Form>

@@ -110,7 +110,7 @@ const MenusTable = (props: Props) => {
       },
     },
     {
-      title: '描素',
+      title: '描述',
       dataIndex: 'description',
       align: 'right' as const,
     },

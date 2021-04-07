@@ -8,7 +8,7 @@ export enum AccessTypeEnum {
   API = 3,
 }
 
-/** 资源类型描素 */
+/** 资源类型描述 */
 export const AccessTypeMessage = {
   1: '模块',
   2: '菜单',

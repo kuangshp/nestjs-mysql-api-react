@@ -190,7 +190,7 @@ const AccessApiModal = (props: Props) => {
           <Form.Item name="sort" label="接口排序">
             <Input placeholder="请输入接口排序" />
           </Form.Item>
-          <Form.Item name="description" label="描素">
+          <Form.Item name="description" label="描述">
             <Input.TextArea />
           </Form.Item>
         </Form>

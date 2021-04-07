@@ -91,7 +91,7 @@ const Role: React.FC = () => {
       width: 100,
     },
     {
-      title: '描素',
+      title: '描述',
       dataIndex: 'description',
       align: 'right' as const,
       width: 200,

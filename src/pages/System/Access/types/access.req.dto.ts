@@ -26,7 +26,7 @@ export class AccessReqDto {
   /** 状态 */
   status?: number;
 
-  /** 描素 */
+  /** 描述 */
   description?: string;
 
   /** 接口名称 */
