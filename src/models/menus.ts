@@ -2,22 +2,26 @@ import { Model } from 'dva';
 
 import { ReduxAction } from './global';
 import { MenusResDto } from './../Layout/AppSider/types/menu.res.dto';
+import MenusService from './../services/menus';
 
 export interface LoginState {
   menusList: MenusResDto[];
 }
 
 const model: Model = {
-  namespace: 'login',
+  namespace: 'menus',
   state: {
     userInfo: {},
   },
   subscriptions: {},
   effects: {
     // 获取菜单
-    // *menusApi({ payload }: ReduxAction, { call, put }) {
-    //   console.log('安逸你');
-    // }
+    *menusApi(_: ReduxAction, { call, put }) {
+      const result = yield call(() => MenusService.menusList());
+      if (result) {
+        yield put({ type: 'setMenus', payload: result });
+      }
+    },
   },
   reducers: {
     // 存储菜单

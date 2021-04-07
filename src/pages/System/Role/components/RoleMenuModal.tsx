@@ -1,7 +1,7 @@
 import React, { PropsWithChildren, useEffect, useState } from 'react';
 import { Modal, Tree } from 'antd';
 import { useSelector } from 'dva';
-import { RoleState } from 'src/models/role';
+import { RoleState } from 'src/models/system/role';
 import RoleAccessService from 'src/services/system/role-access';
 import { getTreeList } from 'src/utils';
 import { RoleMenusResDto } from './../types/role.menus.res.dto';

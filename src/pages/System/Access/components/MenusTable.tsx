@@ -11,7 +11,7 @@ import { StatusEnum } from 'src/enums';
 import yesImg from 'src/assets/images/yes.gif';
 import noImg from 'src/assets/images/no.gif';
 import { useDispatch, useSelector } from 'dva';
-import { AccessState } from 'src/models/access';
+import { AccessState } from 'src/models/system/access';
 import { QueryAccessDto } from './../types/query.access.dto';
 
 const { confirm } = Modal;

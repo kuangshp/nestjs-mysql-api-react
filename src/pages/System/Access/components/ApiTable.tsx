@@ -8,7 +8,7 @@ import { StatusEnum } from 'src/enums';
 import { useDispatch, useSelector } from 'dva';
 import yesImg from 'src/assets/images/yes.gif';
 import noImg from 'src/assets/images/no.gif';
-import { AccessState } from 'src/models/access';
+import { AccessState } from 'src/models/system/access';
 const { confirm } = Modal;
 
 type Props = PropsWithChildren<{

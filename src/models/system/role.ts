@@ -1,6 +1,6 @@
 import { Model } from 'dva';
-import { RoleResDto } from './../pages/System/Role/types/role.res.dto';
-import { ReduxAction } from './global';
+import { RoleResDto } from '../../pages/System/Role/types/role.res.dto';
+import { ReduxAction } from '../global';
 
 export interface RoleState {
   roleRowData: RoleResDto;

@@ -5,7 +5,7 @@ import { AccountRoleDto, AccountRoleResDto } from '../types/account.role.res.dto
 import { DispatchAccountRoleDto } from '../types/dispatch.account.role.dto';
 import { useRequest } from 'ahooks';
 import { useSelector } from 'dva';
-import { AccountState } from 'src/models/account';
+import { AccountState } from 'src/models/system/account';
 
 type Props = PropsWithChildren<{
   isRoleModifyVisible: boolean;

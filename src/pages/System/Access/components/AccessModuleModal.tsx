@@ -5,7 +5,7 @@ import AccessService from 'src/services/system/access';
 import { AccessReqDto } from '../types/access.req.dto';
 import { AccessTypeEnum } from 'src/enums';
 import { useSelector } from 'dva';
-import { AccessState } from 'src/models/access';
+import { AccessState } from 'src/models/system/access';
 
 const { Option } = Select;
 

@@ -5,7 +5,7 @@ import { useRequest } from 'ahooks';
 import RoleService from 'src/services/system/role';
 import { RoleResDto } from '../types/role.res.dto';
 import { useSelector } from 'dva';
-import { RoleState } from 'src/models/role';
+import { RoleState } from 'src/models/system/role';
 
 const { Option } = Select;
 

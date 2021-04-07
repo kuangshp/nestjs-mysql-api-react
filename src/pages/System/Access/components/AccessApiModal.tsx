@@ -6,7 +6,7 @@ import { AccessReqDto } from '../types/access.req.dto';
 import { AccessResDto } from './../types/access.res.dto';
 import { AccessTypeEnum } from 'src/enums';
 import { useSelector } from 'dva';
-import { AccessState } from 'src/models/access';
+import { AccessState } from 'src/models/system/access';
 const { Option } = Select;
 
 const layout = {
