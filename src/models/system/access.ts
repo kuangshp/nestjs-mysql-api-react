@@ -17,9 +17,9 @@ const model: Model = {
     // 设置存储
     setRowData(state: AccessState, action: ReduxAction) {
       if (action.payload) {
-        return { accessRowData: { ...state.accessRowData, ...action.payload } };
+        return { ...state, accessRowData: { ...state.accessRowData, ...action.payload } };
       } else {
-        return { accessRowData: {} };
+        return { ...state, accessRowData: {} };
       }
     },
   },

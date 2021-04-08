@@ -34,7 +34,7 @@ const model: Model = {
     // 设置存储
     setStorage(state: LoginState, action: ReduxAction) {
       storage.setItem(authToken, action.payload.token);
-      return { userInfo: { ...state.userInfo, ...action.payload } };
+      return { ...state, userInfo: { ...state.userInfo, ...action.payload } };
     },
   },
 };

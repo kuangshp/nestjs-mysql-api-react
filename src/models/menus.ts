@@ -27,7 +27,7 @@ const model: Model = {
   reducers: {
     // 存储菜单
     setMenus(state: MenusState, action: ReduxAction) {
-      return { menusList: action.payload };
+      return { ...state, menusList: action.payload };
     },
     // isAuthMenus(state: MenusState) {
     //   console.log(state.menusList, '菜单');

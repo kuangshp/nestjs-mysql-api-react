@@ -17,9 +17,9 @@ const model: Model = {
     // 设置存储
     setRowData(state: RoleState, action: ReduxAction) {
       if (action.payload) {
-        return { roleRowData: { ...state.roleRowData, ...action.payload } };
+        return { ...state, roleRowData: { ...state.roleRowData, ...action.payload } };
       } else {
-        return { roleRowData: {} };
+        return { ...state, roleRowData: {} };
       }
     },
   },
