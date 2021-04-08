@@ -10,8 +10,8 @@ import { AccessState } from 'src/models/system/access';
 const { Option } = Select;
 
 const layout = {
-  labelCol: { span: 4 },
-  wrapperCol: { span: 20 },
+  labelCol: { span: 6 },
+  wrapperCol: { span: 18 },
 };
 
 type Props = PropsWithChildren<{
@@ -87,17 +87,27 @@ const AccessModuleModal = (props: Props) => {
   const handleModifyOk = () => {
     // 提交数据中不重复提交
     if (loading || loading1) return;
-    form.validateFields(['moduleName', 'icon', 'sort', 'status', 'description']).then(values => {
-      const { moduleName, icon, sort, status, description } = values;
-      // 根据当前是否有id区分是新增还是编辑
-      const rowId = accessRowData && Object.keys(accessRowData).length ? accessRowData.id : null;
-      if (rowId) {
-        run1(rowId, { type: AccessTypeEnum.MODULE, moduleName, icon, sort, status, description });
-      } else {
-        // 提交数据
-        run({ type: AccessTypeEnum.MODULE, moduleName, icon, sort, status, description });
-      }
-    });
+    form
+      .validateFields(['moduleName', 'url', 'icon', 'sort', 'status', 'description'])
+      .then(values => {
+        const { moduleName, url, icon, sort, status, description } = values;
+        // 根据当前是否有id区分是新增还是编辑
+        const rowId = accessRowData && Object.keys(accessRowData).length ? accessRowData.id : null;
+        if (rowId) {
+          run1(rowId, {
+            type: AccessTypeEnum.MODULE,
+            moduleName,
+            url,
+            icon,
+            sort,
+            status,
+            description,
+          });
+        } else {
+          // 提交数据
+          run({ type: AccessTypeEnum.MODULE, moduleName, url, icon, sort, status, description });
+        }
+      });
   };
 
   // 取消
@@ -126,6 +136,18 @@ const AccessModuleModal = (props: Props) => {
             ]}
           >
             <Input placeholder="请输入模块名称" />
+          </Form.Item>
+          <Form.Item
+            name="url"
+            label="模块url地址"
+            rules={[
+              {
+                required: true,
+                message: '请输入模块url地址',
+              },
+            ]}
+          >
+            <Input placeholder="请输入模块url地址" />
           </Form.Item>
           <Form.Item name="icon" label="模块图标">
             <Input placeholder="请输入模块图标" />
