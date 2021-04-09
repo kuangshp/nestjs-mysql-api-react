@@ -4,11 +4,14 @@ import { MenuUnfoldOutlined, MenuFoldOutlined, ExclamationCircleOutlined } from 
 import { storage } from './../../utils';
 import { authToken } from '../../config';
 import { connect, useDispatch, useSelector } from 'dva';
-import { withRouter, RouteComponentProps } from 'dva/router';
 import styles from './index.module.less';
 import { GlobalState } from '../../models/global';
 import { LoginState } from 'src/models/login';
 import ModifyPasswordModal from './components/ModifyPasswordModal';
+import { RouteComponentProps } from 'react-router';
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { withRouter } = require('dva').router;
 
 const { Header } = Layout;
 const { confirm } = Modal;
