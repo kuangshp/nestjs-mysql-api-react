@@ -3,6 +3,7 @@ import Layout from 'src/Layout';
 import HomeRoute from 'src/router/home';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/lib/integration/react';
+import AuthRoute from 'src/router/auth/authRoute';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const dynamic = require('dva').dynamic;
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -56,7 +57,14 @@ function RouterConfig({ history, app }: any) {
                 key={path}
                 path={path}
                 exact
-                component={(dynamic as any)({ app, ...otherProps }) as any}
+                render={() => {
+                  const DynamicComponent = (dynamic as any)({ app, ...otherProps });
+                  return (
+                    <AuthRoute path={path}>
+                      <DynamicComponent />
+                    </AuthRoute>
+                  );
+                }}
               />
             )
           )}
