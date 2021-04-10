@@ -3,7 +3,6 @@ import { Modal, Form, Input, Select } from 'antd';
 import { useRequest } from 'ahooks';
 import AccessService from 'src/services/system/access';
 import { AccessReqDto } from '../types/access.req.dto';
-import { AccessResDto } from './../types/access.res.dto';
 import { AccessTypeEnum } from 'src/enums';
 import { useSelector } from 'dva';
 import { AccessState } from 'src/models/system/access';

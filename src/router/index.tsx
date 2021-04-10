@@ -3,7 +3,6 @@ import Layout from 'src/Layout';
 import HomeRoute from 'src/router/home';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/lib/integration/react';
-import useRouteInterception from 'src/hooks/useRouteInterception';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const dynamic = require('dva').dynamic;
 // eslint-disable-next-line @typescript-eslint/no-var-requires

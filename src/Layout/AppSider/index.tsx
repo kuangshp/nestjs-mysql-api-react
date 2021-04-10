@@ -1,10 +1,10 @@
 import React, { useState, useMemo, PropsWithChildren, useEffect } from 'react';
 import { Layout, Menu } from 'antd';
-import { ObjectType, CombinedState } from '../../typings';
+import { ObjectType } from '../../typings';
 import styles from './index.module.css';
 import { MenusProps } from './menus';
 import { FolderOpenOutlined, FileTextOutlined } from '@ant-design/icons';
-import { connect, useSelector, useDispatch } from 'dva';
+import { connect, useSelector } from 'dva';
 import { RouteComponentProps, withRouter } from 'dva/router';
 import { GlobalState } from '../../models/global';
 import { MenusState } from 'src/models/menus';

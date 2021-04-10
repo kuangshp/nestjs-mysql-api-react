@@ -3,7 +3,6 @@ import { Modal, Form, Input, Select } from 'antd';
 import { useRequest } from 'ahooks';
 import AccessService from 'src/services/system/access';
 import { AccessReqDto } from '../types/access.req.dto';
-import { AccessResDto } from './../types/access.res.dto';
 import { AccessTypeEnum } from 'src/enums';
 import { useSelector } from 'dva';
 import { AccessState } from 'src/models/system/access';
@@ -42,7 +41,6 @@ const AccessMenuModal = (props: Props) => {
   const { isAccessMenusVisible, setIsAccessMenusVisible, loadData, isNew } = props;
   const { accessRowData } = useSelector((state: any): AccessState => state.present.access);
   const [title, setTitle] = useState<string>('新增菜单');
-  const [isDisabledMenusInput, setIsDisabledMenusInput] = useState<boolean>(false);
   const [form] = Form.useForm();
   const { run, loading } = useRequest(createAccessHandler, {
     manual: true,
@@ -81,14 +79,12 @@ const AccessMenuModal = (props: Props) => {
           status: String(status),
         });
         setTitle('编辑菜单');
-        setIsDisabledMenusInput(true);
       } else {
         const { moduleName } = accessRowData;
         form.setFieldsValue({
           moduleName,
         });
         setTitle('新增菜单');
-        setIsDisabledMenusInput(false);
       }
     }
   }, [accessRowData]);
