@@ -3,6 +3,9 @@ import { Model } from 'dva';
 import { ReduxAction } from './global';
 import { MenusResDto } from './../Layout/AppSider/types/menu.res.dto';
 import MenusService from './../services/menus';
+import { storage } from 'src/utils';
+import { authToken } from 'src/config';
+import * as path from 'path';
 
 export interface MenusState {
   menusList: MenusResDto[];
@@ -13,7 +16,6 @@ const model: Model = {
   state: {
     menusList: [],
   },
-  subscriptions: {},
   effects: {
     // 获取菜单
     *menusApi(_: ReduxAction, { call, put }) {
@@ -21,18 +23,16 @@ const model: Model = {
       if (result) {
         yield put({ type: 'setMenus', payload: result });
       }
-      return result;
+      put({ type: 'isAuthMenus', payload: result });
     },
   },
   reducers: {
     // 存储菜单
     setMenus(state: MenusState, action: ReduxAction) {
+      console.log('setMenus --->');
       return { ...state, menusList: action.payload };
     },
-    // isAuthMenus(state: MenusState) {
-    //   console.log(state.menusList, '菜单');
-    //   return true;
-    // },
   },
+  subscriptions: {},
 };
 export default model;
