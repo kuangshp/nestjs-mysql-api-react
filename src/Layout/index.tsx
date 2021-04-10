@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
 import { Layout } from 'antd';
 import AppSider from './AppSider';
 import AppHeader from './AppHeader';

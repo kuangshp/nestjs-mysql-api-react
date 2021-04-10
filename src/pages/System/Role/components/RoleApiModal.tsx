@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, useEffect, useState } from 'react';
-import { Modal, Checkbox, Row, Col, Form, message } from 'antd';
+import { Modal, Checkbox, Row, Col, Form } from 'antd';
 import { useRequest } from 'ahooks';
 import { useSelector } from 'dva';
 import RoleAccessService from 'src/services/system/role-access';

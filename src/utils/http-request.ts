@@ -129,9 +129,9 @@ class HttpRequest {
     return /^(sso|iam|iam-.*)\//.test(input);
   }
 
-  private isPlainRequest(input: string) {
-    return /\.(html?|xml|txt)$/.test(input);
-  }
+  // private isPlainRequest(input: string) {
+  //   return /\.(html?|xml|txt)$/.test(input);
+  // }
 
   private useOrigin(res: any) {
     return res.config.useOrigin;

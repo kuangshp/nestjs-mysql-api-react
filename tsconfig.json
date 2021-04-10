@@ -14,7 +14,6 @@
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "noImplicitReturns": true,
     "noImplicitThis": true,
     "noImplicitAny": false,
     "importHelpers": true,
@@ -26,9 +25,10 @@
     "emitDecoratorMetadata": true,
     "strictPropertyInitialization": false,
     "noEmit": true,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
     "downlevelIteration": true,
+    "noUnusedLocals": true, /*定义未使用的时候会有提示*/
+    "noUnusedParameters": true, /*检查函数中是否有未使用的变量*/
+    "noImplicitReturns": true, /*检查函数否有返回值*/
     "jsx": "preserve",
     "newLine": "lf",
     "baseUrl": ".",

@@ -1,14 +1,11 @@
-import React, { useMemo, PropsWithChildren, Dispatch } from 'react';
+import React, { useMemo } from 'react';
 import { Form, Input, Button, message } from 'antd';
-import { RouteComponentProps } from 'dva/router';
 import styles from './index.module.less';
 import { FormError } from 'src/typings';
 import { storage } from 'src/utils';
 import { connect, useDispatch } from 'dva';
 
-type Props = PropsWithChildren<RouteComponentProps>;
-
-const Login = (props: Props) => {
+const Login = () => {
   const dispatch = useDispatch();
   useMemo(() => {
     storage.clear();

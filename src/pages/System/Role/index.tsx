@@ -39,8 +39,6 @@ const Role: React.FC = () => {
   const [isModifyVisible, setIsModifyVisible] = useState<boolean>(false);
   const [isRoleMenuVisible, setIsRoleMenuVisible] = useState<boolean>(false);
   const [isRoleApiVisible, setIsRoleApiVisible] = useState<boolean>(false);
-  // 当前点击行数据
-  const [rowData, setRowData] = useState<RoleResDto>();
   const dispatch = useDispatch();
   // 头部搜索表单
   const [searchForm] = Form.useForm();

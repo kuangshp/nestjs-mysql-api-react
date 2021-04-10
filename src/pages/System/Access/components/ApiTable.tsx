@@ -5,10 +5,10 @@ import { AccessResDto } from '../types/access.res.dto';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import AccessService from 'src/services/system/access';
 import { StatusEnum } from 'src/enums';
-import { useDispatch, useSelector } from 'dva';
+import { useDispatch } from 'dva';
 import yesImg from 'src/assets/images/yes.gif';
 import noImg from 'src/assets/images/no.gif';
-import { AccessState } from 'src/models/system/access';
+// import { AccessState } from 'src/models/system/access';
 const { confirm } = Modal;
 
 type Props = PropsWithChildren<{
@@ -20,7 +20,7 @@ const ApiTable = (props: Props) => {
   const { apiTableData, loadData } = props;
   const [isAccessApiVisible, setIsAccessApiVisible] = useState<boolean>(false);
   const dispatch = useDispatch();
-  const { accessRowData } = useSelector((state: any): AccessState => state.present.access);
+  // const { accessRowData } = useSelector((state: any): AccessState => state.present.access);
 
   const modifyApiHandler = (rowData: AccessResDto) => {
     dispatch({ type: 'access/setRowData', payload: rowData });
