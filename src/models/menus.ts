@@ -3,9 +3,6 @@ import { Model } from 'dva';
 import { ReduxAction } from './global';
 import { MenusResDto } from './../Layout/AppSider/types/menu.res.dto';
 import MenusService from './../services/menus';
-import { storage } from 'src/utils';
-import { authToken } from 'src/config';
-import * as path from 'path';
 
 export interface MenusState {
   menusList: MenusResDto[];
