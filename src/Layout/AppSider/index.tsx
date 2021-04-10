@@ -62,8 +62,14 @@ const AppSider = (props: Props) => {
   };
   // 刷新的时候默认选中
   useMemo(() => {
-    setSelectKey(location.pathname);
-    setOpenKey(() => findMenus(menusDataList, location.pathname) as string);
+    if (Object.is(location.pathname, '/home')) {
+      console.log('跳转到首页', location.pathname);
+      setSelectKey('');
+      setOpenKey('');
+    } else {
+      setSelectKey(location.pathname);
+      setOpenKey(() => findMenus(menusDataList, location.pathname) as string);
+    }
   }, [location.pathname]);
 
   return (
