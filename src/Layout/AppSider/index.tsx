@@ -9,6 +9,7 @@ import { RouteComponentProps, withRouter } from 'dva/router';
 import { GlobalState } from '../../models/global';
 import { MenusState } from 'src/models/menus';
 import { getTreeList } from 'src/utils';
+import useRouteInterception from 'src/hooks/useRouteInterception';
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 
@@ -39,9 +40,9 @@ const AppSider = (props: Props) => {
   const [selectKey, setSelectKey] = useState<string>('');
   const [openKey, setOpenKey] = useState<string>('');
   const [menusDataList, setMenusDataList] = useState<MenusProps[]>([]);
+  useRouteInterception(history);
   // 可以使用hooks代替下面的connect
   const { menusList } = useSelector((state: any): MenusState => state.present.menus);
-
   // 初始化菜单
   const initMenus = () => {
     // 格式化菜单成树结构

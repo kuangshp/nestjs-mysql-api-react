@@ -6,7 +6,6 @@ import { routerRedux } from 'dva/router';
 import { storage } from './../utils';
 import { authToken } from './../config';
 import { ReduxAction } from './global';
-import { MenusResDto } from 'src/Layout/AppSider/types/menu.res.dto';
 
 export interface LoginState {
   userInfo: ObjectType;
