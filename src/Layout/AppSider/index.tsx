@@ -36,8 +36,8 @@ const findMenus = (menusList: Array<MenusProps>, currentPath: string): string | 
 
 const AppSider = (props: Props) => {
   const { location, history } = props;
-  const [selectKey, setSelectKey] = useState<string>('');
-  const [openKey, setOpenKey] = useState<string>('');
+  const [selectKey, setSelectKey] = useState<string[]>([]);
+  const [openKey, setOpenKey] = useState<string[]>([]);
   const [menusDataList, setMenusDataList] = useState<MenusProps[]>([]);
   // 可以使用hooks代替下面的connect
   const { menusList } = useSelector((state: any): MenusState => state.present.menus);
@@ -58,17 +58,21 @@ const AppSider = (props: Props) => {
     // 根据菜单去跳转页面
     const { key } = ev;
     const toPath = key && key.startsWith('/') ? key : `/${key}`;
+    // 设置当前选中的
+    // setSelectKey(key);
+    console.log(openKey, selectKey);
     history.push(toPath);
   };
   // 刷新的时候默认选中
   useMemo(() => {
     if (Object.is(location.pathname, '/home')) {
       console.log('跳转到首页', location.pathname);
-      setSelectKey('');
-      setOpenKey('');
+      setSelectKey([]);
+      setOpenKey([]);
     } else {
-      setSelectKey(location.pathname);
-      setOpenKey(() => findMenus(menusDataList, location.pathname) as string);
+      setSelectKey([location.pathname]);
+      const openMenusKey = findMenus(menusDataList, location.pathname) as string;
+      setOpenKey([openMenusKey]);
     }
   }, [location.pathname]);
 
@@ -78,8 +82,9 @@ const AppSider = (props: Props) => {
       <Menu
         theme="dark"
         mode="inline"
-        defaultSelectedKeys={[selectKey]}
-        defaultOpenKeys={[openKey]}
+        defaultSelectedKeys={selectKey}
+        defaultOpenKeys={openKey}
+        // selectedKeys={selectKey}
         onClick={selectMenuHandler}
       >
         {menusDataList.map((item: MenusProps) => {
