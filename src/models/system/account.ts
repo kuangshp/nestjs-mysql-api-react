@@ -1,5 +1,5 @@
 import { Model } from 'dva';
-import { AccountResDto } from '../../pages/System/Account/types/account.res.dto';
+import { AccountResDto } from '../../pages/System/Account/types';
 import { ReduxAction } from '../global';
 
 export interface AccountState {

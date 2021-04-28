@@ -1,6 +1,5 @@
 import BaseService from './../../base';
-import { RoleReqDto } from 'src/pages/System/Role/types/role.req.dto';
-import { QueryRoleDto } from 'src/pages/System/Role/types/query.role.dto';
+import { RoleReqDto, QueryRoleDto } from 'src/pages/System/Role/types';
 
 class RoleService extends BaseService {
   // 创建角色

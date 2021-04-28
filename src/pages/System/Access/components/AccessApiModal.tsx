@@ -2,7 +2,7 @@ import React, { PropsWithChildren, useEffect, useState } from 'react';
 import { Modal, Form, Input, Select } from 'antd';
 import { useRequest } from 'ahooks';
 import AccessService from 'src/services/system/access';
-import { AccessReqDto } from '../types/access.req.dto';
+import { AccessReqDto } from '../types';
 import { AccessTypeEnum } from 'src/enums';
 import { useSelector } from 'dva';
 import { AccessState } from 'src/models/system/access';

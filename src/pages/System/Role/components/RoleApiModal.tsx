@@ -3,10 +3,8 @@ import { Modal, Checkbox, Row, Col, Form } from 'antd';
 import { useRequest } from 'ahooks';
 import { useSelector } from 'dva';
 import RoleAccessService from 'src/services/system/role-access';
-import { RoleMenuApiReqDto } from './../types/role.menu.api.req.dto';
 import { RoleState } from 'src/models/system/role';
-import { RoleApiResDto } from '../types/role.api.res.dto';
-import { RoleMenuAuthResDto } from '../types/role.menu.auth.res.dto';
+import { RoleApiResDto, RoleMenuApiReqDto, RoleMenuAuthResDto } from '../types';
 
 type Props = PropsWithChildren<{
   isRoleApiVisible: boolean;

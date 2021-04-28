@@ -2,10 +2,9 @@ import React, { PropsWithChildren, useEffect, useState } from 'react';
 import { Modal, Form, Input, Select } from 'antd';
 import { useRequest } from 'ahooks';
 
-import { AccountResDto } from '../types/account.res.dto';
 import { mobileReg, usernameReg, emailReg } from 'src/constants';
 import AccountService from 'src/services/system/account';
-import { AccountDto } from '../types/account.dto';
+import { AccountDto, AccountResDto } from '../types';
 import { AccountState } from 'src/models/system/account';
 import { useSelector } from 'dva';
 

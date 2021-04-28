@@ -1,8 +1,7 @@
 import React, { PropsWithChildren, useEffect, useState } from 'react';
 import { Modal, Checkbox, Row, Col, Form, message } from 'antd';
 import AccountRoleService from 'src/services/system/account-role';
-import { AccountRoleDto, AccountRoleResDto } from '../types/account.role.res.dto';
-import { DispatchAccountRoleDto } from '../types/dispatch.account.role.dto';
+import { AccountRoleDto, AccountRoleResDto, DispatchAccountRoleDto } from '../types';
 import { useRequest } from 'ahooks';
 import { useSelector } from 'dva';
 import { AccountState } from 'src/models/system/account';

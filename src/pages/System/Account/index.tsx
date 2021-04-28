@@ -7,7 +7,7 @@ import { ExclamationCircleOutlined } from '@ant-design/icons';
 import AccountService from 'src/services/system/account';
 import styles from './index.module.less';
 import { DEFAULT_PAGE_SIZE, DEFAULT_PASSWORD } from 'src/constants';
-import { AccountResDto, AccountTableDto } from './types/account.res.dto';
+import { AccountResDto, AccountTableDto } from './types';
 import { formatDate } from 'src/utils';
 import AccountModal from './components/AccountModal';
 import AccountRoleModal from './components/AccountRoleModal';

@@ -1,8 +1,10 @@
 import BaseService from './../../base';
-import { RoleMenusResDto } from 'src/pages/System/Role/types/role.menus.res.dto';
-import { RoleMenuAuthResDto } from 'src/pages/System/Role/types/role.menu.auth.res.dto';
-import { RoleApiResDto } from 'src/pages/System/Role/types/role.api.res.dto';
-import { RoleMenuApiReqDto } from 'src/pages/System/Role/types/role.menu.api.req.dto';
+import {
+  RoleApiResDto,
+  RoleMenusResDto,
+  RoleMenuAuthResDto,
+  RoleMenuApiReqDto,
+} from 'src/pages/System/Role/types';
 
 class RoleAccessService extends BaseService {
   // 根据角色id获取已经授权的菜单
