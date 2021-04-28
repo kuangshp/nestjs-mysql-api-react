@@ -2,8 +2,8 @@ import BaseService from '../../base';
 import {
   AccountRoleResDto,
   AccountRoleDto,
-} from 'src/pages/System/Account/types/account.role.res.dto';
-import { DispatchAccountRoleDto } from 'src/pages/System/Account/types/dispatch.account.role.dto';
+  DispatchAccountRoleDto,
+} from 'src/pages/System/Account/types';
 
 class AccountRoleService extends BaseService {
   // 根据账号id获取已经授权的角色

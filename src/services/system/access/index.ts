@@ -1,7 +1,5 @@
 import BaseService from './../../base';
-import { AccessReqDto } from 'src/pages/System/Access/types/access.req.dto';
-import { QueryAccessDto } from 'src/pages/System/Access/types/query.access.dto';
-import { AccessListResDto } from 'src/pages/System/Access/types/access.res.dto';
+import { AccessReqDto, QueryAccessDto, AccessListResDto } from 'src/pages/System/Access/types';
 
 class AccessService extends BaseService {
   // 创建资源

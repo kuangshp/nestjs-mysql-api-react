@@ -4,10 +4,8 @@ import { useSelector } from 'dva';
 import { RoleState } from 'src/models/system/role';
 import RoleAccessService from 'src/services/system/role-access';
 import { getTreeList } from 'src/utils';
-import { RoleMenusResDto } from './../types/role.menus.res.dto';
-import { RoleMenuApiReqDto } from './../types/role.menu.api.req.dto';
+import { RoleMenusResDto, RoleMenuApiReqDto, RoleMenuAuthResDto } from './../types';
 import { useRequest } from 'ahooks';
-import { RoleMenuAuthResDto } from '../types/role.menu.auth.res.dto';
 
 type Props = PropsWithChildren<{
   isRoleMenuVisible: boolean;

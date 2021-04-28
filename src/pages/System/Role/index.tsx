@@ -11,7 +11,7 @@ import yesImg from 'src/assets/images/yes.gif';
 import noImg from 'src/assets/images/no.gif';
 import { StatusEnum, RoleEnum } from 'src/enums';
 import TopForm from './components/TopForm';
-import { AccountTableDto, RoleResDto } from './types/role.res.dto';
+import { AccountTableDto, RoleResDto } from './types';
 import RoleModal from './components/RoleModal';
 import RoleMenuModal from './components/RoleMenuModal';
 import { useDispatch } from 'dva';
