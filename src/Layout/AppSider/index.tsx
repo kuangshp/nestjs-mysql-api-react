@@ -1,7 +1,7 @@
 import React, { useState, useMemo, PropsWithChildren, useEffect } from 'react';
 import { Layout, Menu } from 'antd';
 import { ObjectType } from '../../typings';
-import styles from './index.module.css';
+import styles from './index.module.scss';
 import { MenusProps } from './menus';
 import { FolderOpenOutlined, FileTextOutlined } from '@ant-design/icons';
 import { connect, useSelector } from 'dva';
@@ -10,10 +10,7 @@ import { GlobalState } from '../../models/global';
 import { MenusState } from 'src/models/menus';
 import { getTreeList } from 'src/utils';
 import { StateWithHistory } from 'redux-undo';
-import { AccessState } from 'src/models/system/access';
-import { AccountState } from 'src/models/system/account';
-import { LoginState } from 'src/models/login';
-import { RoleState } from 'src/models/system/role';
+import { IGState } from 'src/models';
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 
@@ -38,18 +35,6 @@ const findMenus = (menusList: Array<MenusProps>, currentPath: string): string | 
     ? menusList.find((item: MenusProps) => item.id === currentItem.parentId)?.url
     : '';
 };
-
-export interface IGState {
-  '@@dva': number;
-  menus: MenusState;
-  access: AccessState;
-  account: AccountState;
-  global: GlobalState;
-  loading: any;
-  login: LoginState;
-  role: RoleState;
-  router: any;
-}
 
 const AppSider = (props: Props) => {
   const { location, history } = props;
