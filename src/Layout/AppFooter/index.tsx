@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout } from 'antd';
-import styles from './index.module.less';
+import styles from './index.module.scss';
 import { connect } from 'dva';
 const { Footer } = Layout;
 

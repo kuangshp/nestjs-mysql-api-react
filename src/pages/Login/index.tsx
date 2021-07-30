@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { Form, Input, Button, message } from 'antd';
-import styles from './index.module.less';
+import styles from './index.module.scss';
 import { FormError } from 'src/typings';
 import { storage } from 'src/utils';
 import { connect, useDispatch } from 'dva';

@@ -6,4 +6,5 @@ import systemAccount from './system/account';
 import systemRole from './system/role';
 
 const models = [global, login, menus, systemAccess, systemAccount, systemRole];
+// export type RootState = ReturnType<typeof models.getState>;
 export default models;
