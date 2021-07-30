@@ -4,7 +4,7 @@ import { Form, Table, Button, Modal, message, Space } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import useAntdTable, { PaginatedParams } from 'ahooks/lib/useAntdTable';
 
-import styles from './index.module.less';
+import styles from './index.module.scss';
 import RoleService from 'src/services/system/role';
 import { DEFAULT_PAGE_SIZE } from 'src/constants';
 import yesImg from 'src/assets/images/yes.gif';

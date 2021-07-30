@@ -2,7 +2,7 @@ import dva from 'dva';
 import React from 'react';
 import createHistory from 'history/createHashHistory';
 // import createHistory from 'history/createBrowserHistory';
-import './assets/style/global.less';
+import './assets/style/global.scss';
 import 'antd/dist/antd.css';
 import createLoading from 'dva-loading';
 import ReactDOM from 'react-dom';

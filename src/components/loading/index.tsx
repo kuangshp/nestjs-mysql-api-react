@@ -1,5 +1,5 @@
 import React from 'react';
-import './index.less';
+import './index.scss';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 

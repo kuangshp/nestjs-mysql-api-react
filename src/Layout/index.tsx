@@ -3,7 +3,7 @@ import { Layout } from 'antd';
 import AppSider from './AppSider';
 import AppHeader from './AppHeader';
 import AppFooter from './AppFooter';
-import styles from './index.module.less';
+import styles from './index.module.scss';
 
 const { Content } = Layout;
 

@@ -4,7 +4,7 @@ import { MenuUnfoldOutlined, MenuFoldOutlined, ExclamationCircleOutlined } from 
 import { storage } from './../../utils';
 import { authToken } from '../../config';
 import { connect, useDispatch, useSelector } from 'dva';
-import styles from './index.module.less';
+import styles from './index.module.scss';
 import { GlobalState } from '../../models/global';
 import { LoginState } from 'src/models/login';
 import ModifyPasswordModal from './components/ModifyPasswordModal';
