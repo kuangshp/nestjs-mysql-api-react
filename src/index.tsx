@@ -15,7 +15,8 @@ import models from './models';
 
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import undoable from 'redux-undo';
+import undoable, { StateWithHistory } from 'redux-undo';
+import { IGState } from 'src/Layout/AppSider';
 
 const persistConfig = {
   key: 'root',
@@ -30,7 +31,7 @@ const app = dva({
     const undoReducer = undoable(reducer);
     const rootReducer = persistReducer(persistConfig, undoReducer);
     return (state: any, action: any) => {
-      const newState: any = rootReducer(state, action);
+      const newState: StateWithHistory<IGState> = rootReducer(state, action);
       return { ...newState, router: newState.present.router };
     };
   },
