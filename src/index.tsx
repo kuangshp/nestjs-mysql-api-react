@@ -11,12 +11,11 @@ import zhCN from 'antd/es/locale/zh_CN';
 import routeConfig from 'src/router';
 import 'moment/locale/zh-cn';
 import { createLogger } from 'redux-logger';
-import models from './models';
+import models, { IGState } from './models';
 
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import undoable, { StateWithHistory } from 'redux-undo';
-import { IGState } from 'src/Layout/AppSider';
 
 const persistConfig = {
   key: 'root',
