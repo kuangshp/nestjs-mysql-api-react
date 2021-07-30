@@ -9,6 +9,11 @@ import { RouteComponentProps, withRouter } from 'dva/router';
 import { GlobalState } from '../../models/global';
 import { MenusState } from 'src/models/menus';
 import { getTreeList } from 'src/utils';
+import { StateWithHistory } from 'redux-undo';
+import { AccessState } from 'src/models/system/access';
+import { AccountState } from 'src/models/system/account';
+import { LoginState } from 'src/models/login';
+import { RoleState } from 'src/models/system/role';
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 
@@ -34,13 +39,27 @@ const findMenus = (menusList: Array<MenusProps>, currentPath: string): string | 
     : '';
 };
 
+export interface IGState {
+  '@@dva': number;
+  menus: MenusState;
+  access: AccessState;
+  account: AccountState;
+  global: GlobalState;
+  loading: any;
+  login: LoginState;
+  role: RoleState;
+  router: any;
+}
+
 const AppSider = (props: Props) => {
   const { location, history } = props;
   const [selectKey, setSelectKey] = useState<string[]>([]);
   const [openKey, setOpenKey] = useState<string[]>([]);
   const [menusDataList, setMenusDataList] = useState<MenusProps[]>([]);
   // 可以使用hooks代替下面的connect
-  const { menusList } = useSelector(({ menus }: { menus: MenusState }): MenusState => menus);
+  const { menusList } = useSelector<StateWithHistory<IGState>, MenusState>(
+    (state): MenusState => state.present.menus
+  );
   // 初始化菜单
   const initMenus = () => {
     // 格式化菜单成树结构
