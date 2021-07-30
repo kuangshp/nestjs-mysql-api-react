@@ -40,7 +40,7 @@ const AppSider = (props: Props) => {
   const [openKey, setOpenKey] = useState<string[]>([]);
   const [menusDataList, setMenusDataList] = useState<MenusProps[]>([]);
   // 可以使用hooks代替下面的connect
-  const { menusList } = useSelector((state: any): MenusState => state.present.menus);
+  const { menusList } = useSelector(({ menus }: { menus: MenusState }): MenusState => menus);
   // 初始化菜单
   const initMenus = () => {
     // 格式化菜单成树结构

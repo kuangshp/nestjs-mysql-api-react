@@ -25,7 +25,9 @@ const AccountRoleModal = (props: Props) => {
   const { isRoleModifyVisible, setIsRoleModifyVisible, loadData } = props;
   // 全部的角色ID
   const [allRoleList, setAllRoleIdList] = useState<AccountRoleDto[]>([]);
-  const { accountRowData } = useSelector((state: any): AccountState => state.present.account);
+  const { accountRowData } = useSelector(
+    ({ account }: { account: AccountState }): AccountState => account
+  );
   const [form] = Form.useForm();
 
   const { run, loading } = useRequest(dispatchAccountRoleHandler, {

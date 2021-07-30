@@ -22,7 +22,7 @@ const AppHeader = (props: Props) => {
   const [isModifyVisible, setIsModifyVisible] = useState<boolean>(false);
   const dispatch = useDispatch();
   // 从状态中获取用户信息
-  const { userInfo } = useSelector((state: any): LoginState => state.present.login);
+  const { userInfo } = useSelector(({ login }: { login: LoginState }): LoginState => login);
   // 退出操作
   const logoutHandler = () => {
     confirm({

@@ -24,7 +24,7 @@ const RoleApiModal = (props: Props) => {
   const { isRoleApiVisible, setIsRoleApiVisible } = props;
   // 全部的接口ID
   const [allApiList, setAllApiList] = useState<RoleApiResDto[]>([]);
-  const { roleRowData } = useSelector((state: any): RoleState => state.present.role);
+  const { roleRowData } = useSelector(({ role }: { role: RoleState }): RoleState => role);
   const [form] = Form.useForm();
 
   const { run, loading } = useRequest(dispatchApiToRoleHandler, {

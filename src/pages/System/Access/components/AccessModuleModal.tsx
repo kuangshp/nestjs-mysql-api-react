@@ -40,7 +40,9 @@ const modifyAccessHandler = async (id: number, params: AccessReqDto) => {
 const AccessModuleModal = (props: Props) => {
   const { isAccessModalVisible, setIsAccessModalVisible, loadData } = props;
   const [title, setTitle] = useState<string>('新增模块');
-  const { accessRowData } = useSelector((state: any): AccessState => state.present.access);
+  const { accessRowData } = useSelector(
+    ({ access }: { access: AccessState }): AccessState => access
+  );
   const [form] = Form.useForm();
 
   const { run, loading } = useRequest(createAccessHandler, {
