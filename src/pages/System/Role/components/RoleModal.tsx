@@ -39,7 +39,7 @@ const modifyRoleHandler = async (id: number, params: any) => {
 const RoleModal = (props: Props) => {
   const { isModifyVisible, setIsModifyVisible, loadData } = props;
   const [title, setTitle] = useState<string>('新增角色');
-  const { roleRowData } = useSelector((state: any): RoleState => state.present.role);
+  const { roleRowData } = useSelector(({ role }: { role: RoleState }): RoleState => role);
   const [form] = Form.useForm();
 
   const { run, loading } = useRequest(createRoleHandler, {

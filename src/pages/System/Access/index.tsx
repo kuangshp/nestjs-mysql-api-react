@@ -47,7 +47,9 @@ const Access = () => {
   const [isAccessModalVisible, setIsAccessModalVisible] = useState<boolean>(false);
   const [isAccessMenusVisible, setIsAccessMenusVisible] = useState<boolean>(false);
   const dispatch = useDispatch();
-  const { accessRowData } = useSelector((state: any): AccessState => state.present.access);
+  const { accessRowData } = useSelector(
+    ({ access }: { access: AccessState }): AccessState => access
+  );
   // 获取模块数据
   const { tableProps: moduleTableData, search } = useAntdTable(getModuleData, {
     defaultPageSize: DEFAULT_PAGE_SIZE, // 默认请求页数
