@@ -22,7 +22,9 @@ const AppHeader = (props: Props) => {
   const [isModifyVisible, setIsModifyVisible] = useState<boolean>(false);
   const dispatch = useDispatch();
   // 从状态中获取用户信息
-  const { userInfo } = useSelector(({ login }: { login: LoginState }): LoginState => login);
+  // const { userInfo } = useSelector(({ login }: { login: LoginState }): LoginState => login);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { userInfo } = useSelector((state: any): LoginState => state.present.login);
   // 退出操作
   const logoutHandler = () => {
     confirm({
